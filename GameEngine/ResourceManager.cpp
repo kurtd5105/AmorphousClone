@@ -20,4 +20,12 @@ namespace GameEngine {
 		}
 		return result->second;
 	}
+
+	void ResourceManager::syncLoadTexture(std::string path) {
+		getTexture(path);
+	}
+
+	bool ResourceManager::asyncLoadTexture(std::string path) {
+		return false;
+	}
 }

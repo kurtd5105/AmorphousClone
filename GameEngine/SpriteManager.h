@@ -10,8 +10,11 @@ namespace GameEngine {
 		SpriteManager();
 		~SpriteManager();
 
-		void sortSprites(sortType cmp = sortType::TEXTURE);
 		void addSprite(Sprite* sprite);
+
+		//For resorting sprites later
+		void sortSprites(sortType cmp);
+		
 
 		//Getters
 		std::vector<Sprite*>* getSprites() { return &_spriteRefs; }

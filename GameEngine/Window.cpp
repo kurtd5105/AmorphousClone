@@ -60,7 +60,7 @@ namespace GameEngine {
 		std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
 
 		//Set the clear color to rgba of solid black
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		//Turn on VSync
 		//SDL_GL_SetSwapInterval(1);
