@@ -41,10 +41,10 @@ namespace GameEngine {
 		_lastSort = cmp;
 		switch(cmp) {
 		case sortType::TEXTURE:
-			//std::stable_sort(_spriteRefs.begin(), _spriteRefs.end(), cmpTexture);
+			std::stable_sort(_spriteRefs.begin(), _spriteRefs.end(), cmpTexture);
 			break;
 		case sortType::DEPTH:
-			//std::stable_sort(_spriteRefs.begin(), _spriteRefs.end(), cmpDepth);
+			std::stable_sort(_spriteRefs.begin(), _spriteRefs.end(), cmpDepth);
 			break;
 		}
 	}

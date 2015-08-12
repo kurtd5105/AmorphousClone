@@ -20,7 +20,7 @@ namespace GameEngine {
 		sortType _lastSort = sortType::TEXTURE;
 		std::vector<Sprite*> _spriteRefs;
 
-		bool cmpTexture(Sprite* a, Sprite* b);
-		bool cmpDepth(Sprite* a, Sprite* b);
+		static bool cmpTexture(Sprite* a, Sprite* b);
+		static bool cmpDepth(Sprite* a, Sprite* b);
 	};
 }

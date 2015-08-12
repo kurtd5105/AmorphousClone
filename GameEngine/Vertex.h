@@ -15,6 +15,7 @@ namespace GameEngine {
 	};
 
 	class Vertex {
+	public:
 		Position position;
 		Color color;
 		UV uv;
