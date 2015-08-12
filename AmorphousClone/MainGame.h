@@ -4,6 +4,7 @@
 
 #include <GameEngine/Window.h>
 #include <GameEngine/InputManager.h>
+#include <GameEngine/IOManager.h>
 
 enum GameState {
 	MAIN_MENU, PLAYING, EXIT
@@ -26,7 +27,8 @@ public:
 
 private:
 	GameEngine::Window _window;
-	GameEngine::InputManager _inputManager();
+	GameEngine::InputManager _inputManager;
+	GameEngine::IOManager _IOManager;
 	GameState _gameState;
 };
 
