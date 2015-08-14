@@ -7,6 +7,7 @@
 #include <GameEngine/IOManager.h>
 #include <GameEngine/ResourceManager.h>
 #include <GameEngine/SpriteManager.h>
+#include <GameEngine/SpriteBatcher.h>
 #include <GameEngine/Sprite.h>
 
 enum GameState {
@@ -49,6 +50,7 @@ private:
 	GameEngine::IOManager _IOManager;
 	GameEngine::ResourceManager _ResourceManager = GameEngine::ResourceManager(&_IOManager);
 	GameEngine::SpriteManager _SpriteManager;
+	GameEngine::SpriteBatcher _SpriteBatcher;
 
 	GameState _gameState;
 

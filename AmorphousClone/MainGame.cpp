@@ -11,7 +11,7 @@ MainGame::~MainGame() {
 void MainGame::startGame() {
 	//Vector containing all the textures needed, and whether or not they can be loaded asynchronously
 	//MUST BE SORTED NON-ASYNC FIRST
-	//TEXTURE_LIST.emplace_back("hello_world.png", false);
+	TEXTURE_LIST.emplace_back("Textures/hello_world.png", false);
 
 	init();
 	gameLoop();
@@ -28,20 +28,22 @@ void MainGame::init() {
 	for(auto& file : TEXTURE_LIST) {
 		if(file.async) {
 			loadedFile.push_back(false);
-			loadedFile[i++] = _ResourceManager.asyncLoadTexture(file.path);
+			//_ResourceManager.asyncLoadTexture(file.path, loadedFile[i]._Getptr());
 		} else {
 			_ResourceManager.syncLoadTexture(file.path);
 		}
 	}
 
 	//Temporary sprite creation, will be managed by the game logic in the future
-	//_sprites.emplace_back(0.0f, 0.0f, 100.0f,  100.0f, 1.0f, "Textures/hello_world.png", &_ResourceManager);
-	//_sprites.emplace_back(100.0f, 0.0f, 100.0f, 100.0f, 1.0f, "Textures/hello_world.png", &_ResourceManager);
+	_sprites.emplace_back(0.0f, 0.0f, 100.0f,  100.0f, 1.0f, "Textures/hello_world.png", &_ResourceManager);
+	_sprites.emplace_back(100.0f, 0.0f, 100.0f, 100.0f, 1.0f, "Textures/hello_world.png", &_ResourceManager);
 
 	for(auto& sprite : _sprites) {
 		_SpriteManager.addSprite(&sprite);
 	}
-	
+
+	_SpriteBatcher.init();
+	_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 }
 
 void MainGame::gameLoop() {
@@ -75,9 +77,13 @@ void MainGame::renderGame() {
 	glClearDepth(1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	/*_spriteBatch.cleanUp();
-	_spriteBatch.setupBatches();
-	_spriteBatch.renderBatch();*/
+	glActiveTexture(GL_TEXTURE0);
+
+	_SpriteBatcher.cleanUp();
+	_SpriteBatcher.setupBatches();
+	_SpriteBatcher.renderBatch();
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	_Window.swapBuffer();
 }

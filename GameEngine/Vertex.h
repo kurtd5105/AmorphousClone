@@ -3,11 +3,15 @@
 
 namespace GameEngine {
 	struct Position {
-		float x, y;
+		float x;
+		float y;
 	};
 
 	struct Color {
-		GLubyte r, g, b, a;
+		GLubyte r;
+		GLubyte g;
+		GLubyte b;
+		GLubyte a;
 	};
 
 	struct UV {
@@ -20,7 +24,7 @@ namespace GameEngine {
 		Color color;
 		UV uv;
 
-		Vertex(float x, float y, GLubyte r, GLubyte g, GLubyte b, GLubyte a, float u, float v) {
+		void setVertex(float x, float y, GLubyte r, GLubyte g, GLubyte b, GLubyte a, float u, float v) {
 			setPosition(x, y);
 			setColor(r, g, b, a);
 			setUV(u, v);

@@ -17,7 +17,7 @@ namespace GameEngine {
 		void syncLoadTexture(std::string path);
 
 		//Asynchronously loads a file
-		bool asyncLoadTexture(std::string path);
+		bool asyncLoadTexture(std::string path, bool& loaded);
 
 	private:
 		std::map<std::string, GLTexture> _textureMap;

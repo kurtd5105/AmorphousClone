@@ -1,5 +1,6 @@
 #include "ResourceManager.h"
 #include "IOManager.h"
+#include <iostream>
 
 namespace GameEngine {
 	ResourceManager::ResourceManager(IOManager* IOManager) : _IOManager(IOManager) {
@@ -16,8 +17,10 @@ namespace GameEngine {
 		if(result == _textureMap.end()) {
 			GLTexture newTexture = _IOManager->loadPNG(path);
 			_textureMap.insert(make_pair(path, newTexture));
+			std::cout << "New texture loaded." << std::endl;
 			return newTexture;
 		}
+		std::cout << "Texture already loaded." << std::endl;
 		return result->second;
 	}
 
@@ -25,7 +28,7 @@ namespace GameEngine {
 		getTexture(path);
 	}
 
-	bool ResourceManager::asyncLoadTexture(std::string path) {
+	bool ResourceManager::asyncLoadTexture(std::string path, bool& loaded) {
 		return false;
 	}
 }
