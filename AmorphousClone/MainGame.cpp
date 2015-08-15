@@ -42,6 +42,8 @@ void MainGame::init() {
 		_SpriteManager.addSprite(&sprite);
 	}
 
+	_ShadingProgram.init("Shaders/shader.vert", "Shaders/shader.frag", &_IOManager);
+
 	_SpriteBatcher.init();
 	_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 }
@@ -77,11 +79,25 @@ void MainGame::renderGame() {
 	glClearDepth(1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	//Start using the shading program
+	//_ShadingProgram.use();
+
 	glActiveTexture(GL_TEXTURE0);
+
+	//Get the texture uniform
+	//GLint textureLocation = _ShadingProgram.getUniformLocation("playerTexture");
+	//glUniform1i(textureLocation, 0);
+
+	//Get the position uniform
+	//GLint positionLocation = _colorProgram.getUniformLocation("P");
+	//glm::mat4 cameraMatrix = _camera.getCameraMatrix();
+	//glUniformMatrix4fv(positionLocation, 1, GL_FALSE, &cameraMatrix[0][0]);
 
 	_SpriteBatcher.cleanUp();
 	_SpriteBatcher.setupBatches();
 	_SpriteBatcher.renderBatch();
+
+	//_ShadingProgram.unuse();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 

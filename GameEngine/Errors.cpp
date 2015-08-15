@@ -30,4 +30,11 @@ namespace GameEngine {
 		std::cin >> a;
 		exit(1);
 	}
+
+	void fatalGenericError(std::string error) {
+		std::cout << error << std::endl << "Press any key and hit enter to continue..." << std::endl;
+		int a;
+		std::cin >> a;
+		exit(1);
+	}
 }

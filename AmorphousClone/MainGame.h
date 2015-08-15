@@ -6,6 +6,7 @@
 #include <GameEngine/InputManager.h>
 #include <GameEngine/IOManager.h>
 #include <GameEngine/ResourceManager.h>
+#include <GameEngine/ShadingProgram.h>
 #include <GameEngine/SpriteManager.h>
 #include <GameEngine/SpriteBatcher.h>
 #include <GameEngine/Sprite.h>
@@ -49,6 +50,7 @@ private:
 	GameEngine::InputManager _InputManager;
 	GameEngine::IOManager _IOManager;
 	GameEngine::ResourceManager _ResourceManager = GameEngine::ResourceManager(&_IOManager);
+	GameEngine::ShadingProgram _ShadingProgram;
 	GameEngine::SpriteManager _SpriteManager;
 	GameEngine::SpriteBatcher _SpriteBatcher;
 
