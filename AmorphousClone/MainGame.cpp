@@ -11,7 +11,7 @@ MainGame::~MainGame() {
 void MainGame::startGame() {
 	//Vector containing all the textures needed, and whether or not they can be loaded asynchronously
 	//MUST BE SORTED NON-ASYNC FIRST
-	TEXTURE_LIST.emplace_back("Textures/hello_world.png", false);
+	//TEXTURE_LIST.emplace_back("Textures/hello_world.png", false);
 
 	init();
 	gameLoop();
@@ -19,7 +19,7 @@ void MainGame::startGame() {
 }
 
 void MainGame::init() {
-	_Window.createWindow(800, 600, "Amorphous Clone", GameEngine::WindowMode::WINDOWED);
+	_Window.createWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Amorphous Clone", GameEngine::WindowMode::WINDOWED);
 
 	//Load textures into memory, either they are loaded at the start of the game or not and we track
 	//the status of the rest of the textures
@@ -42,7 +42,9 @@ void MainGame::init() {
 		_SpriteManager.addSprite(&sprite);
 	}
 
-	_ShadingProgram.init("Shaders/shader.vert", "Shaders/shader.frag", &_IOManager);
+	_ShadingProgram.init("Shaders/shader.vert", "Shaders/shader.frag", SHADING_ATTRIBUTES, &_IOManager);
+
+	_Camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	_SpriteBatcher.init();
 	_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
@@ -51,6 +53,7 @@ void MainGame::init() {
 void MainGame::gameLoop() {
 	while(_gameState != GameState::EXIT) {
 		processInput();
+
 		renderGame();
 	}
 }
@@ -71,33 +74,35 @@ void MainGame::processInput() {
 		}
 	}
 
-	//Handle keyboard input here
+	//Handle input here
 }
 
 void MainGame::renderGame() {
+	_Camera.update();
 	//Clear the screen
 	glClearDepth(1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//Start using the shading program
-	//_ShadingProgram.use();
+	_ShadingProgram.use();
 
 	glActiveTexture(GL_TEXTURE0);
 
 	//Get the texture uniform
-	//GLint textureLocation = _ShadingProgram.getUniformLocation("playerTexture");
-	//glUniform1i(textureLocation, 0);
+	GLint textureLocation = _ShadingProgram.getUniformLocation("playerTexture");
+	glUniform1i(textureLocation, 0);
 
 	//Get the position uniform
-	//GLint positionLocation = _colorProgram.getUniformLocation("P");
-	//glm::mat4 cameraMatrix = _camera.getCameraMatrix();
-	//glUniformMatrix4fv(positionLocation, 1, GL_FALSE, &cameraMatrix[0][0]);
+	GLint positionLocation = _ShadingProgram.getUniformLocation("P");
+
+	float *cameraMatrix = _Camera.getMatrixRef();
+	glUniformMatrix4fv(positionLocation, 1, GL_FALSE, cameraMatrix);
 
 	_SpriteBatcher.cleanUp();
 	_SpriteBatcher.setupBatches();
 	_SpriteBatcher.renderBatch();
 
-	//_ShadingProgram.unuse();
+	_ShadingProgram.unuse();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 

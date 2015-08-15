@@ -9,7 +9,7 @@ namespace GameEngine {
 		ShadingProgram();
 		~ShadingProgram();
 
-		void ShadingProgram::init(const std::string &vertexPath, const std::string &fragmentPath, IOManager* manager);
+		void ShadingProgram::init(const std::string &vertexPath, const std::string &fragmentPath, std::vector<std::string> attributes, IOManager* manager);
 		void compileShaders(const std::string &vertexPath, const std::string &fragmentPath);
 		void linkShaders();
 		void addAttribute(const std::string attributeName);
