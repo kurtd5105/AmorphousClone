@@ -28,8 +28,7 @@ public:
 	const int WINDOW_WIDTH = 800;
 	const int WINDOW_HEIGHT = 600;
 
-	//Vector containing all the textures needed, and whether or not they can be loaded asynchronously
-	//MUST BE SORTED NON-ASYNC FIRST
+	//Vectors containing all the required textures
 	std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/hello_world.png"};
 	std::vector<std::string> TEXTURE_LIST_ASYNC;// = std::vector<std::string>{};
 
@@ -63,7 +62,5 @@ private:
 
 	std::thread _IOThread;
 	ThreadState _IOThreadState;
-
-	std::vector<GameEngine::Sprite> _sprites;
 };
 

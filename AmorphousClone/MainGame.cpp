@@ -9,10 +9,6 @@ MainGame::~MainGame() {
 }
 
 void MainGame::startGame() {
-	//Vector containing all the textures needed, and whether or not they can be loaded asynchronously
-	//MUST BE SORTED NON-ASYNC FIRST
-	//TEXTURE_LIST.emplace_back("Textures/hello_world.png", false);
-
 	init();
 	gameLoop();
 	close();
@@ -27,19 +23,16 @@ void MainGame::init() {
 	for(auto& filePath : TEXTURE_LIST_SYNC) {
 		_ResourceManager.syncLoadTexture(filePath);
 	}
-	_ResourceManager.asyncLoadTexture(std::vector<std::string>{"Textures/01.png", "Textures/02.png", "Textures/03.png"}, _IOThread, &_IOThreadState);
-	std::cout << "Passed over async load texture." << std::endl;
-	//_ResourceManager.asyncLoadTexture(TEXTURE_LIST_ASYNC, _IOThread);
+
+	//_ResourceManager.asyncLoadTexture(std::vector<std::string>{"Textures/01.png", "Textures/02.png", "Textures/03.png"}, _IOThread, &_IOThreadState);
+
+	//_ResourceManager.asyncLoadTexture(TEXTURE_LIST_ASYNC, _IOThread, &_IOThreadState);
+	_SpriteManager.init(GameEngine::sortType::TEXTURE, &_ResourceManager);
 
 	//Temporary sprite creation, will be managed by the game logic in the future
-	_sprites.emplace_back(); 
-	_sprites.back().init(0.0f, 0.0f, 100.0f, 100.0f, 1.0f, "Textures/hello_world.png", &_ResourceManager);
-	_sprites.emplace_back(); 
-	_sprites.back().init(100.0f, 0.0f, 100.0f, 100.0f, 1.0f, "Textures/hello_world.png", &_ResourceManager);
-
-	for(auto& sprite : _sprites) {
-		_SpriteManager.addSprite(&sprite);
-	}
+	_SpriteManager.addSprite(0.0f, 0.0f, 100.0f, 100.0f, 1.0f, "Textures/hello_world.png");
+	_SpriteManager.addSprite(100.0f, 0.0f, 100.0f, 200.0f, 1.0f, "Textures/hello_world.png");
+	_SpriteManager.addSprite(0.0f, 100.0f, 100.0f, 100.0f, 1.0f, "Textures/hello_world.png");
 
 	_ShadingProgram.init("Shaders/shader.vert", "Shaders/shader.frag", SHADING_ATTRIBUTES, &_IOManager);
 
@@ -53,14 +46,14 @@ void MainGame::gameLoop() {
 	while(_gameState != GameState::EXIT) {
 		processInput();
 
+		//Optional to update the batch, could be moved to automatically update every batch creation
+		_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 		renderGame();
 		if(_IOThreadState == ThreadState::FINISHED) {
-			//Change sprite manager to directly contain the sprites
-			_sprites.resize(_sprites.size() + 1);
-			_sprites.emplace_back(); 
-			_sprites.back().init(100.0f, 0.0f, 100.0f, 100.0f, 1.0f, "Textures/03.png", &_ResourceManager);
-			_SpriteManager.addSprite(&_sprites.back());
-			_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
+			//_SpriteManager.addSprite(100.0f, 300.0f, 500.0f, 500.0f, 1.0f, "Textures/03.png");
+			//_SpriteManager.addSprite(200.0f, 100.0f, 500.0f, 500.0f, 1.0f, "Textures/03.png");
+
+			//_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 			_IOThreadState = ThreadState::OFF;
 		}
 	}
@@ -83,6 +76,8 @@ void MainGame::processInput() {
 	}
 
 	//Handle input here
+
+	//Temporary camera movement code
 	Uint8 KEY_A = SDL_SCANCODE_A;
 	Uint8 KEY_D = SDL_SCANCODE_D;
 	Uint8 KEY_W = SDL_SCANCODE_W;

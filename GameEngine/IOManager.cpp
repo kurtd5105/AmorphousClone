@@ -2,7 +2,6 @@
 #include "picoPNG.h"
 #include "Errors.h"
 #include <fstream>
-#include <iostream>
 
 namespace GameEngine {
 	IOManager::IOManager() {
