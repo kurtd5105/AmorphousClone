@@ -1,7 +1,7 @@
 #include "MainGame.h"
+#include <iostream>
 
-
-MainGame::MainGame() : _gameState(MAIN_MENU) {
+MainGame::MainGame() : _gameState(MAIN_MENU), _IOThreadState(ThreadState::OFF) {
 }
 
 
@@ -23,20 +23,19 @@ void MainGame::init() {
 
 	//Load textures into memory, either they are loaded at the start of the game or not and we track
 	//the status of the rest of the textures
-	int i = 0;
-	std::vector<bool> loadedFile;
-	for(auto& file : TEXTURE_LIST) {
-		if(file.async) {
-			loadedFile.push_back(false);
-			//_ResourceManager.asyncLoadTexture(file.path, loadedFile[i]._Getptr());
-		} else {
-			_ResourceManager.syncLoadTexture(file.path);
-		}
+
+	for(auto& filePath : TEXTURE_LIST_SYNC) {
+		_ResourceManager.syncLoadTexture(filePath);
 	}
+	_ResourceManager.asyncLoadTexture(std::vector<std::string>{"Textures/01.png", "Textures/02.png", "Textures/03.png"}, _IOThread, &_IOThreadState);
+	std::cout << "Passed over async load texture." << std::endl;
+	//_ResourceManager.asyncLoadTexture(TEXTURE_LIST_ASYNC, _IOThread);
 
 	//Temporary sprite creation, will be managed by the game logic in the future
-	_sprites.emplace_back(0.0f, 0.0f, 100.0f,  100.0f, 1.0f, "Textures/hello_world.png", &_ResourceManager);
-	_sprites.emplace_back(100.0f, 0.0f, 100.0f, 100.0f, 1.0f, "Textures/hello_world.png", &_ResourceManager);
+	_sprites.emplace_back(); 
+	_sprites.back().init(0.0f, 0.0f, 100.0f, 100.0f, 1.0f, "Textures/hello_world.png", &_ResourceManager);
+	_sprites.emplace_back(); 
+	_sprites.back().init(100.0f, 0.0f, 100.0f, 100.0f, 1.0f, "Textures/hello_world.png", &_ResourceManager);
 
 	for(auto& sprite : _sprites) {
 		_SpriteManager.addSprite(&sprite);
@@ -55,6 +54,15 @@ void MainGame::gameLoop() {
 		processInput();
 
 		renderGame();
+		if(_IOThreadState == ThreadState::FINISHED) {
+			//Change sprite manager to directly contain the sprites
+			_sprites.resize(_sprites.size() + 1);
+			_sprites.emplace_back(); 
+			_sprites.back().init(100.0f, 0.0f, 100.0f, 100.0f, 1.0f, "Textures/03.png", &_ResourceManager);
+			_SpriteManager.addSprite(&_sprites.back());
+			_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
+			_IOThreadState = ThreadState::OFF;
+		}
 	}
 }
 
@@ -75,6 +83,18 @@ void MainGame::processInput() {
 	}
 
 	//Handle input here
+	Uint8 KEY_A = SDL_SCANCODE_A;
+	Uint8 KEY_D = SDL_SCANCODE_D;
+	Uint8 KEY_W = SDL_SCANCODE_W;
+	Uint8 KEY_S = SDL_SCANCODE_S;
+	if((keys[KEY_D] != keys[KEY_A]) && (keys[KEY_W] != keys[KEY_S])) {
+		//If there is diagonal movement then normalize it so the distance moved is still camera speed * 1
+		_Camera.setPosition(_Camera.getPosition() + glm::vec2(_Camera.CAMERA_SPEED * (keys[KEY_D] - keys[KEY_A]) / sqrt(2), _Camera.CAMERA_SPEED*(keys[KEY_W] - keys[KEY_S]) / sqrt(2)));
+	} else {
+		//Move the camera by the additions of the key presses
+		_Camera.setPosition(_Camera.getPosition() + glm::vec2(_Camera.CAMERA_SPEED * (keys[KEY_D] - keys[KEY_A]), _Camera.CAMERA_SPEED*(keys[KEY_W] - keys[KEY_S])));
+	}
+	_Camera.setScale(_Camera.getScale() + _Camera.SCALE_SPEED * (keys[SDL_SCANCODE_Q] - keys[SDL_SCANCODE_E]));
 }
 
 void MainGame::renderGame() {
@@ -110,6 +130,12 @@ void MainGame::renderGame() {
 }
 
 void MainGame::close() {
+	if(_IOThread.joinable()) {
+		_IOThread.join();
+	} else {
+		_IOThread.~thread();
+	}
+
 	_Window.destroySDLWindow();
 	SDL_Quit();
 }

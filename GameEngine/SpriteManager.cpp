@@ -25,15 +25,23 @@ namespace GameEngine {
 			auto insertLocation = _spriteRefs.begin();
 			switch(_lastSort) {
 			case sortType::DEPTH:
-				while(cmpDepth(sprite, _spriteRefs[i++])) {}
+				while(i < _spriteRefs.size()) {
+					cmpDepth(sprite, _spriteRefs[i++]);
+				}
 				break;
 			case sortType::TEXTURE:
-				while(cmpTexture(sprite, _spriteRefs[i++])) {}
+				while(i < _spriteRefs.size()) {
+					cmpTexture(sprite, _spriteRefs[i++]);
+				}
 				break;
 			}
 			//Advance the iterator to the insert location
-			std::advance(insertLocation, i);
-			_spriteRefs.insert(insertLocation, sprite);
+			if(i != _spriteRefs.size()) {
+				std::advance(insertLocation, i);
+				_spriteRefs.insert(insertLocation, sprite);
+			} else {
+				_spriteRefs.push_back(sprite);
+			}
 		}
 	}
 

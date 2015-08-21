@@ -9,7 +9,7 @@ namespace GameEngine {
 		Camera();
 		~Camera();
 
-		const float CAMERA_SPEED = 5.0f;
+		const float CAMERA_SPEED = 0.05f;
 		const float SCALE_SPEED = 0.01f;
 
 		void init(int width, int height);

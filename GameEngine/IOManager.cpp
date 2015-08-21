@@ -2,6 +2,7 @@
 #include "picoPNG.h"
 #include "Errors.h"
 #include <fstream>
+#include <iostream>
 
 namespace GameEngine {
 	IOManager::IOManager() {
@@ -45,6 +46,32 @@ namespace GameEngine {
 
 		//Unbind the texture afterwards
 		glBindTexture(GL_TEXTURE_2D, 0);
+		return texture;
+	}
+
+	GLRawTexture IOManager::loadPNGRaw(std::string path) {
+		std::vector<unsigned char> in;
+		std::vector<unsigned char> out;
+		unsigned long width, height;
+
+		GLRawTexture texture = {};
+
+		//Read file and check for load errors
+		if(!readFileToBuffer(path, in)) {
+			fatalIOError(path);
+		}
+
+		//Decode the PNG and check for errors
+		int error = decodePNG(out, width, height, &(in[0]), in.size());
+
+		if(error != 0) {
+			fatalPicoError(std::to_string(error));
+		}
+
+		texture.width = width;
+		texture.height = height;
+		texture.data = out;
+
 		return texture;
 	}
 

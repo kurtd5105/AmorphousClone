@@ -1,7 +1,9 @@
 #include "Sprite.h"
 
 namespace GameEngine {
-	Sprite::Sprite(float x, float y, float width, float height, float depth, std::string path, ResourceManager* manager) {
+	Sprite::Sprite() {}
+		
+	void Sprite::init(float x, float y, float width, float height, float depth, std::string path, ResourceManager* manager) {
 		_texture = manager->getTexture(path);
 		Vertex vertex;
 

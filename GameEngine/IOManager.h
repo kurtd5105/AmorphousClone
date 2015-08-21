@@ -10,6 +10,7 @@ namespace GameEngine {
 		~IOManager();
 
 		GLTexture loadPNG(std::string path);
+		GLRawTexture loadPNGRaw(std::string path);
 		bool readFileToBuffer(std::string filePath, std::vector<unsigned char>& buffer);
 	};
 }
