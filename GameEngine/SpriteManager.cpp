@@ -22,37 +22,35 @@ namespace GameEngine {
 		return (a.getTextureID() > b.getTextureID());
 	}
 
-	void SpriteManager::addSprite(float x, float y, float width, float height, float depth, std::vector<float> uvMin, std::vector<float> uvMax, std::string path) {
+	Sprite* SpriteManager::addSprite(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path) {
 		Sprite sprite;
-		sprite.init(x, y, width, height, depth, uvMin, uvMax, path, _ResourceManager);
+		sprite.init(x, y, width, height, depth, UVmM, path, _ResourceManager);
 
-		//If there aren't any sprites then simply push the new sprite
-		if(_sprites.size() == 0) {
-			_sprites.push_back(sprite);
-		//Otherwise find a new insert location
-		} else {
-			unsigned int i = 0;
-			auto insertLocation = _sprites.begin();
-			switch(_sortType) {
-			case sortType::DEPTH:
-				while(i < _sprites.size()) {
-					cmpDepth(sprite, _sprites[i++]);
-				}
-				break;
-			case sortType::TEXTURE:
-				while(i < _sprites.size()) {
-					cmpTexture(sprite, _sprites[i++]);
-				}
-				break;
+		//Iterate to the insertion point for the new sprite
+		unsigned int i = 0;
+		auto insertLocation = _sprites.begin();
+		switch(_sortType) {
+		case sortType::DEPTH:
+			while(i < _sprites.size()) {
+				cmpDepth(sprite, _sprites[i++]);
 			}
-			//Advance the iterator to the insert location or push to the back if it is at the end 
-			if(i != _sprites.size()) {
-				std::advance(insertLocation, i);
-				_sprites.insert(insertLocation, sprite);
-			} else {
-				_sprites.push_back(sprite);
+			break;
+		case sortType::TEXTURE:
+			while(i < _sprites.size()) {
+				cmpTexture(sprite, _sprites[i++]);
 			}
+			break;
 		}
+		//Advance the iterator to the insert location or push to the back if it is at the end 
+		if(i != _sprites.size() && _sprites.size() != 0) {
+			std::advance(insertLocation, i);
+			_sprites.insert(insertLocation, sprite);
+			_spriteRefs.push_back(&_sprites[i]);
+		} else {
+			_sprites.push_back(sprite);
+			_spriteRefs.push_back(&_sprites.back());
+		}
+		return _spriteRefs.back();
 	}
 
 	void SpriteManager::sortSprites(sortType cmp) {

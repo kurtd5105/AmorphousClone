@@ -12,7 +12,7 @@ namespace GameEngine {
 
 		void init(sortType sort, ResourceManager* _ResourceManager);
 
-		void addSprite(float x, float y, float width, float height, float depth, std::vector<float> uvMin, std::vector<float> uvMax, std::string path);
+		Sprite* addSprite(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path);
 
 		//For resorting sprites later
 		void sortSprites(sortType cmp);
@@ -28,6 +28,7 @@ namespace GameEngine {
 
 		sortType _sortType;
 		std::vector<Sprite> _sprites;
+		std::vector<Sprite*> _spriteRefs;
 
 		static bool cmpTexture(Sprite a, Sprite b);
 		static bool cmpDepth(Sprite a, Sprite b);

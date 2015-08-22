@@ -32,13 +32,15 @@ void MainGame::init() {
 	_SpriteManager.init(GameEngine::sortType::TEXTURE, &_ResourceManager);
 	_StagingManager.init(&_gameState, &_SpriteManager);
 	_Camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
+	_Game.init(&_gameState, &_Camera);
 	_SpriteBatcher.init();
-	
+
 	_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 }
 
 void MainGame::gameLoop() {
 	while(_gameState != GameState::EXIT) {
+		//_Game.processInput();
 		processInput();
 
 		//Optional to update the batch, could be moved to automatically update every batch creation

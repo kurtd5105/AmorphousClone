@@ -18,6 +18,7 @@
 
 #include "StagingManager.h"
 #include "GameState.h"
+#include "GameLogic.h"
 
 //enum GameState {
 //	MAIN_MENU, PLAYING, EXIT
@@ -62,6 +63,7 @@ private:
 	GameEngine::Camera _Camera;
 
 	StagingManager _StagingManager;
+	GameLogic _Game;
 	GameState _gameState;
 
 	std::thread _IOThread;
