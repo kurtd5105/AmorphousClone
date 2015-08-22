@@ -16,9 +16,12 @@
 
 #include <GameEngine/ThreadState.h>
 
-enum GameState {
-	MAIN_MENU, PLAYING, EXIT
-};
+#include "StagingManager.h"
+#include "GameState.h"
+
+//enum GameState {
+//	MAIN_MENU, PLAYING, EXIT
+//};
 
 class MainGame {
 public:
@@ -29,7 +32,7 @@ public:
 	const int WINDOW_HEIGHT = 600;
 
 	//Vectors containing all the required textures
-	std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/hello_world.png"};
+	std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/buttons.png"};
 	std::vector<std::string> TEXTURE_LIST_ASYNC;// = std::vector<std::string>{};
 
 	std::vector<std::string> SHADING_ATTRIBUTES = std::vector<std::string>{"vertexPosition", "vertexColor", "vertexUV"};
@@ -58,6 +61,7 @@ private:
 
 	GameEngine::Camera _Camera;
 
+	StagingManager _StagingManager;
 	GameState _gameState;
 
 	std::thread _IOThread;

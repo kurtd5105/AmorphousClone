@@ -24,21 +24,16 @@ void MainGame::init() {
 		_ResourceManager.syncLoadTexture(filePath);
 	}
 
-	//_ResourceManager.asyncLoadTexture(std::vector<std::string>{"Textures/01.png", "Textures/02.png", "Textures/03.png"}, _IOThread, &_IOThreadState);
-
-	//_ResourceManager.asyncLoadTexture(TEXTURE_LIST_ASYNC, _IOThread, &_IOThreadState);
-	_SpriteManager.init(GameEngine::sortType::TEXTURE, &_ResourceManager);
-
-	//Temporary sprite creation, will be managed by the game logic in the future
-	_SpriteManager.addSprite(0.0f, 0.0f, 100.0f, 100.0f, 1.0f, "Textures/hello_world.png");
-	_SpriteManager.addSprite(100.0f, 0.0f, 100.0f, 200.0f, 1.0f, "Textures/hello_world.png");
-	_SpriteManager.addSprite(0.0f, 100.0f, 100.0f, 100.0f, 1.0f, "Textures/hello_world.png");
-
 	_ShadingProgram.init("Shaders/shader.vert", "Shaders/shader.frag", SHADING_ATTRIBUTES, &_IOManager);
+	//_ResourceManager.asyncLoadTexture(std::vector<std::string>{"Textures/01.png", "Textures/02.png", "Textures/03.png"}, _IOThread, &_IOThreadState);
+	//_ResourceManager.asyncLoadTexture(TEXTURE_LIST_ASYNC, _IOThread, &_IOThreadState);
 
+	//Init classes
+	_SpriteManager.init(GameEngine::sortType::TEXTURE, &_ResourceManager);
+	_StagingManager.init(&_gameState, &_SpriteManager);
 	_Camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
-
 	_SpriteBatcher.init();
+	
 	_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 }
 

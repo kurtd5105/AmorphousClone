@@ -22,16 +22,16 @@ namespace GameEngine {
 		return (a.getTextureID() > b.getTextureID());
 	}
 
-	void SpriteManager::addSprite(float x, float y, float width, float height, float depth, std::string path) {
+	void SpriteManager::addSprite(float x, float y, float width, float height, float depth, std::vector<float> uvMin, std::vector<float> uvMax, std::string path) {
 		Sprite sprite;
-		sprite.init(x, y, width, height, depth, path, _ResourceManager);
+		sprite.init(x, y, width, height, depth, uvMin, uvMax, path, _ResourceManager);
 
 		//If there aren't any sprites then simply push the new sprite
 		if(_sprites.size() == 0) {
 			_sprites.push_back(sprite);
 		//Otherwise find a new insert location
 		} else {
-			int i = 0;
+			unsigned int i = 0;
 			auto insertLocation = _sprites.begin();
 			switch(_sortType) {
 			case sortType::DEPTH:

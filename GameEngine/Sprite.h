@@ -10,7 +10,7 @@ namespace GameEngine {
 		Sprite();//(float x, float y, float width, float height, float depth, std::string path, ResourceManager* manager);
 		~Sprite();
 
-		void init(float x, float y, float width, float height, float depth, std::string path, ResourceManager* manager);
+		void init(float x, float y, float width, float height, float depth, std::vector<float> uvMin, std::vector<float> uvMax, std::string path, ResourceManager* manager);
 		GLuint getTextureID() { return _texture.id; }
 		float getDepth() { return _depth; }
 		Vertex getVertexAt(int i) { return _vertices[i]; }

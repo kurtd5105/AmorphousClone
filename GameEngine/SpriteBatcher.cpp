@@ -80,7 +80,7 @@ namespace GameEngine {
 
 		//Access violation???
 		//_spritePointers.resize(spritesLocation->size());
-		for(int i = 0; i < spritesLocation->size(); i++) {
+		for(unsigned int i = 0; i < spritesLocation->size(); i++) {
 			_spritePointers.push_back(&spritesLocation->at(i));
 		}
 	}
