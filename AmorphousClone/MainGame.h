@@ -18,7 +18,8 @@
 
 #include "StagingManager.h"
 #include "GameState.h"
-#include "GameLogic.h"
+
+#include "FPSManager.h"
 
 //enum GameState {
 //	MAIN_MENU, PLAYING, EXIT
@@ -43,6 +44,7 @@ public:
 	
 	void gameLoop();
 
+	void processInput();
 	void renderGame();
 
 	void close();
@@ -62,8 +64,9 @@ private:
 	GameEngine::Camera _Camera;
 
 	StagingManager _StagingManager;
-	GameLogic _Game;
 	GameState _gameState;
+
+	FPSManager _FPSManager;
 
 	std::thread _IOThread;
 	ThreadState _IOThreadState;

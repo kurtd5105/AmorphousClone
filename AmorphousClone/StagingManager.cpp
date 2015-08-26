@@ -14,19 +14,15 @@ void StagingManager::init(GameState* gameState, GameEngine::SpriteManager* manag
 }
 
 void StagingManager::loadState() {
-	//Cleanup the sprites on screen and any buttons
+	//Cleanup the sprites on screen
 	_SpriteManager->clearSprites();
-	_buttons.clear();
-	Button button;
+
 	//Setup the new sprites on screen
 	switch(*_gameState) {
 	case GameState::MAIN_MENU:
-		button.init(300.0f, 350.0f, 200.0f, 50.0f, 1.0f, std::vector<float>{0.0f, 1.0f, 0.5f, 1.0f}, "Textures/buttons.png", GameState::PLAYING, _SpriteManager);
-		_buttons.push_back(button);
-
-		button.init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, std::vector<float>{0.0f, 1.0f, 0.0f, 0.5f}, "Textures/buttons.png", GameState::EXIT, _SpriteManager);
-		_buttons.push_back(button);
-
+		//Eventually to be replaced with button classes
+		_SpriteManager->addSprite(300.0f, 350.0f, 200.0f, 50.0f, 1.0f, std::vector<float>{0.0f, 0.5f}, std::vector<float>{1.0f, 1.0f}, "Textures/buttons.png");
+		_SpriteManager->addSprite(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, std::vector<float>{0.0f, 0.0f}, std::vector<float>{1.0f, 0.5f}, "Textures/buttons.png");
 		break;
 	case GameState::PLAYING:
 		break;

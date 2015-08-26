@@ -32,26 +32,26 @@ void MainGame::init() {
 	_SpriteManager.init(GameEngine::sortType::TEXTURE, &_ResourceManager);
 	_StagingManager.init(&_gameState, &_SpriteManager);
 	_Camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
-	_Game.init(&_gameState, &_Camera, &_StagingManager);
 	_SpriteBatcher.init();
-
+	
 	_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 }
 
 void MainGame::gameLoop() {
-	GameState currState = _gameState;
+	_FPSManager.fpsinit();
+
 	while(_gameState != GameState::EXIT) {
-		if(currState != _gameState) {
-			_StagingManager.loadState();
-			currState = _gameState;
-		}
-		_Game.processInput();
-		//processInput();
-		//std::cout << "State: " << (_gameState == GameState::PLAYING ? "playing." : _gameState == GameState::MAIN_MENU ? "main menu." : "exit.") << std::endl;
+		processInput();
 
 		//Optional to update the batch, could be moved to automatically update every batch creation
 		_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
+
 		renderGame();
+
+		//SDL_Delay(100);
+		_FPSManager.fpsthink();
+		printf("%f\n", _FPSManager.framespersecond);
+
 		if(_IOThreadState == ThreadState::FINISHED) {
 			//_SpriteManager.addSprite(100.0f, 300.0f, 500.0f, 500.0f, 1.0f, "Textures/03.png");
 			//_SpriteManager.addSprite(200.0f, 100.0f, 500.0f, 500.0f, 1.0f, "Textures/03.png");
@@ -60,6 +60,39 @@ void MainGame::gameLoop() {
 			_IOThreadState = ThreadState::OFF;
 		}
 	}
+}
+
+void MainGame::processInput() {
+	SDL_Event event;
+
+	//Get the pointer to the state of the keyboard key presses
+	const Uint8 *keys = SDL_GetKeyboardState(NULL);
+
+	//Poll every event and handle it
+	while(SDL_PollEvent(&event)) {
+		switch(event.type) {
+		//If the user clicked the close button
+		case SDL_QUIT:
+			_gameState = GameState::EXIT;
+			break;
+		}
+	}
+
+	//Handle input here
+
+	//Temporary camera movement code
+	Uint8 KEY_A = SDL_SCANCODE_A;
+	Uint8 KEY_D = SDL_SCANCODE_D;
+	Uint8 KEY_W = SDL_SCANCODE_W;
+	Uint8 KEY_S = SDL_SCANCODE_S;
+	if((keys[KEY_D] != keys[KEY_A]) && (keys[KEY_W] != keys[KEY_S])) {
+		//If there is diagonal movement then normalize it so the distance moved is still camera speed * 1
+		_Camera.setPosition(_Camera.getPosition() + glm::vec2(_Camera.CAMERA_SPEED * (keys[KEY_D] - keys[KEY_A]) / sqrt(2), _Camera.CAMERA_SPEED*(keys[KEY_W] - keys[KEY_S]) / sqrt(2)));
+	} else {
+		//Move the camera by the additions of the key presses
+		_Camera.setPosition(_Camera.getPosition() + glm::vec2(_Camera.CAMERA_SPEED * (keys[KEY_D] - keys[KEY_A]), _Camera.CAMERA_SPEED*(keys[KEY_W] - keys[KEY_S])));
+	}
+	_Camera.setScale(_Camera.getScale() + _Camera.SCALE_SPEED * (keys[SDL_SCANCODE_Q] - keys[SDL_SCANCODE_E]));
 }
 
 void MainGame::renderGame() {
@@ -103,7 +136,4 @@ void MainGame::close() {
 
 	_Window.destroySDLWindow();
 	SDL_Quit();
-	//int a;
-	//std::cout << "Enter a key to close. ";
-	//std::cin >> a;
 }
