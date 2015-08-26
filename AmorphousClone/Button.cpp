@@ -12,4 +12,5 @@ void Button::init(float x, float y, float width, float height, float depth, std:
 	_onClick = onClick;
 	_SpriteManager = manager;
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
+	_hitbox.init(x, y, width, height, 0);
 }

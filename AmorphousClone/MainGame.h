@@ -43,7 +43,6 @@ public:
 	
 	void gameLoop();
 
-	void processInput();
 	void renderGame();
 
 	void close();
