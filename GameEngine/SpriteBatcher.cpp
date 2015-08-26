@@ -1,5 +1,4 @@
 #include "SpriteBatcher.h"
-//#include <iostream>
 
 namespace GameEngine {
 	SpriteBatcher::SpriteBatcher() {
@@ -17,7 +16,6 @@ namespace GameEngine {
 
 		//If there aren't any glyphs there is nothing else that needs to be done
 		if(_spritePointers.empty()) {
-			//std::cout << "There are no sprite pointers in the sprite batcher." << std::endl;
 			return;
 		}
 
@@ -26,12 +24,10 @@ namespace GameEngine {
 		GLuint currentTexture = 0, textureID = 0;
 
 		for(auto& sprite : _spritePointers) {
-			//std::cout << "Sprite at: " << &sprite << std::endl;
 			//If the texture is unique then add a new grouping of vertices
 			textureID = sprite->getTextureID();
 			if(textureID != currentTexture) {
 				_renderBatches.emplace_back(offset, 6, textureID);
-				offset += 6;
 				currentTexture = textureID;
 				//Otherwise just increase the amount of vertices for that one batch
 			} else {
@@ -41,6 +37,7 @@ namespace GameEngine {
 			for(int i = 0; i < 6; i++) {
 				vertices[n++] = sprite->getVertexAt(i);
 			}
+			offset += 6;
 		}
 		//Bind the vbo
 		glBindBuffer(GL_ARRAY_BUFFER, _vboID);
@@ -77,18 +74,20 @@ namespace GameEngine {
 		glBindVertexArray(0);
 	}
 
-	void SpriteBatcher::setNewBatch(std::vector<Sprite*>* spritesLocation) {
-		_spritePointers = *spritesLocation;
-		//std::cout << "Setting new batch." << std::endl;
-		/*for(auto & sprite : _spritePointers) {
-			std::cout << sprite->getVertexAt(0).position.x << ", " << sprite->getVertexAt(0).position.y << std::endl;
-		}*/
+	void SpriteBatcher::setNewBatch(std::vector<Sprite>* spritesLocation) {
+		//Clear the current vector of sprite pointers and create it again with the new sprites
+		_spritePointers.clear();
+
+		//Access violation???
+		//_spritePointers.resize(spritesLocation->size());
+		for(unsigned int i = 0; i < spritesLocation->size(); i++) {
+			_spritePointers.push_back(&spritesLocation->at(i));
+		}
 	}
 
 	void SpriteBatcher::init() {
 		//Set up the VAO and VBO
 		createVertexArray();
-		//std::cout << "Sprite batcher initialized." << std::endl;
 	}
 
 	void SpriteBatcher::cleanUp() {
@@ -103,7 +102,6 @@ namespace GameEngine {
 	void SpriteBatcher::renderBatch() {
 		glBindVertexArray(_vaoID);
 		for(auto& batch : _renderBatches) {
-			//std::cout << "Drawing batch..." << std::endl;
 			glBindTexture(GL_TEXTURE_2D, batch.texture);
 			glDrawArrays(GL_TRIANGLES, batch.offset, batch.numVertices);
 		}

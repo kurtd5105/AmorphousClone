@@ -10,20 +10,27 @@ namespace GameEngine {
 		SpriteManager();
 		~SpriteManager();
 
-		void addSprite(Sprite* sprite);
+		void init(sortType sort, ResourceManager* _ResourceManager);
+
+		Sprite* addSprite(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path);
 
 		//For resorting sprites later
 		void sortSprites(sortType cmp);
 		
 
 		//Getters
-		std::vector<Sprite*>* getSprites() { return &_spriteRefs; }
+		std::vector<Sprite>* getSprites() { return &_sprites; }
+		
+		void clearSprites() { _sprites.clear(); }
 		
 	private:
-		sortType _lastSort = sortType::TEXTURE;
+		ResourceManager* _ResourceManager;
+
+		sortType _sortType;
+		std::vector<Sprite> _sprites;
 		std::vector<Sprite*> _spriteRefs;
 
-		static bool cmpTexture(Sprite* a, Sprite* b);
-		static bool cmpDepth(Sprite* a, Sprite* b);
+		static bool cmpTexture(Sprite a, Sprite b);
+		static bool cmpDepth(Sprite a, Sprite b);
 	};
 }

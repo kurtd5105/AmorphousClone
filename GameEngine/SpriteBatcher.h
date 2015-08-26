@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL/SDL.h>
 #include <GL/glew.h>
-#include "GameEngine/Sprite.h"
+#include "Sprite.h"
 #include "Vertex.h"
 #include <vector>
 
@@ -24,7 +24,7 @@ namespace GameEngine {
 		void setupBatches();
 		void renderBatch();
 
-		void setNewBatch(std::vector<Sprite*>* spritesLocation);
+		void setNewBatch(std::vector<Sprite>* spritesLocation);
 
 	private:
 		GLuint _vboID;

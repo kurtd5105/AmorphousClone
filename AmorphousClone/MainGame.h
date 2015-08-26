@@ -2,6 +2,8 @@
 #include <GL/glew.h>
 #include <SDL/SDL.h>
 
+#include <thread>
+
 #include <GameEngine/Window.h>
 #include <GameEngine/InputManager.h>
 #include <GameEngine/IOManager.h>
@@ -12,20 +14,16 @@
 #include <GameEngine/Sprite.h>
 #include <GameEngine/Camera.h>
 
-enum GameState {
-	MAIN_MENU, PLAYING, EXIT
-};
+#include <GameEngine/ThreadState.h>
 
-class TextureInfo {
-public:
-	std::string path;
-	bool async;
+#include "StagingManager.h"
+#include "GameState.h"
 
-	TextureInfo(std::string givenPath, bool givenAsync) {
-		path = givenPath;
-		async = givenAsync;
-	}
-};
+#include "FPSManager.h"
+
+//enum GameState {
+//	MAIN_MENU, PLAYING, EXIT
+//};
 
 class MainGame {
 public:
@@ -35,9 +33,9 @@ public:
 	const int WINDOW_WIDTH = 800;
 	const int WINDOW_HEIGHT = 600;
 
-	//Vector containing all the textures needed, and whether or not they can be loaded asynchronously
-	//MUST BE SORTED NON-ASYNC FIRST
-	std::vector<TextureInfo> TEXTURE_LIST = std::vector<TextureInfo>{TextureInfo("Textures/hello_world.png", false)};
+	//Vectors containing all the required textures
+	std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/buttons.png"};
+	std::vector<std::string> TEXTURE_LIST_ASYNC;// = std::vector<std::string>{};
 
 	std::vector<std::string> SHADING_ATTRIBUTES = std::vector<std::string>{"vertexPosition", "vertexColor", "vertexUV"};
 
@@ -65,8 +63,12 @@ private:
 
 	GameEngine::Camera _Camera;
 
+	StagingManager _StagingManager;
 	GameState _gameState;
 
-	std::vector<GameEngine::Sprite> _sprites;
+	FPSManager _FPSManager;
+
+	std::thread _IOThread;
+	ThreadState _IOThreadState;
 };
 
