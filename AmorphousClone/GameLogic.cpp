@@ -33,6 +33,8 @@ void GameLogic::processInput() {
 
 	//Handle input here
 	std::vector<Button>* buttonRefs;
+	Player* player;
+
 	switch(*_gameState) {
 	case GameState::MAIN_MENU:
 		//std::cout << mouseCoords[0] << ", " << mouseCoords[1] << std::endl;
@@ -49,15 +51,18 @@ void GameLogic::processInput() {
 		}
 		break;
 	case GameState::PLAYING:
+		player = _StagingManager->getPlayer();
 		//Temporary camera movement code
 		if((_keys[D] != _keys[A]) && (_keys[W] != _keys[S])) {
-			//If there is diagonal movement then normalize it so the distance moved is still camera speed * 1
-			_Camera->setPosition(_Camera->getPosition() + glm::vec2(_Camera->CAMERA_SPEED * (_keys->at(D) - _keys->at(A) / sqrt(2)), _Camera->CAMERA_SPEED*(_keys->at(W) - _keys->at(S)) / sqrt(2)));
+			//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
+			player->translate(player->PLAYER_SPEED * (_keys->at(D) - _keys->at(A) / sqrt(2)), player->PLAYER_SPEED * (_keys->at(W) - _keys->at(S)) / sqrt(2));
 		} else {
-			//Move the camera by the additions of the key presses
-			_Camera->setPosition(_Camera->getPosition() + glm::vec2(_Camera->CAMERA_SPEED * (_keys->at(D) - _keys->at(A)), _Camera->CAMERA_SPEED*(_keys->at(W) - _keys->at(S))));
+			//Move the player by the additions of the key presses
+			player->translate(player->PLAYER_SPEED * (_keys->at(D) - _keys->at(A)), player->PLAYER_SPEED * (_keys->at(W) - _keys->at(S)));
 		}
-		_Camera->setScale(_Camera->getScale() + _Camera->SCALE_SPEED * (_keys->at(Q) - _keys->at(E)));
+		if(abs(_keys->at(Q) - _keys->at(E))) {
+			_Camera->setScale(_Camera->getScale() + _Camera->SCALE_SPEED * (_keys->at(Q) - _keys->at(E)));
+		}
 		break;
 	default:
 		break;

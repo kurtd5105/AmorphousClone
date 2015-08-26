@@ -12,6 +12,8 @@ namespace GameEngine {
 
 		void init(float x, float y, float width, float height, float radius);//, HitboxType type); //if more shapes introduced otherwise r = 0 means rect
 
+		void translate(float x, float y);
+
 		HitboxType getType() { return _type; }
 		std::vector<float>* getInfo() { return &_info; }
 
