@@ -17,30 +17,35 @@ namespace GameEngine {
 
 		vertex.setVertex(x + width, y + height, 0, 0, 0, 0, UVmM[1], UVmM[3]);
 		_vertices.push_back(vertex);
-		//_vertices.emplace_back(x + width, y + height, 0, 0, 0, 0, 1.0f, 1.0f);
 
 		vertex.setVertex(x, y + height, 0, 0, 0, 0, UVmM[0], UVmM[3]);
 		_vertices.push_back(vertex);
-		//_vertices.emplace_back(x, y + height, 0, 0, 0, 0, 0.0f, 1.0f);
 
 		vertex.setVertex(x, y, 0, 0, 0, 0, UVmM[0], UVmM[2]);
 		_vertices.push_back(vertex);
-		//_vertices.emplace_back(x, y, 0, 0, 0, 0, 0.0f, 0.0f);
 
 		//Triangle 2
 		vertex.setVertex(x, y, 0, 0, 0, 0, UVmM[0], UVmM[2]);
 		_vertices.push_back(vertex);
-		//_vertices.emplace_back(x, y, 0, 0, 0, 0, 0.0f, 0.0f);
 
 		vertex.setVertex(x + width, y, 0, 0, 0, 0, UVmM[1], UVmM[2]);
 		_vertices.push_back(vertex);
-		//_vertices.emplace_back(x + width, y, 0, 0, 0, 0, 1.0f, 0.0f);
 
 		vertex.setVertex(x + width, y + height, 0, 0, 0, 0, UVmM[1], UVmM[3]);
 		_vertices.push_back(vertex);
-		//_vertices.emplace_back(x + width, y + height, 0, 0, 0, 0, 1.0f, 1.0f);
 	}
 
 	Sprite::~Sprite() {
+	}
+
+	void Sprite::translate(float x, float y) {
+		_x += x;
+		_y += y;
+		_vertices[0].setPosition(_x + _width, _y + _height);
+		_vertices[1].setPosition(_x, _y + _height);
+		_vertices[2].setPosition(_x, _y);
+		_vertices[3].setPosition(_x, _y);
+		_vertices[4].setPosition(_x + _width, _y);
+		_vertices[5].setPosition(_x + _width, _y + _height);
 	}
 }

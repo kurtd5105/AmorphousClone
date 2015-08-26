@@ -11,6 +11,9 @@ namespace GameEngine {
 		~Sprite();
 		//																	UVmM: aka UVminMax = {Umin, Umax, Vmin, Vmax}
 		void init(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, ResourceManager* manager);
+
+		void translate(float x, float y);
+
 		GLuint getTextureID() { return _texture.id; }
 		float getDepth() { return _depth; }
 		Vertex getVertexAt(int i) { return _vertices[i]; }
