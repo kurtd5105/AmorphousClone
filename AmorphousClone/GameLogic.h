@@ -1,16 +1,18 @@
 #pragma once
 #include <vector>
 
-#include <SDL/SDL.h>
 #include <GL/glew.h>
+#include <SDL/SDL.h>
 
-#include <GameEngine/InputManager.h>
 #include <GameEngine/Camera.h>
 #include <GameEngine/CollisionManager.h>
+#include <GameEngine/InputManager.h>
 
-#include "GameState.h"
-#include "StagingManager.h"
 #include "Button.h"
+#include "GameState.h"
+#include "Player.h"
+#include "StagingManager.h"
+
 
 class GameLogic {
 public:

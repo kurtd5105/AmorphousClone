@@ -1,8 +1,10 @@
 #pragma once
 #include <GameEngine/SpriteManager.h>
 
-#include "GameState.h"
 #include "Button.h"
+#include "GameState.h"
+#include "Player.h"
+
 
 
 class StagingManager {
@@ -14,11 +16,13 @@ public:
 	void loadState();
 
 	std::vector<Button>* getButtonRefs() { return &_buttons; }
+	Player* getPlayer() { return &_player; }
 
 private:
 	GameEngine::SpriteManager* _SpriteManager;
 
 	std::vector<Button> _buttons;
+	Player _player;
 
 	GameState* _gameState;
 };

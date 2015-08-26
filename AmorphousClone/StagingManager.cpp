@@ -29,6 +29,7 @@ void StagingManager::loadState() {
 
 		break;
 	case GameState::PLAYING:
+		_player.init(375.0f, 275.0f, 50.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/player.png", _SpriteManager);
 		break;
 	}
 }
