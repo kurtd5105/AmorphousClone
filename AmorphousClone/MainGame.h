@@ -62,7 +62,7 @@ private:
 	GameEngine::Camera _Camera;
 
 	StagingManager _StagingManager;
-	GameLogic _Game;
+	GameLogic _Game;//more important than fps manager thx github
 	GameState _gameState;
 
 	std::thread _IOThread;

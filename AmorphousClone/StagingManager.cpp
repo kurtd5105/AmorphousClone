@@ -22,7 +22,7 @@ void StagingManager::loadState() {
 	switch(*_gameState) {
 	case GameState::MAIN_MENU:
 		button.init(300.0f, 350.0f, 200.0f, 50.0f, 1.0f, std::vector<float>{0.0f, 1.0f, 0.5f, 1.0f}, "Textures/buttons.png", GameState::PLAYING, _SpriteManager);
-		_buttons.push_back(button);
+		_buttons.push_back(button);//ty github
 
 		button.init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, std::vector<float>{0.0f, 1.0f, 0.0f, 0.5f}, "Textures/buttons.png", GameState::EXIT, _SpriteManager);
 		_buttons.push_back(button);
