@@ -40,12 +40,12 @@ void MainGame::init() {
 
 void MainGame::gameLoop() {
 	GameState currState = _gameState;
-	while(_gameState != GameState::EXIT) {
-		if(currState != _gameState) {
-			_StagingManager.loadState();
-			currState = _gameState;
+	while(_gameState != GameState::EXIT) {//thanks
+		if(currState != _gameState) {//github
+			_StagingManager.loadState();//thanks
+			currState = _gameState;//github
 		}
-		_Game.processInput();
+		_Game.processInput();//thanks
 		//processInput();
 		//std::cout << "State: " << (_gameState == GameState::PLAYING ? "playing." : _gameState == GameState::MAIN_MENU ? "main menu." : "exit.") << std::endl;
 
