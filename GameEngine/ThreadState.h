@@ -1,4 +1,4 @@
 #pragma once
 enum ThreadState {
-	OFF, ON, FINISHED
+	OFF, ON, POST_LOAD, FINISHED
 };

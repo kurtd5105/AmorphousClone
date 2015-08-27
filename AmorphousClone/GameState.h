@@ -1,4 +1,4 @@
 #pragma once
 enum GameState {
-	MAIN_MENU, PLAYING, EXIT
+	MAIN_MENU, LOADING, PLAYING, EXIT
 };

@@ -62,6 +62,9 @@ namespace GameEngine {
 		//Set the clear color to rgba of solid black
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+		//Turn on alpha blending
+		glEnable(GL_BLEND);
+
 		//Turn on VSync
 		//SDL_GL_SetSwapInterval(1);
 	}

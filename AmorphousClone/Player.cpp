@@ -1,11 +1,16 @@
 #include "Player.h"
+#include <GameEngine/Errors.h>
 
-
-Player::Player() : _x(0), _y(0) {
+Player::Player() : _x(0), _y(0), _SpriteManager(nullptr), _sprite(nullptr) {
 }
 
 
 Player::~Player() {
+	if(_SpriteManager != nullptr && _sprite != nullptr) {
+		_SpriteManager->deleteSprite(_sprite);
+	} else if(_sprite != nullptr && _SpriteManager == nullptr) {
+		GameEngine::fatalGenericError("Sprite deletion but no manager to delete with.");
+	}
 }
 
 void Player::init(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager) {

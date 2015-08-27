@@ -33,8 +33,8 @@ public:
 	const int WINDOW_HEIGHT = 600;
 
 	//Vectors containing all the required textures
-	std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/buttons.png"};
-	std::vector<std::string> TEXTURE_LIST_ASYNC;// = std::vector<std::string>{};
+	std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/buttons.png", "Textures/loading.png"};
+	std::vector<std::string> TEXTURE_LIST_ASYNC = std::vector<std::string>{"Textures/player.png", "Textures/tile1.png"};
 
 	std::vector<std::string> SHADING_ATTRIBUTES = std::vector<std::string>{"vertexPosition", "vertexColor", "vertexUV"};
 

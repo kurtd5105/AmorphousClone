@@ -45,7 +45,7 @@ namespace GameEngine {
 
 			GLTexture newTexture = _IOManager->loadPNG(path);
 			_textureMap.insert(make_pair(path, newTexture));
-			std::cout << "New texture loaded." << std::endl;
+			std::cout << "New texture loaded: " << path << std::endl;
 			return newTexture;
 		}
 		std::cout << "Texture already loaded." << std::endl;

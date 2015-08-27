@@ -53,9 +53,9 @@ void GameLogic::processInput() {
 	case GameState::PLAYING:
 		player = _StagingManager->getPlayer();
 		//Temporary camera movement code
-		if((_keys[D] != _keys[A]) && (_keys[W] != _keys[S])) {
+		if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
 			//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
-			player->translate(player->PLAYER_SPEED * (_keys->at(D) - _keys->at(A) / sqrt(2)), player->PLAYER_SPEED * (_keys->at(W) - _keys->at(S)) / sqrt(2));
+			player->translate(player->PLAYER_SPEED * (float)(_keys->at(D) - _keys->at(A) / sqrt(2)), player->PLAYER_SPEED * (float)(_keys->at(W) - _keys->at(S)) / sqrt(2));
 		} else {
 			//Move the player by the additions of the key presses
 			player->translate(player->PLAYER_SPEED * (_keys->at(D) - _keys->at(A)), player->PLAYER_SPEED * (_keys->at(W) - _keys->at(S)));

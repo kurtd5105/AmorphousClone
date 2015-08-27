@@ -13,6 +13,7 @@ namespace GameEngine {
 		void init(sortType sort, ResourceManager* _ResourceManager);
 
 		Sprite* addSprite(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path);
+		void deleteSprite(Sprite* sprite);
 
 		//For resorting sprites later
 		void sortSprites(sortType cmp);
@@ -21,7 +22,7 @@ namespace GameEngine {
 		//Getters
 		std::vector<Sprite>* getSprites() { return &_sprites; }
 		
-		void clearSprites() { _sprites.clear(); }
+		void clearSprites() { _sprites.clear(); _spriteRefs.clear(); }
 		
 	private:
 		ResourceManager* _ResourceManager;

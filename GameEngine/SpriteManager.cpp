@@ -1,5 +1,6 @@
 #include "SpriteManager.h"
 #include <algorithm>
+#include <iostream>
 
 namespace GameEngine {
 	SpriteManager::SpriteManager() : _sortType(sortType::TEXTURE){
@@ -51,6 +52,13 @@ namespace GameEngine {
 			_spriteRefs.push_back(&_sprites.back());
 		}
 		return _spriteRefs.back();
+	}
+
+	void SpriteManager::deleteSprite(Sprite* sprite) {
+		//auto spriteRefLocation = std::find(_spriteRefs.begin(), _spriteRefs.end(), sprite);
+		//auto spriteLocation = std::find(_sprites.begin(), _sprites.end(), *sprite);
+		//_spriteRefs.erase(spriteRefLocation);
+		//_sprites.erase(spriteLocation);
 	}
 
 	void SpriteManager::sortSprites(sortType cmp) {

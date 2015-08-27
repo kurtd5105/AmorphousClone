@@ -26,7 +26,7 @@ void MainGame::init() {
 
 	_ShadingProgram.init("Shaders/shader.vert", "Shaders/shader.frag", SHADING_ATTRIBUTES, &_IOManager);
 	//_ResourceManager.asyncLoadTexture(std::vector<std::string>{"Textures/01.png", "Textures/02.png", "Textures/03.png"}, _IOThread, &_IOThreadState);
-	//_ResourceManager.asyncLoadTexture(TEXTURE_LIST_ASYNC, _IOThread, &_IOThreadState);
+	_ResourceManager.asyncLoadTexture(TEXTURE_LIST_ASYNC, _IOThread, &_IOThreadState);
 
 	//Init classes
 	_SpriteManager.init(GameEngine::sortType::TEXTURE, &_ResourceManager);
@@ -40,25 +40,50 @@ void MainGame::init() {
 
 void MainGame::gameLoop() {
 	GameState currState = _gameState;
-	while(_gameState != GameState::EXIT) {//thanks
-		if(currState != _gameState) {//github
-			_StagingManager.loadState();//thanks
-			currState = _gameState;//github
+	while(_gameState != GameState::EXIT) {
+		//Handle thread state switching
+		if(_IOThreadState == ThreadState::FINISHED) {
+			_IOThreadState = ThreadState::POST_LOAD;
 		}
-		_Game.processInput();//thanks
-		//processInput();
-		//std::cout << "State: " << (_gameState == GameState::PLAYING ? "playing." : _gameState == GameState::MAIN_MENU ? "main menu." : "exit.") << std::endl;
+
+		//If the game is loading then a post load can occur
+		if(_gameState == GameState::LOADING && _IOThreadState == ThreadState::POST_LOAD) {
+			for(auto& path : TEXTURE_LIST_ASYNC) {
+				_ResourceManager.getTexture(path);
+			}
+			_IOThreadState = ThreadState::OFF;
+		}
+
+		//Handle state switching with threading
+		//
+		//Thread is off and switch request can switch instantly
+		if(currState != _gameState && _IOThreadState == ThreadState::OFF) {
+			_StagingManager.loadState();
+			currState = _gameState;
+		//Thread is on or post load and switch request requires switch to loading where thread will complete and post load will occur
+		//Game will be in loading state while thread completes loading and post load
+		} else if(currState != _gameState && (_IOThreadState == ThreadState::ON || _IOThreadState == ThreadState::POST_LOAD)) {
+			std::cout << "Waiting on thread to complete or post load." << std::endl;
+			_gameState = GameState::LOADING;
+			currState = _gameState;
+			_StagingManager.loadState();
+		//Thread is complete and game state is loading, switch can now occur
+		} else if(_gameState == GameState::LOADING && _IOThreadState == ThreadState::OFF) {
+			_gameState = GameState::PLAYING;
+			currState = _gameState;
+			_StagingManager.loadState();
+		}
+
+		
+		
+
+		//Process the game input
+		_Game.processInput();
 
 		//Optional to update the batch, could be moved to automatically update every batch creation
 		_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
-		renderGame();
-		if(_IOThreadState == ThreadState::FINISHED) {
-			//_SpriteManager.addSprite(100.0f, 300.0f, 500.0f, 500.0f, 1.0f, "Textures/03.png");
-			//_SpriteManager.addSprite(200.0f, 100.0f, 500.0f, 500.0f, 1.0f, "Textures/03.png");
 
-			//_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
-			_IOThreadState = ThreadState::OFF;
-		}
+		renderGame();
 	}
 }
 
