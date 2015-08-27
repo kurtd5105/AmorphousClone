@@ -16,7 +16,7 @@ public:
 	void loadState();
 
 	std::vector<Button>* getButtonRefs() { return &_buttons; }
-	Player* getPlayer() { return &_player; }
+	Player* getPlayer() { return &_player; }//gj github
 
 private:
 	GameEngine::SpriteManager* _SpriteManager;
