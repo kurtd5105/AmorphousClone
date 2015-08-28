@@ -43,6 +43,8 @@ void MainGame::init() {
 
 void MainGame::gameLoop() {
 	GameState currState = _gameState;
+	Uint32 prevTick = SDL_GetTicks();
+	float prevFPS = _FPSManager.framespersecond;
 
 	while(_gameState != GameState::EXIT) {
 		//Handle thread state switching
@@ -85,10 +87,12 @@ void MainGame::gameLoop() {
 		//Optional to update the batch, could be moved to automatically update every batch creation
 		_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 
-
-		//SDL_Delay(500);
 		_FPSManager.fpsthink();
-		cout << _FPSManager.framespersecond << endl;
+		if((SDL_GetTicks() - prevTick) > _FPSManager.framespersecond/2) {
+			std::cout << "FPS: " <<_FPSManager.framespersecond << std::endl;
+			prevTick = SDL_GetTicks();
+		}
+		
 		renderGame();
 	}
 }
