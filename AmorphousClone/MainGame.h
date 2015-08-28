@@ -2,6 +2,8 @@
 #include <GL/glew.h>
 #include <SDL/SDL.h>
 
+#include <iostream>
+
 #include <thread>
 
 #include <GameEngine/Window.h>
@@ -13,12 +15,15 @@
 #include <GameEngine/SpriteBatcher.h>
 #include <GameEngine/Sprite.h>
 #include <GameEngine/Camera.h>
+#include <GameEngine/FPSManager.h>
 
 #include <GameEngine/ThreadState.h>
 
 #include "StagingManager.h"
 #include "GameState.h"
 #include "GameLogic.h"
+
+using namespace std;
 
 //enum GameState {
 //	MAIN_MENU, PLAYING, EXIT
@@ -60,6 +65,8 @@ private:
 	GameEngine::SpriteBatcher _SpriteBatcher;
 
 	GameEngine::Camera _Camera;
+
+	GameEngine::FPSManager _FPSManager;
 
 	StagingManager _StagingManager;
 	GameLogic _Game;//more important than fps manager thx github

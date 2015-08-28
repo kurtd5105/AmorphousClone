@@ -13,7 +13,7 @@ namespace GameEngine {
 
 	ResourceManager::~ResourceManager() {
 	}
-
+	//get texture tile
 	GLTexture ResourceManager::getTexture(std::string path) {
 		auto result = _textureMap.find(path);
 
