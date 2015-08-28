@@ -36,10 +36,13 @@ void MainGame::init() {
 	_SpriteBatcher.init();
 
 	_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
+
+	_FPSManager.fpsinit();
 }
 
 void MainGame::gameLoop() {
 	GameState currState = _gameState;
+
 	while(_gameState != GameState::EXIT) {
 		//Handle thread state switching
 		if(_IOThreadState == ThreadState::FINISHED) {
@@ -74,15 +77,16 @@ void MainGame::gameLoop() {
 			_StagingManager.loadState();
 		}
 
-		
-		
-
 		//Process the game input
 		_Game.processInput();
 
 		//Optional to update the batch, could be moved to automatically update every batch creation
 		_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 
+
+		//SDL_Delay(500);
+		_FPSManager.fpsthink();
+		cout << _FPSManager.framespersecond << endl;
 		renderGame();
 	}
 }
