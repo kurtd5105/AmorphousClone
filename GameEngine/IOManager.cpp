@@ -74,6 +74,26 @@ namespace GameEngine {
 		return texture;
 	}
 
+	GLTexture IOManager::loadRawTex(GLRawTexture raw) {
+		GLTexture texture = {};
+		texture.width = raw.width;
+		texture.height = raw.height;
+
+		glGenTextures(1, &texture.id);
+		glBindTexture(GL_TEXTURE_2D, texture.id);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.width, texture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &(raw.data[0]));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		//Unbind the texture afterwards
+		glBindTexture(GL_TEXTURE_2D, 0);
+		return texture;
+	}
+
 	bool IOManager::readFileToBuffer(std::string filePath, std::vector<unsigned char>& buffer) {
 		std::ifstream file(filePath, std::ios::binary);
 

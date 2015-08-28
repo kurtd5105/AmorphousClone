@@ -25,6 +25,7 @@ void MainGame::init() {
 	}
 
 	_ShadingProgram.init("Shaders/shader.vert", "Shaders/shader.frag", SHADING_ATTRIBUTES, &_IOManager);
+	//Test textures with a large file size for extending async load time
 	//_ResourceManager.asyncLoadTexture(std::vector<std::string>{"Textures/01.png", "Textures/02.png", "Textures/03.png"}, _IOThread, &_IOThreadState);
 	_ResourceManager.asyncLoadTexture(TEXTURE_LIST_ASYNC, _IOThread, &_IOThreadState);
 
@@ -43,6 +44,7 @@ void MainGame::gameLoop() {
 	while(_gameState != GameState::EXIT) {
 		//Handle thread state switching
 		if(_IOThreadState == ThreadState::FINISHED) {
+			std::cout << ">> Async loading complete. Thread closed." << std::endl;
 			_IOThreadState = ThreadState::POST_LOAD;
 		}
 

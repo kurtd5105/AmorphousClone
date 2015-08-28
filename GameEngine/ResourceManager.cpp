@@ -1,6 +1,7 @@
 #include "ResourceManager.h"
 #include "IOManager.h"
 #include <iostream>
+#include <functional>
 
 namespace GameEngine {
 	void test(std::string tests) {
@@ -16,33 +17,18 @@ namespace GameEngine {
 	GLTexture ResourceManager::getTexture(std::string path) {
 		auto result = _textureMap.find(path);
 
-		//If it wasn't found then load it
+		//If it wasn't found fully loaded then load it
 		if(result == _textureMap.end()) {
 			auto resultRaw = _rawTextureMap.find(path);
+			//If it was partially loaded then complete the loading
 			if(resultRaw != _rawTextureMap.end()) {
-				GLTexture texture = {};
-				texture.width = resultRaw->second.width;
-				texture.height = resultRaw->second.height;
-
-				glGenTextures(1, &texture.id);
-				glBindTexture(GL_TEXTURE_2D, texture.id);
-				//&(out[0])
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.width, texture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &(resultRaw->second.data[0]));
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-
-				glGenerateMipmap(GL_TEXTURE_2D);
-
-				//Unbind the texture afterwards
-				glBindTexture(GL_TEXTURE_2D, 0);
+				GLTexture texture = _IOManager->loadRawTex(resultRaw->second);
 
 				_textureMap.insert(make_pair(path, texture));
 				std::cout << "New raw texture loaded: " << path << ". ID: " << texture.id << std::endl;
 				return texture;
 			}
-
+			//The texture wasn't partially loaded so it must be loaded now
 			GLTexture newTexture = _IOManager->loadPNG(path);
 			_textureMap.insert(make_pair(path, newTexture));
 			std::cout << "New texture loaded: " << path << std::endl;
@@ -52,34 +38,19 @@ namespace GameEngine {
 		return result->second;
 	}
 
-	void ResourceManager::getTextures(std::vector<std::string> paths) {
-		for(auto& path : paths) {
-			auto result = _textureMap.find(path);
-
-			//If it wasn't found then load it
-			if(result == _textureMap.end()) {
-				GLRawTexture newTexture = _IOManager->loadPNGRaw(path);
-				_rawTextureMap.insert(make_pair(path, newTexture));
-				std::cout << "New texture loaded." << std::endl;
-			}
-			std::cout << "Texture already loaded." << std::endl;
-		}
-	}
-
-	void getTexturesB(std::vector<std::string> paths, std::map<std::string, GLTexture>* _textureMap, std::map<std::string, GLRawTexture>* _rawTextureMap,
-					  IOManager* _IOManager, ThreadState* taskState) {
+	void ResourceManager::getTextures(std::vector<std::string> paths, ThreadState* taskState) {
 		*taskState = ThreadState::ON;
 		for(auto& path : paths) {
-			std::cout << "Async loading a texture." << std::endl;
-			auto result = _textureMap->find(path);
-			auto resultRaw = _rawTextureMap->find(path);
+			std::cout << ">> Async loading a texture: " << path << std::endl;
+			auto result = _textureMap.find(path);
+			auto resultRaw = _rawTextureMap.find(path);
 			//If it wasn't found then load it
-			if(result == _textureMap->end() && resultRaw == _rawTextureMap->end()) {
+			if(result == _textureMap.end() && resultRaw == _rawTextureMap.end()) {
 				GLRawTexture newTexture = _IOManager->loadPNGRaw(path);
-				_rawTextureMap->insert(make_pair(path, newTexture));
-				std::cout << "New texture loaded." << std::endl;
+				_rawTextureMap.insert(make_pair(path, newTexture));
+				std::cout << "> New texture loaded: " << path << std::endl;
 			} else {
-				std::cout << "Texture already loaded." << std::endl;
+				std::cout << "> Texture already loaded." << std::endl;
 			}
 		}
 		*taskState = ThreadState::FINISHED;
@@ -90,8 +61,9 @@ namespace GameEngine {
 	}
 
 	void ResourceManager::asyncLoadTexture(std::vector<std::string> paths, std::thread& currentThread, ThreadState* taskState) {
-		std::cout << "Async texture load called." << std::endl;
-		currentThread = std::thread(getTexturesB, paths, &_textureMap, &_rawTextureMap, _IOManager, taskState);
+		std::cout << ">> Async texture load called, thread started." << std::endl;
+		currentThread = std::thread(&GameEngine::ResourceManager::getTextures, this, paths, taskState);
+		//Better performance when thread is detached
 		currentThread.detach();
 	}
 }
