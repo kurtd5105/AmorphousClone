@@ -55,9 +55,13 @@ namespace GameEngine {
 	}
 
 	void SpriteManager::deleteSprite(Sprite* sprite) {
-		//auto spriteRefLocation = std::find(_spriteRefs.begin(), _spriteRefs.end(), sprite);
+		auto spriteRefLocation = std::find(_spriteRefs.begin(), _spriteRefs.end(), sprite);
 		//auto spriteLocation = std::find(_sprites.begin(), _sprites.end(), *sprite);
-		//_spriteRefs.erase(spriteRefLocation);
+		_spriteRefs.erase(spriteRefLocation);
+		sprite->~Sprite();
+		for(int i = 0; i < _sprites.size(); i++) {
+
+		}
 		//_sprites.erase(spriteLocation);
 	}
 

@@ -1,4 +1,6 @@
+#define _USE_MATH_DEFINES
 #include "Hitbox.h"
+#include <math.h>
 
 namespace GameEngine {
 	Hitbox::Hitbox() {

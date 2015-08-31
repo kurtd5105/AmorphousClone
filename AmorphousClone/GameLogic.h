@@ -20,7 +20,10 @@ public:
 	~GameLogic();
 
 	void init(GameState* gameState, GameEngine::Camera* camera, StagingManager* manager);
+
 	void processInput();
+	void getStage();
+
 private:
 	GameEngine::InputManager _InputManager;
 	GameEngine::Camera* _Camera;
@@ -29,6 +32,9 @@ private:
 	GameState* _gameState;
 
 	std::vector<bool>* _keys;
+
+	std::vector<Button>* _buttonRefs;
+	Player* _player;
 
 	int W, A, S, D, Q, E;
 };

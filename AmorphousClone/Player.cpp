@@ -1,7 +1,7 @@
 #include "Player.h"
 #include <GameEngine/Errors.h>
 
-Player::Player() : _x(0), _y(0), _SpriteManager(nullptr), _sprite(nullptr) {
+Player::Player() : _x(0), _y(0), _width(0), _height(0), _depth(0), _rotation(0), _SpriteManager(nullptr), _sprite(nullptr) {
 }
 
 
@@ -20,6 +20,7 @@ void Player::init(float x, float y, float width, float height, float depth, std:
 	_height = height;
 	_depth = depth;
 	_SpriteManager = manager;
+	//Assumes player is a circle
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
 	_hitbox.init(x, y, width, height, width/2);
 }
@@ -29,6 +30,12 @@ void Player::translate(float x, float y) {
 	_y += y;
 	_sprite->translate(x, y);
 	_hitbox.translate(x, y);
+}
+
+void Player::rotate(float angle) {
+	_rotation = angle;
+	_sprite->rotate(angle);
+	//_hitbox->rotate(angle);
 }
 
 void Player::attack() {

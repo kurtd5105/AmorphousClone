@@ -74,11 +74,13 @@ void MainGame::gameLoop() {
 			_gameState = GameState::LOADING;
 			currState = _gameState;
 			_StagingManager.loadState();
+			_Game.getStage();
 		//Thread is complete and game state is loading, switch can now occur
 		} else if(_gameState == GameState::LOADING && _IOThreadState == ThreadState::OFF) {
 			_gameState = GameState::PLAYING;
 			currState = _gameState;
 			_StagingManager.loadState();
+			_Game.getStage();
 		}
 
 		//Process the game input
@@ -89,7 +91,7 @@ void MainGame::gameLoop() {
 
 		_FPSManager.fpsthink();
 		if((SDL_GetTicks() - prevTick) > _FPSManager.framespersecond/2) {
-			std::cout << "FPS: " <<_FPSManager.framespersecond << std::endl;
+			std::cout << "FPS: " << _FPSManager.framespersecond << std::endl;
 			prevTick = SDL_GetTicks();
 		}
 		

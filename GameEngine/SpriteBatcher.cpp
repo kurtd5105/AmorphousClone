@@ -78,10 +78,9 @@ namespace GameEngine {
 		//Clear the current vector of sprite pointers and create it again with the new sprites
 		_spritePointers.clear();
 
-		//Access violation???
-		//_spritePointers.resize(spritesLocation->size());
+		_spritePointers.resize(spritesLocation->size());
 		for(unsigned int i = 0; i < spritesLocation->size(); i++) {
-			_spritePointers.push_back(&spritesLocation->at(i));
+			_spritePointers[i] = &spritesLocation->at(i);
 		}
 	}
 
