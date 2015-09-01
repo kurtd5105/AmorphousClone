@@ -23,12 +23,6 @@
 #include "GameState.h"
 #include "GameLogic.h"
 
-using namespace std;
-
-//enum GameState {
-//	MAIN_MENU, PLAYING, EXIT
-//};
-
 class MainGame {
 public:
 	MainGame();

@@ -42,6 +42,8 @@ namespace GameEngine {
 		//Top right [5] = [0]
 		vertex.setVertex(x + width, y + height, 0, 0, 0, 0, UVmM[1], UVmM[3]);
 		_vertices.push_back(vertex);
+
+		_center = glm::vec2(_width / 2.0f, _height / 2.0f);
 	}
 
 	Sprite::~Sprite() {
@@ -59,23 +61,19 @@ namespace GameEngine {
 	}
 
 	void Sprite::rotate(float angle) {
-		//Convert the angle to radians
-		angle = _rotation + (angle * M_PI / 180.0f);
-		_rotation = angle;
-
-		glm::vec2 center(_width / 2.0f, _height / 2.0f);
+		_rotation = angle;//+=
 
 		//Center the sprite around the origin
-		glm::vec2 topLeft(-center.x, center.y);
-		glm::vec2 bottomLeft(-center.x, -center.y);
-		glm::vec2 bottomRight(center.x, -center.y);
-		glm::vec2 topRight(center.x, center.y);
+		glm::vec2 topLeft(-_center.x, _center.y);
+		glm::vec2 bottomLeft(-_center.x, -_center.y);
+		glm::vec2 bottomRight(_center.x, -_center.y);
+		glm::vec2 topRight(_center.x, _center.y);
 
 		//Rotate the sprite around the origin
-		topLeft = rotatePoint(topLeft.x, topRight.y, angle) + center;
-		bottomLeft = rotatePoint(bottomLeft.x, bottomLeft.y, angle) + center;
-		bottomRight = rotatePoint(bottomRight.x, bottomRight.y, angle) + center;
-		topRight = rotatePoint(topRight.x, topRight.y, angle) + center;
+		topLeft = rotatePoint(topLeft.x, topRight.y, _rotation) + _center;
+		bottomLeft = rotatePoint(bottomLeft.x, bottomLeft.y, _rotation) + _center;
+		bottomRight = rotatePoint(bottomRight.x, bottomRight.y, _rotation) + _center;
+		topRight = rotatePoint(topRight.x, topRight.y, _rotation) + _center;
 
 		//Triangle 1
 		//Top right
@@ -96,6 +94,12 @@ namespace GameEngine {
 
 		//Top right
 		_vertices[5].setPosition(_x + topRight.x, _y + topRight.y);
+	}
+
+	void Sprite::pointAt(glm::vec2 pos) {
+		//Subtract the position from the center position of the player then normalize
+		pos = glm::normalize(pos - (glm::vec2(_x, _y) + glm::vec2(_width / 2)));
+		rotate(acos(pos.x) * (pos.y < 0.0f ? -1.0f : 1.0f));
 	}
 	
 	glm::vec2 Sprite::rotatePoint(float x, float y, float angle) {

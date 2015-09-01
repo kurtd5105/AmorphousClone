@@ -31,7 +31,7 @@ void GameLogic::getStage() {
 void GameLogic::processInput() {
 	SDL_Event event;
 	//_InputManager.update();
-	std::vector<float> mouseCoords = _InputManager.getMouseCoords();
+	glm::vec2 mouseCoords = _InputManager.getMouseCoords();
 	//Poll every event and handle it
 	while(SDL_PollEvent(&event)) {
 		switch(event.type) {
@@ -74,7 +74,8 @@ void GameLogic::processInput() {
 			_player->rotate((_keys->at(Q) - _keys->at(E)) * 0.01f);
 			//std::cout << "Rotation: " << player->getRotation() << std::endl;
 		}
-		//std::cout << "Rotation: " << player->getRotation() << std::endl;
+		_player->pointAt(_Camera->toWorldCoords(mouseCoords));
+		std::cout << "Rotation: " << _player->getRotation() << std::endl;
 		break;
 	default:
 		break;

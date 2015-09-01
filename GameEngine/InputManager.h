@@ -1,7 +1,9 @@
 #pragma once
 #include <vector>
+
 #include <SDL/SDL.h>
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 
 namespace GameEngine {
 	/*enum class Key {
@@ -14,7 +16,7 @@ namespace GameEngine {
 
 		void update();
 
-		std::vector<float> getMouseCoords() { return std::vector<float>{(float)_mouseX, (float)_mouseY}; }
+		glm::vec2 getMouseCoords() { return glm::vec2((float)_mouseX, (float)_mouseY); }
 		bool getMousePress() { return _LMB; }
 
 		std::vector<bool>* getKeyPresses() { return &_keyPresses; }

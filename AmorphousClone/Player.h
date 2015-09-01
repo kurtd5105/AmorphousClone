@@ -16,6 +16,7 @@ public:
 	
 	void translate(float x, float y);
 	void rotate(float angle);
+	void pointAt(glm::vec2 pos);
 
 	void attack();
 	void kill();
@@ -23,7 +24,7 @@ public:
 	float getRotation() { return _sprite->getRotation(); }
 
 private:
-	float _x, _y, _width, _height, _depth, _rotation;
+	float _x, _y, _width, _height, _depth, _rotation, _radius;
 
 	GameEngine::SpriteManager* _SpriteManager;
 	GameEngine::Sprite* _sprite;

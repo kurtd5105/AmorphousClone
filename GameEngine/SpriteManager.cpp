@@ -59,9 +59,9 @@ namespace GameEngine {
 		//auto spriteLocation = std::find(_sprites.begin(), _sprites.end(), *sprite);
 		_spriteRefs.erase(spriteRefLocation);
 		sprite->~Sprite();
-		for(int i = 0; i < _sprites.size(); i++) {
+		/*for(int i = 0; i < _sprites.size(); i++) {
 
-		}
+		}*/
 		//_sprites.erase(spriteLocation);
 	}
 

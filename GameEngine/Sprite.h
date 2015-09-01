@@ -15,6 +15,7 @@ namespace GameEngine {
 
 		void translate(float x, float y);
 		void rotate(float angle);
+		void pointAt(glm::vec2 pos);
 
 		GLuint getTextureID() { return _texture.id; }
 		float getDepth() { return _depth; }
@@ -23,6 +24,8 @@ namespace GameEngine {
 
 	private:
 		glm::vec2 Sprite::rotatePoint(float x, float y, float angle);
+
+		glm::vec2 _center;
 
 		GLTexture _texture;
 		float _x, _y, _width, _height, _depth, _rotation;

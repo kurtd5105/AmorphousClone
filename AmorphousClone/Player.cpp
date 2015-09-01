@@ -19,10 +19,11 @@ void Player::init(float x, float y, float width, float height, float depth, std:
 	_width = width;
 	_height = height;
 	_depth = depth;
+	_radius = width / 2;
 	_SpriteManager = manager;
 	//Assumes player is a circle
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
-	_hitbox.init(x, y, width, height, width/2);
+	_hitbox.init(x, y, width, height, _radius);
 }
 
 void Player::translate(float x, float y) {
@@ -36,6 +37,10 @@ void Player::rotate(float angle) {
 	_rotation = angle;
 	_sprite->rotate(angle);
 	//_hitbox->rotate(angle);
+}
+
+void Player::pointAt(glm::vec2 pos) {
+	_sprite->pointAt(pos);
 }
 
 void Player::attack() {

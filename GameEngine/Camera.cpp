@@ -31,4 +31,12 @@ namespace GameEngine {
 			_needsUpdate = false;
 		}
 	}
+
+	glm::vec2 Camera::toWorldCoords(glm::vec2 pos) {
+		//Invert Y direction
+		pos.y = _width - pos.y;
+
+		//Center, scale then move position back
+		return ((pos - glm::vec2(_width / 2, _height / 2)) / _scale) + _position;
+	}
 }
