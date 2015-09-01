@@ -32,6 +32,7 @@ void GameLogic::processInput() {
 	SDL_Event event;
 	//_InputManager.update();
 	glm::vec2 mouseCoords = _InputManager.getMouseCoords();
+	auto output = _Camera->toWorldCoords(mouseCoords);
 	//Poll every event and handle it
 	while(SDL_PollEvent(&event)) {
 		switch(event.type) {
@@ -64,18 +65,16 @@ void GameLogic::processInput() {
 		//Check if A or D and W or S are pressed for diagonal movement
 		if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
 			//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
-			_player->translate(_player->PLAYER_SPEED * (float)(_keys->at(D) - _keys->at(A) / sqrt(2)), _player->PLAYER_SPEED * (float)(_keys->at(W) - _keys->at(S)) / sqrt(2));
+			_player->translate(_player->PLAYER_SPEED * (float)(_keys->at(D) - _keys->at(A)) / sqrt(2), _player->PLAYER_SPEED * (float)(_keys->at(W) - _keys->at(S)) / sqrt(2));
 		} else {
 			//Move the player by the additions of the key presses
 			_player->translate(_player->PLAYER_SPEED * (_keys->at(D) - _keys->at(A)), _player->PLAYER_SPEED * (_keys->at(W) - _keys->at(S)));
 		}
 		if(_keys->at(Q) != _keys->at(E)) {
-			//_Camera->setScale(_Camera->getScale() + _Camera->SCALE_SPEED * (_keys->at(Q) - _keys->at(E)));
-			_player->rotate((_keys->at(Q) - _keys->at(E)) * 0.01f);
-			//std::cout << "Rotation: " << player->getRotation() << std::endl;
+			_Camera->setScale(_Camera->getScale() + _Camera->SCALE_SPEED * (_keys->at(Q) - _keys->at(E)));
+			//_player->rotate((_keys->at(Q) - _keys->at(E)) * 0.01f);
 		}
-		_player->pointAt(_Camera->toWorldCoords(mouseCoords));
-		std::cout << "Rotation: " << _player->getRotation() << std::endl;
+		_player->pointAt(mouseCoords);
 		break;
 	default:
 		break;

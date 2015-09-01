@@ -1,6 +1,7 @@
 #define _USE_MATH_DEFINES
 #include "Sprite.h"
 #include <math.h>
+#include <iostream>
 
 namespace GameEngine {
 	Sprite::Sprite() : _x(0.0f), _y(0.0f), _width(0.0f), _height(0.0f), _depth(0.0f), _rotation(0.0f) {}
@@ -61,7 +62,7 @@ namespace GameEngine {
 	}
 
 	void Sprite::rotate(float angle) {
-		_rotation = angle;//+=
+		_rotation = angle;
 
 		//Center the sprite around the origin
 		glm::vec2 topLeft(-_center.x, _center.y);
@@ -97,9 +98,14 @@ namespace GameEngine {
 	}
 
 	void Sprite::pointAt(glm::vec2 pos) {
-		//Subtract the position from the center position of the player then normalize
-		pos = glm::normalize(pos - (glm::vec2(_x, _y) + glm::vec2(_width / 2)));
-		rotate(acos(pos.x) * (pos.y < 0.0f ? -1.0f : 1.0f));
+		//Subtract the position from the center position
+		glm::vec2 diff(pos - (glm::vec2(_x, _y) + glm::vec2(_width / 2)));
+		//If the mouse isn't directly on the center then normalize the difference and rotate the sprite
+		if(diff.x != 0 || diff.y != 0) {
+			pos = glm::normalize(diff);
+			//Rotate it based on the arc cos of the x position and flip it if the y position is greater than 0
+			rotate(acos(pos.x) * (pos.y < 0.0f ? 1.0f : -1.0f));// - (M_PI/2)); //rotates player.png to face the mouse on the arrow guide
+		}
 	}
 	
 	glm::vec2 Sprite::rotatePoint(float x, float y, float angle) {
