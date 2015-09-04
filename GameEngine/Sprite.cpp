@@ -98,13 +98,12 @@ namespace GameEngine {
 	}
 
 	void Sprite::pointAt(glm::vec2 pos) {
-		//Subtract the position from the center position
-		glm::vec2 diff(pos - (glm::vec2(_x, _y) + glm::vec2(_width / 2)));
-		//If the mouse isn't directly on the center then normalize the difference and rotate the sprite
-		if(diff.x != 0 || diff.y != 0) {
-			pos = glm::normalize(diff);
-			//Rotate it based on the arc cos of the x position and flip it if the y position is greater than 0
-			rotate(acos(pos.x) * (pos.y < 0.0f ? 1.0f : -1.0f));// - (M_PI/2)); //rotates player.png to face the mouse on the arrow guide
+		//Set the pos vector to be centered around the sprite
+		pos = pos - glm::vec2(_x, _y) - _center;
+		if(pos.x != 0 || pos.y != 0) {
+			//Rotate by the angle between the vector (1, 0) and pos 
+			//The dot product of (1, 0) with pos simplifies to pos.x / length(pos)
+			rotate(acos(pos.x / glm::length(pos)) * (pos.y < 0.0f ? -1.0f : 1.0f));
 		}
 	}
 	

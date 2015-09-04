@@ -74,7 +74,7 @@ void GameLogic::processInput() {
 			_Camera->setScale(_Camera->getScale() + _Camera->SCALE_SPEED * (_keys->at(Q) - _keys->at(E)));
 			//_player->rotate((_keys->at(Q) - _keys->at(E)) * 0.01f);
 		}
-		_player->pointAt(mouseCoords);
+		_player->pointAt(_Camera->toWorldCoords(mouseCoords));
 		break;
 	default:
 		break;
