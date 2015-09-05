@@ -74,13 +74,15 @@ namespace GameEngine {
 		glBindVertexArray(0);
 	}
 
-	void SpriteBatcher::setNewBatch(std::vector<Sprite>* spritesLocation) {
+	void SpriteBatcher::setNewBatch(std::list<Sprite*>* spritesLocation) {
 		//Clear the current vector of sprite pointers and create it again with the new sprites
 		_spritePointers.clear();
 
 		_spritePointers.resize(spritesLocation->size());
+		auto curr = spritesLocation->begin();
 		for(unsigned int i = 0; i < spritesLocation->size(); i++) {
-			_spritePointers[i] = &spritesLocation->at(i);
+			_spritePointers[i] = *curr;
+			curr = std::next(curr);
 		}
 	}
 
