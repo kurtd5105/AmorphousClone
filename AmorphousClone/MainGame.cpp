@@ -36,7 +36,7 @@ void MainGame::init() {
 	_Game.init(&_gameState, &_Camera, &_StagingManager);
 	_SpriteBatcher.init();
 
-	_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
+	//_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 
 	_FPSManager.fpsinit();
 }
@@ -87,7 +87,7 @@ void MainGame::gameLoop() {
 		_Game.processInput();
 
 		//Optional to update the batch, could be moved to automatically update every batch creation
-		_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
+		//_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 
 		_FPSManager.fpsthink();
 		if((SDL_GetTicks() - prevTick) > _FPSManager.framespersecond/2) {
@@ -121,7 +121,7 @@ void MainGame::renderGame() {
 	glUniformMatrix4fv(positionLocation, 1, GL_FALSE, cameraMatrix);
 
 	_SpriteBatcher.cleanUp();
-	_SpriteBatcher.setupBatches();
+	_SpriteBatcher.setupBatches(_SpriteManager.getSprites());
 	_SpriteBatcher.renderBatch();
 
 	_ShadingProgram.unuse();

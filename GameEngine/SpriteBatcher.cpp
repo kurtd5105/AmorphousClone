@@ -34,9 +34,14 @@ namespace GameEngine {
 				_renderBatches.back().numVertices += 6;
 			}
 			//Add in all the vertices
-			for(int i = 0; i < 6; i++) {
-				vertices[n++] = sprite->getVertexAt(i);
-			}
+			//Assumes bottom left and top right vertices are shared
+			vertices[n++] = sprite->getVertexAt(0);
+			vertices[n++] = sprite->getVertexAt(1);
+			vertices[n++] = sprite->getVertexAt(2);
+			vertices[n++] = vertices[n - 2];//vertex[2]
+			vertices[n++] = sprite->getVertexAt(3);
+			vertices[n++] = vertices[n - 6];//vertex[0]
+
 			offset += 6;
 		}
 		//Bind the vbo
@@ -96,7 +101,8 @@ namespace GameEngine {
 		_renderBatches.clear();
 	}
 
-	void SpriteBatcher::setupBatches() {
+	void SpriteBatcher::setupBatches(std::list<Sprite*>* spritesLocation) {
+		setNewBatch(spritesLocation);
 		createRenderBatches();
 	}
 

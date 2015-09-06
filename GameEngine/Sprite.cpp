@@ -33,16 +33,12 @@ namespace GameEngine {
 
 		//Triangle 2
 		//Bottom left [3] = [2]
-		vertex.setVertex(x, y, 0, 0, 0, 0, UVmM[0], UVmM[2]);
-		_vertices.push_back(vertex);
 
 		//Bottom right [4]
 		vertex.setVertex(x + width, y, 0, 0, 0, 0, UVmM[1], UVmM[2]);
 		_vertices.push_back(vertex);
 
 		//Top right [5] = [0]
-		vertex.setVertex(x + width, y + height, 0, 0, 0, 0, UVmM[1], UVmM[3]);
-		_vertices.push_back(vertex);
 
 		_center = glm::vec2(_width / 2.0f, _height / 2.0f);
 	}
@@ -57,8 +53,6 @@ namespace GameEngine {
 		_vertices[1].setPosition(_vertices[1].position.x + x, _vertices[1].position.y + y);
 		_vertices[2].setPosition(_vertices[2].position.x + x, _vertices[2].position.y + y);
 		_vertices[3].setPosition(_vertices[3].position.x + x, _vertices[3].position.y + y);
-		_vertices[4].setPosition(_vertices[4].position.x + x, _vertices[4].position.y + y);
-		_vertices[5].setPosition(_vertices[5].position.x + x, _vertices[5].position.y + y);
 	}
 
 	void Sprite::rotate(float angle) {
@@ -87,14 +81,12 @@ namespace GameEngine {
 		_vertices[2].setPosition(_x + bottomLeft.x, _y + bottomLeft.y);
 
 		//Triangle 2
-		//Bottom left
-		_vertices[3].setPosition(_x + bottomLeft.x, _y + bottomLeft.y);
+		//Bottom left = vertices[2]
 
 		//Bottom right
-		_vertices[4].setPosition(_x + bottomRight.x, _y + bottomRight.y);
+		_vertices[3].setPosition(_x + bottomRight.x, _y + bottomRight.y);
 
-		//Top right
-		_vertices[5].setPosition(_x + topRight.x, _y + topRight.y);
+		//Top right = vertices[0]
 	}
 
 	void Sprite::pointAt(glm::vec2 pos) {

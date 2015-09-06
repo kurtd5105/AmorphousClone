@@ -22,10 +22,10 @@ namespace GameEngine {
 
 		void init();
 		void cleanUp();
-		void setupBatches();
+		void setupBatches(std::list<Sprite*>* spritesLocation);
 		void renderBatch();
 
-		void setNewBatch(std::list<Sprite*>* spritesLocation);
+		
 
 	private:
 		GLuint _vboID;
@@ -37,6 +37,7 @@ namespace GameEngine {
 		std::vector<Sprite*> _spritePointers;
 		std::vector<RenderBatch> _renderBatches;
 
+		void setNewBatch(std::list<Sprite*>* spritesLocation);
 		void createRenderBatches();
 		void createVertexArray();
 	};

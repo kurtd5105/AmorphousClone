@@ -65,7 +65,7 @@ void GameLogic::processInput() {
 		//Check if A or D and W or S are pressed for diagonal movement
 		if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
 			//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
-			_player->translate(_player->PLAYER_SPEED * (float)(_keys->at(D) - _keys->at(A)) / sqrt(2), _player->PLAYER_SPEED * (float)(_keys->at(W) - _keys->at(S)) / sqrt(2));
+			_player->translate(_player->PLAYER_SPEED * (float)(_keys->at(D) - _keys->at(A)) / sqrt(2.0f), _player->PLAYER_SPEED * (float)(_keys->at(W) - _keys->at(S)) / sqrt(2.0f));
 		} else {
 			//Move the player by the additions of the key presses
 			_player->translate(_player->PLAYER_SPEED * (_keys->at(D) - _keys->at(A)), _player->PLAYER_SPEED * (_keys->at(W) - _keys->at(S)));
