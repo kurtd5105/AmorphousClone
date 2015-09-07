@@ -18,6 +18,7 @@ void StagingManager::loadState() {
 	_SpriteManager->clearSprites();
 	_buttons.clear();
 	_player.~Player();
+	_goople.~Goople();
 	Button button;
 	//Setup the new sprites on screen
 	switch(*_gameState) {
@@ -34,6 +35,7 @@ void StagingManager::loadState() {
 		break;
 	case GameState::PLAYING:
 		_player.init(375.0f, 275.0f, 50.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/player.png", _SpriteManager);
+		_goople.init(100.0f, 100.0f, 50.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/player.png", _SpriteManager);
 		//_SpriteManager->addSprite(0.0f, 0.0f, 160.0f, 90.0f, 1.0f, std::vector<float>{}, "Textures/01.png");
 		break;
 	}

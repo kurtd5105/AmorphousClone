@@ -1,12 +1,9 @@
 #pragma once
 
-#include <GameEngine/SpriteManager.h>
-#include <GameEngine/Sprite.h>
-#include <GameEngine/Hitbox.h>
 
-class Goople;
+#include "Agent.h"
 
-class EnemySuper
+class EnemySuper : public Agent
 {
 public:
 	EnemySuper();
