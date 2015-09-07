@@ -1,14 +1,17 @@
-#include "Player.h"
+#include "Goople.h"
 
-Player::Player() {
 
+Goople::Goople()
+{
 }
 
-Player::~Player() {
 
+Goople::~Goople()
+{
 }
 
-void Player::init(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager) {
+
+void Goople::init(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager) {
 	_x = x;
 	_y = y;
 	_width = width;

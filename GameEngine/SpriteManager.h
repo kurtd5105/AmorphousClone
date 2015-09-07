@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite.h"
 #include <vector>
+#include <list>
 namespace GameEngine {
 	enum sortType {
 		TEXTURE, DEPTH
@@ -20,18 +21,22 @@ namespace GameEngine {
 		
 
 		//Getters
-		std::vector<Sprite>* getSprites() { return &_sprites; }
+		//std::vector<Sprite>* getSprites() { return &_sprites; }
+		std::list<Sprite*>* getSprites() { return &_spriteList; }
 		
-		void clearSprites() { _sprites.clear(); _spriteRefs.clear(); }
+		void clearSprites() { _spriteList.clear(); }//_sprites.clear(); _spriteRefs.clear(); }
 		
 	private:
 		ResourceManager* _ResourceManager;
 
 		sortType _sortType;
-		std::vector<Sprite> _sprites;
-		std::vector<Sprite*> _spriteRefs;
+		//std::vector<Sprite> _sprites;
+		//std::vector<Sprite*> _spriteRefs;
 
-		static bool cmpTexture(Sprite a, Sprite b);
-		static bool cmpDepth(Sprite a, Sprite b);
+		//To be replaced in the future
+		std::list<Sprite*> _spriteList;
+
+		static bool cmpTexture(Sprite* a, Sprite* b);
+		static bool cmpDepth(Sprite* a, Sprite* b);
 	};
 }

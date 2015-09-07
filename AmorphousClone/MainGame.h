@@ -2,6 +2,8 @@
 #include <GL/glew.h>
 #include <SDL/SDL.h>
 
+#include <iostream>
+
 #include <thread>
 
 #include <GameEngine/Window.h>
@@ -13,16 +15,13 @@
 #include <GameEngine/SpriteBatcher.h>
 #include <GameEngine/Sprite.h>
 #include <GameEngine/Camera.h>
+#include <GameEngine/FPSManager.h>
 
 #include <GameEngine/ThreadState.h>
 
 #include "StagingManager.h"
 #include "GameState.h"
 #include "GameLogic.h"
-
-//enum GameState {
-//	MAIN_MENU, PLAYING, EXIT
-//};
 
 class MainGame {
 public:
@@ -34,7 +33,7 @@ public:
 
 	//Vectors containing all the required textures
 	std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/buttons.png", "Textures/loading.png"};
-	std::vector<std::string> TEXTURE_LIST_ASYNC = std::vector<std::string>{"Textures/player.png", "Textures/tile1.png"};
+	std::vector<std::string> TEXTURE_LIST_ASYNC = std::vector<std::string>{"Textures/player.png", "Textures/tile1.png", "Textures/example_enemy.png"};
 
 	std::vector<std::string> SHADING_ATTRIBUTES = std::vector<std::string>{"vertexPosition", "vertexColor", "vertexUV"};
 
@@ -60,6 +59,8 @@ private:
 	GameEngine::SpriteBatcher _SpriteBatcher;
 
 	GameEngine::Camera _Camera;
+
+	GameEngine::FPSManager _FPSManager;
 
 	StagingManager _StagingManager;
 	GameLogic _Game;//more important than fps manager thx github

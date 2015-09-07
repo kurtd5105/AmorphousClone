@@ -16,7 +16,7 @@ namespace GameEngine {
 
 		//Allows for dynamic loading of textures
 		GLTexture getTexture(std::string path);
-		void getTextures(std::vector<std::string> paths);
+		void getTextures(std::vector<std::string> paths, ThreadState* taskState);
 
 
 		//Synchronously loads a file

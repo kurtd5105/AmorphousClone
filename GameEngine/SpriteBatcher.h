@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include "Sprite.h"
 #include "Vertex.h"
+#include <list>
 #include <vector>
 
 namespace GameEngine {
@@ -21,10 +22,10 @@ namespace GameEngine {
 
 		void init();
 		void cleanUp();
-		void setupBatches();
+		void setupBatches(std::list<Sprite*>* spritesLocation);
 		void renderBatch();
 
-		void setNewBatch(std::vector<Sprite>* spritesLocation);
+		
 
 	private:
 		GLuint _vboID;
@@ -36,6 +37,7 @@ namespace GameEngine {
 		std::vector<Sprite*> _spritePointers;
 		std::vector<RenderBatch> _renderBatches;
 
+		void setNewBatch(std::list<Sprite*>* spritesLocation);
 		void createRenderBatches();
 		void createVertexArray();
 	};

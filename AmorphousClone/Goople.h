@@ -1,12 +1,12 @@
 #pragma once
-#include "Agent.h"
+#include "EnemySuper.h"
 
-class Player : public Agent {
+class Goople : public EnemySuper {
 public:
-	Player();
-	~Player();
+	Goople();
+	~Goople();
 
-	const float PLAYER_SPEED = 0.05f;
+	const float GOOPLE_SPEED = 0.025f;
 
 	void init(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager);
 

@@ -15,59 +15,61 @@ namespace GameEngine {
 		_sortType = sort;
 	}
 
-	bool SpriteManager::cmpDepth(Sprite a, Sprite b) {
-		return (a.getDepth() < b.getDepth());
+	bool SpriteManager::cmpDepth(Sprite* a, Sprite* b) {
+		return (a->getDepth() < b->getDepth());
 	}
 
-	bool SpriteManager::cmpTexture(Sprite a, Sprite b) {
-		return (a.getTextureID() > b.getTextureID());
+	bool SpriteManager::cmpTexture(Sprite* a, Sprite* b) {
+		return (a->getTextureID() > b->getTextureID());
 	}
 
 	Sprite* SpriteManager::addSprite(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path) {
-		Sprite sprite;
-		sprite.init(x, y, width, height, depth, UVmM, path, _ResourceManager);
+		Sprite* sprite = new Sprite();
+		sprite->init(x, y, width, height, depth, UVmM, path, _ResourceManager);
 
-		//Iterate to the insertion point for the new sprite
-		unsigned int i = 0;
-		auto insertLocation = _sprites.begin();
-		switch(_sortType) {
-		case sortType::DEPTH:
-			while(i < _sprites.size()) {
-				cmpDepth(sprite, _sprites[i++]);
-			}
-			break;
-		case sortType::TEXTURE:
-			while(i < _sprites.size()) {
-				cmpTexture(sprite, _sprites[i++]);
-			}
-			break;
-		}
-		//Advance the iterator to the insert location or push to the back if it is at the end 
-		if(i != _sprites.size() && _sprites.size() != 0) {
-			std::advance(insertLocation, i);
-			_sprites.insert(insertLocation, sprite);
-			_spriteRefs.push_back(&_sprites[i]);
+		auto insertLocation = _spriteList.begin();
+
+		if(_spriteList.size() == 0) {
+			_spriteList.push_back(sprite);
 		} else {
-			_sprites.push_back(sprite);
-			_spriteRefs.push_back(&_sprites.back());
+			//Iterate to the insertion point for the new sprite
+			switch(_sortType) {
+			case sortType::DEPTH:
+				while(insertLocation != _spriteList.end() && cmpDepth(sprite, *insertLocation)) {
+					insertLocation = std::next(insertLocation);
+				}
+				break;
+			case sortType::TEXTURE:
+				while(insertLocation != _spriteList.end() && cmpTexture(sprite, *insertLocation)) {
+					insertLocation = std::next(insertLocation);
+				}
+				break;
+			}
+			if(insertLocation == _spriteList.end()) {
+				_spriteList.push_back(sprite);
+			} else {
+				_spriteList.insert(insertLocation, sprite);
+			}
 		}
-		return _spriteRefs.back();
+		
+		return sprite;
 	}
 
 	void SpriteManager::deleteSprite(Sprite* sprite) {
-		//auto spriteRefLocation = std::find(_spriteRefs.begin(), _spriteRefs.end(), sprite);
-		//auto spriteLocation = std::find(_sprites.begin(), _sprites.end(), *sprite);
-		//_spriteRefs.erase(spriteRefLocation);
-		//_sprites.erase(spriteLocation);
+		//Remove the reference from the linked list
+		auto spriteLocation = std::find(_spriteList.begin(), _spriteList.end(), sprite);
+		_spriteList.erase(spriteLocation);
+		//sprite->~Sprite();
+		delete sprite;
 	}
 
 	void SpriteManager::sortSprites(sortType cmp) {
 		switch(cmp) {
 		case sortType::TEXTURE:
-			std::stable_sort(_sprites.begin(), _sprites.end(), cmpTexture);
+			std::stable_sort(_spriteList.begin(), _spriteList.end(), cmpTexture);
 			break;
 		case sortType::DEPTH:
-			std::stable_sort(_sprites.begin(), _sprites.end(), cmpDepth);
+			std::stable_sort(_spriteList.begin(), _spriteList.end(), cmpDepth);
 			break;
 		}
 	}

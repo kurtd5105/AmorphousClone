@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include <vector>
 #include <string>
+#include <glm\glm.hpp>
 
 namespace GameEngine {
 	class Sprite {
@@ -13,14 +14,22 @@ namespace GameEngine {
 		void init(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, ResourceManager* manager);
 
 		void translate(float x, float y);
+		void rotate(float angle);
+		void pointAt(glm::vec2 pos);
 
 		GLuint getTextureID() { return _texture.id; }
 		float getDepth() { return _depth; }
+		float getRotation() { return _rotation; }
 		Vertex getVertexAt(int i) { return _vertices[i]; }
+		glm::vec2 getCentered() { return glm::vec2(_x, _y) + _center; }
 
 	private:
+		glm::vec2 Sprite::rotatePoint(float x, float y, float angle);
+
+		glm::vec2 _center;
+
 		GLTexture _texture;
-		float _x, _y, _width, _height, _depth;
+		float _x, _y, _width, _height, _depth, _rotation;
 		std::vector<Vertex> _vertices;
 	};
 }

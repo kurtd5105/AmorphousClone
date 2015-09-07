@@ -34,9 +34,14 @@ namespace GameEngine {
 				_renderBatches.back().numVertices += 6;
 			}
 			//Add in all the vertices
-			for(int i = 0; i < 6; i++) {
-				vertices[n++] = sprite->getVertexAt(i);
-			}
+			//Assumes bottom left and top right vertices are shared
+			vertices[n++] = sprite->getVertexAt(0);
+			vertices[n++] = sprite->getVertexAt(1);
+			vertices[n++] = sprite->getVertexAt(2);
+			vertices[n++] = vertices[n - 2];//vertex[2]
+			vertices[n++] = sprite->getVertexAt(3);
+			vertices[n++] = vertices[n - 6];//vertex[0]
+
 			offset += 6;
 		}
 		//Bind the vbo
@@ -74,14 +79,15 @@ namespace GameEngine {
 		glBindVertexArray(0);
 	}
 
-	void SpriteBatcher::setNewBatch(std::vector<Sprite>* spritesLocation) {
+	void SpriteBatcher::setNewBatch(std::list<Sprite*>* spritesLocation) {
 		//Clear the current vector of sprite pointers and create it again with the new sprites
 		_spritePointers.clear();
 
-		//Access violation???
-		//_spritePointers.resize(spritesLocation->size());
+		_spritePointers.resize(spritesLocation->size());
+		auto curr = spritesLocation->begin();
 		for(unsigned int i = 0; i < spritesLocation->size(); i++) {
-			_spritePointers.push_back(&spritesLocation->at(i));
+			_spritePointers[i] = *curr;
+			curr = std::next(curr);
 		}
 	}
 
@@ -95,7 +101,8 @@ namespace GameEngine {
 		_renderBatches.clear();
 	}
 
-	void SpriteBatcher::setupBatches() {
+	void SpriteBatcher::setupBatches(std::list<Sprite*>* spritesLocation) {
+		setNewBatch(spritesLocation);
 		createRenderBatches();
 	}
 

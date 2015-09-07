@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>
 #include <SDL/SDL.h>
+#include <glm/glm.hpp>
 
 #include <GameEngine/Camera.h>
 #include <GameEngine/CollisionManager.h>
@@ -11,6 +12,7 @@
 #include "Button.h"
 #include "GameState.h"
 #include "Player.h"
+#include "Goople.h"
 #include "StagingManager.h"
 
 
@@ -20,7 +22,10 @@ public:
 	~GameLogic();
 
 	void init(GameState* gameState, GameEngine::Camera* camera, StagingManager* manager);
+
 	void processInput();
+	void getStage();
+
 private:
 	GameEngine::InputManager _InputManager;
 	GameEngine::Camera* _Camera;
@@ -29,6 +34,10 @@ private:
 	GameState* _gameState;
 
 	std::vector<bool>* _keys;
+
+	std::vector<Button>* _buttonRefs;
+	Player* _player;
+	Goople* _goople;
 
 	int W, A, S, D, Q, E;
 };

@@ -14,6 +14,7 @@ namespace GameEngine {
 
 		void init(int width, int height);
 		void update();
+		glm::vec2 toWorldCoords(glm::vec2 pos);
 
 		//Setters
 		void setPosition(const glm::vec2& newPos) { _position = newPos; _needsUpdate = true; }
