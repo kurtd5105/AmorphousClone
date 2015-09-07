@@ -21,6 +21,7 @@ namespace GameEngine {
 		float getDepth() { return _depth; }
 		float getRotation() { return _rotation; }
 		Vertex getVertexAt(int i) { return _vertices[i]; }
+		glm::vec2 getCentered() { return glm::vec2(_x, _y) + _center; }
 
 	private:
 		glm::vec2 Sprite::rotatePoint(float x, float y, float angle);
