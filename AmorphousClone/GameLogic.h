@@ -12,6 +12,7 @@
 #include "Button.h"
 #include "GameState.h"
 #include "Player.h"
+#include "Goople.h"
 #include "StagingManager.h"
 
 
@@ -36,6 +37,7 @@ private:
 
 	std::vector<Button>* _buttonRefs;
 	Player* _player;
+	Goople* _goople;
 
 	int W, A, S, D, Q, E;
 };

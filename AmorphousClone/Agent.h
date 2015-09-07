@@ -7,6 +7,8 @@
 #include <GameEngine/Hitbox.h>
 
 class EnemySuper;
+class Goople;
+
 class Player;
 
 class Agent {
