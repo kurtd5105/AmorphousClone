@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <list>
 
 #include <GL/glew.h>
 #include <SDL/SDL.h>
@@ -37,7 +38,7 @@ private:
 
 	std::vector<Button>* _buttonRefs;
 	Player* _player;
-	Goople* _goople;
+	std::list<Goople>* _gooples;
 
 	int W, A, S, D, Q, E;
 };

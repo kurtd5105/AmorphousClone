@@ -19,6 +19,7 @@ public:
 	virtual void translate(float x, float y);
 	void rotate(float angle);
 	void pointAt(glm::vec2 pos);
+	void moveTo(Agent* agent);
 
 	virtual void attack();
 	virtual void kill();

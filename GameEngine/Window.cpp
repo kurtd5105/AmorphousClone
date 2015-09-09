@@ -64,6 +64,7 @@ namespace GameEngine {
 
 		//Turn on alpha blending
 		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//Turn on VSync
 		//SDL_GL_SetSwapInterval(1);

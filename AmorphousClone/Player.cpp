@@ -15,6 +15,7 @@ void Player::init(float x, float y, float width, float height, float depth, std:
 	_height = height;
 	_depth = depth;
 	_radius = width / 2;
+	_speed = PLAYER_SPEED;
 	_SpriteManager = manager;
 	//Assumes player is a circle
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);

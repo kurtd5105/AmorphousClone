@@ -1,4 +1,6 @@
 #pragma once
+#include <list>
+
 #include <GameEngine/SpriteManager.h>
 
 #include "Button.h"
@@ -18,7 +20,7 @@ public:
 	std::vector<Button>* getButtonRefs() { return &_buttons; }
 
 	Player* getPlayer() { return &_player; }
-	Goople* getGoople() { return &_goople; }
+	std::list<Goople>* getGooples() { return &_gooples; }
 
 private:
 	GameEngine::SpriteManager* _SpriteManager;
@@ -26,7 +28,7 @@ private:
 	std::vector<Button> _buttons;
 
 	Player _player;
-	Goople _goople;
+	std::list<Goople> _gooples;
 
 	GameState* _gameState;
 };

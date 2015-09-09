@@ -31,6 +31,17 @@ void Agent::pointAt(glm::vec2 pos) {
 	_sprite->pointAt(pos);
 }
 
+void Agent::moveTo(Agent* agent) {
+	_sprite->pointAt(agent->getCentered());
+	float angle = getRotation();
+	//Normalize later
+	float xMove = cos(angle) * _speed;
+	float yMove = sin(angle) * _speed;
+	_x += xMove;
+	_y += yMove;
+	_sprite->translate(xMove, yMove);
+}
+
 void Agent::attack() {
 
 }

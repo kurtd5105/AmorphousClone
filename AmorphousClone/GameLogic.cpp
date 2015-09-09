@@ -22,7 +22,7 @@ void GameLogic::getStage() {
 		break;
 	case GameState::PLAYING:
 		_player = _StagingManager->getPlayer();
-		_goople = _StagingManager->getGoople();
+		_gooples = _StagingManager->getGooples();
 		break;
 	default:
 		break;
@@ -64,9 +64,10 @@ void GameLogic::processInput() {
 		break;
 	case GameState::PLAYING:
 	{
-		_goople->pointAt(_player->getCentered());
-		float goopleRotation = _goople->getRotation();
-		_goople->translate(cos(goopleRotation) * _goople->GOOPLE_SPEED, sin(goopleRotation) * _goople->GOOPLE_SPEED);
+		for(auto& goople : *_gooples) {
+			goople.moveTo(_player);
+		}
+		
 		//Check if A or D and W or S are pressed for diagonal movement
 		if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
 			//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
