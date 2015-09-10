@@ -20,22 +20,22 @@ namespace GameEngine {
 		
 		//Triangle 1
 		//Top right [0]
-		vertex.setVertex(x + width, y + height, 0, 0, 0, 0, UVmM[1], UVmM[3]);
+		vertex.setVertex(x + width, y + height, 255, 255, 255, 255, UVmM[1], UVmM[3]);
 		_vertices.push_back(vertex);
 
 		//Top left [1]
-		vertex.setVertex(x, y + height, 0, 0, 0, 0, UVmM[0], UVmM[3]);
+		vertex.setVertex(x, y + height, 255, 255, 255, 255, UVmM[0], UVmM[3]);
 		_vertices.push_back(vertex);
 
 		//Bottom left [2]
-		vertex.setVertex(x, y, 0, 0, 0, 0, UVmM[0], UVmM[2]);
+		vertex.setVertex(x, y, 255, 255, 255, 255, UVmM[0], UVmM[2]);
 		_vertices.push_back(vertex);
 
 		//Triangle 2
 		//Bottom left [3] = [2]
 
 		//Bottom right [4]
-		vertex.setVertex(x + width, y, 0, 0, 0, 0, UVmM[1], UVmM[2]);
+		vertex.setVertex(x + width, y, 255, 255, 255, 255, UVmM[1], UVmM[2]);
 		_vertices.push_back(vertex);
 
 		//Top right [5] = [0]

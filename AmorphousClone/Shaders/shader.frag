@@ -9,5 +9,5 @@ uniform sampler2D playerTexture;
 
 void main() {
 	vec4 textureColor = texture(playerTexture, fragmentUV);
-	color = textureColor;
+	color = fragmentColor * textureColor;
 }
