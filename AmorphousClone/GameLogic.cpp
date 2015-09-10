@@ -22,11 +22,17 @@ void GameLogic::getStage() {
 		break;
 	case GameState::PLAYING:
 		_player = _StagingManager->getPlayer();
-		_gooples = _StagingManager->getGooples();
+		_enemies = _SpawnManager->getEnemies();
 		break;
 	default:
 		break;
 	}
+}
+
+void GameLogic::updateEnemy() {
+	/*for (auto& enemy : *_enemies) {
+		enemy.moveTo(_player);
+	}*/
 }
 
 void GameLogic::processInput() {
@@ -64,9 +70,6 @@ void GameLogic::processInput() {
 		break;
 	case GameState::PLAYING:
 	{
-		for(auto& goople : *_gooples) {
-			goople.moveTo(_player);
-		}
 		
 		//Check if A or D and W or S are pressed for diagonal movement
 		if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
