@@ -13,6 +13,12 @@ namespace GameEngine {
 
 	ResourceManager::~ResourceManager() {
 	}
+
+	Animation ResourceManager::getAnimation(std::string path) {
+		//Check for/load animation here
+		return _IOManager->loadAnimation(path);
+	}
+
 	//get texture tile
 	GLTexture ResourceManager::getTexture(std::string path) {
 		auto result = _textureMap.find(path);
@@ -56,8 +62,16 @@ namespace GameEngine {
 		*taskState = ThreadState::FINISHED;
 	}
 
+	void ResourceManager::syncLoadAnimation(std::string path) {
+		getAnimation(path);
+	}
+
 	void ResourceManager::syncLoadTexture(std::string path) {
 		getTexture(path);
+	}
+
+	void ResourceManager::asyncLoadAnimation(std::vector<std::string> paths, std::thread& currentThread, ThreadState* taskComplete) {
+		//
 	}
 
 	void ResourceManager::asyncLoadTexture(std::vector<std::string> paths, std::thread& currentThread, ThreadState* taskState) {

@@ -11,6 +11,11 @@ namespace GameEngine {
 	IOManager::~IOManager() {
 	}
 
+	Animation IOManager::loadAnimation(std::string path) {
+		//Parse animation file here
+		return Animation();
+	}
+
 	GLTexture IOManager::loadPNG(std::string path) {
 		GLTexture texture = {};
 		std::vector<unsigned char> in;

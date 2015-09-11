@@ -13,6 +13,8 @@ namespace GameEngine {
 		//																	UVmM: aka UVminMax = {Umin, Umax, Vmin, Vmax}
 		void init(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, ResourceManager* manager);
 
+		void setUVmM(std::vector<float> UVmM);
+
 		void translate(float x, float y);
 		void rotate(float angle);
 		void pointAt(glm::vec2 pos);

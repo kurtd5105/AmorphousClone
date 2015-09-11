@@ -46,6 +46,10 @@ namespace GameEngine {
 	Sprite::~Sprite() {
 	}
 
+	void Sprite::setUVmM(std::vector<float> UVmM) {
+		//
+	}
+
 	void Sprite::translate(float x, float y) {
 		_x += x;
 		_y += y;
