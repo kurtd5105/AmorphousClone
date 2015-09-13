@@ -6,6 +6,7 @@
 #include "Button.h"
 #include "GameState.h"
 #include "Player.h"
+#include "SpawnManager.h"
 
 class StagingManager {
 public:
@@ -16,6 +17,7 @@ public:
 	void loadState();
 
 	std::vector<Button>* getButtonRefs() { return &_buttons; }
+	SpawnManager* getSpawnManager() { return &_SpawnManager; }
 
 	Player* getPlayer() { return &_player; }
 
@@ -25,6 +27,8 @@ private:
 	std::vector<Button> _buttons;
 
 	Player _player;
+
+	SpawnManager _SpawnManager;
 
 	GameState* _gameState;
 };

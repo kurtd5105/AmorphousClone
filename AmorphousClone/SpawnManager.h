@@ -1,10 +1,10 @@
 #pragma once
-#pragma once
 
 #include <SDL/SDL.h>
 
 #include <random>
 #include <vector>
+#include <time.h>
 
 #include "EnemySuper.h"
 #include "Goople.h"
@@ -34,6 +34,8 @@ private:
 
 	Uint32 _startTime;
 	double _delayTime;
+
+	std::mt19937 _mt;
 
 	double random(int a, int b);
 };

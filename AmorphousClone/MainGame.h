@@ -67,7 +67,7 @@ private:
 	StagingManager _StagingManager;
 	GameLogic _Game;
 	GameState _gameState;
-	SpawnManager _SpawnManager;
+	//SpawnManager _SpawnManager;
 
 	std::thread _IOThread;
 	ThreadState _IOThreadState;

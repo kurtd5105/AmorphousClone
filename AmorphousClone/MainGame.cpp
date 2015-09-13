@@ -31,7 +31,7 @@ void MainGame::init() {
 
 	//Init classes
 	_SpriteManager.init(GameEngine::sortType::TEXTURE, &_ResourceManager);
-	_SpawnManager.init(WINDOW_WIDTH, WINDOW_HEIGHT, 20, &_SpriteManager);
+	//_SpawnManager.init(WINDOW_WIDTH, WINDOW_HEIGHT, 20, &_SpriteManager);
 	_StagingManager.init(&_gameState, &_SpriteManager);
 	_Camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
 	_Game.init(&_gameState, &_Camera, &_StagingManager);
@@ -63,9 +63,9 @@ void MainGame::gameLoop() {
 		}
 
 		//Start spawning enemies when game is playing
-		if (_gameState == GameState::PLAYING) {
-			_SpawnManager.startSpawn());
-		}
+		//if (_gameState == GameState::PLAYING) {
+		//	_SpawnManager.startSpawn();
+		//}
 
 		//Handle state switching with threading
 		//

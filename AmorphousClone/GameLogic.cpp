@@ -21,6 +21,7 @@ void GameLogic::getStage() {
 		_buttonRefs = _StagingManager->getButtonRefs();
 		break;
 	case GameState::PLAYING:
+		_SpawnManager = _StagingManager->getSpawnManager();
 		_player = _StagingManager->getPlayer();
 		_enemies = _SpawnManager->getEnemies();
 		break;
@@ -30,9 +31,9 @@ void GameLogic::getStage() {
 }
 
 void GameLogic::updateEnemy() {
-	/*for (auto& enemy : *_enemies) {
+	for(auto& enemy : *_enemies) {
 		enemy.moveTo(_player);
-	}*/
+	}
 }
 
 void GameLogic::processInput() {
@@ -70,7 +71,7 @@ void GameLogic::processInput() {
 		break;
 	case GameState::PLAYING:
 	{
-		
+		_SpawnManager->startSpawn();
 		//Check if A or D and W or S are pressed for diagonal movement
 		if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
 			//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
@@ -84,6 +85,7 @@ void GameLogic::processInput() {
 			//_player->rotate((_keys->at(Q) - _keys->at(E)) * 0.01f);
 		}
 		_player->pointAt(_Camera->toWorldCoords(mouseCoords));
+		updateEnemy();
 		break;
 	}
 	default:
