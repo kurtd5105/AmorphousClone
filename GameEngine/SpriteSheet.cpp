@@ -25,6 +25,8 @@ namespace GameEngine {
 
 	void SpriteSheet::setAnim(std::string animName) {
 		_set = _animation.getUVLocation(animName);
+		_step = 0;
+		_sprite->setUVmM(*_animation.getUVSet(_set, _step));
 	}
 
 }

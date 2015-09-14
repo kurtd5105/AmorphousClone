@@ -23,6 +23,9 @@ void MainGame::init() {
 	for(auto& filePath : TEXTURE_LIST_SYNC) {
 		_ResourceManager.syncLoadTexture(filePath);
 	}
+	for(auto& filePath : ANIMATION_LIST_SYNC) {
+		_ResourceManager.syncLoadAnimation(filePath);
+	}
 
 	_ShadingProgram.init("Shaders/shader.vert", "Shaders/shader.frag", SHADING_ATTRIBUTES, &_IOManager);
 	//Test textures with a large file size for extending async load time

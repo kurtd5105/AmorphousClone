@@ -1,5 +1,6 @@
 #include "Animation.h"
 #include "Errors.h"
+#include <iostream>
 
 namespace GameEngine {
 	int Animation::getUVLocation(std::string name) { 
@@ -9,6 +10,7 @@ namespace GameEngine {
 			}
 		} 
 		fatalGenericError("Animation name '" + name + "' not found.");
+		return -1;
 	}
 
 	void Animation::parseData() {
@@ -59,9 +61,11 @@ namespace GameEngine {
 					UVmM.clear();
 					curr++;
 					prev = curr;
-				} else {
+				} else if(token == '{') {
 					curr++;
 					prev = curr;
+				} else {
+					curr++;
 				}
 				break;
 			}
