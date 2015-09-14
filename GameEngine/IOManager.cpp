@@ -14,7 +14,7 @@ namespace GameEngine {
 	Animation IOManager::loadAnimation(std::string path) {
 		std::vector<unsigned char> in;
 		Animation newAnimation;
-
+		
 		//Read file and check for load errors
 		if(!readFileToBuffer(path, in)) {
 			fatalIOError(path);

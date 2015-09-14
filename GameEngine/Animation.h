@@ -1,4 +1,7 @@
 #pragma once
+#define ANIMATION_FORMAT "([[:alnum:]]+:(\\{([[:digit:]](.[[:digit:]]+)?,){3}[[:digit:]](.[[:digit:]]+)?\\})+;)+"
+#include <regex>
+#include <string>
 #include <vector>
 
 namespace GameEngine {
