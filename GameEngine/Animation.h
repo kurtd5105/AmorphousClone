@@ -7,8 +7,10 @@ namespace GameEngine {
 		Animation() {}
 		~Animation() {}
 
-		void init(std::vector<std::string> animNames, std::vector<std::vector<std::vector<float>>> UVmMSets) { _UVmMSets = UVmMSets; _animNames = animNames; }
+		void init(std::vector<unsigned char> data) { _data = data; }
+		void parseData();
 
+		//Getters
 		std::vector<float>* getUVSet(int set, int step) { return &_UVmMSets[set][step]; }
 		int getUVLocation(std::string name);
 		int getAnimSize(int set) { return _UVmMSets[set].size(); }
@@ -16,5 +18,6 @@ namespace GameEngine {
 	private:
 		std::vector<std::vector<std::vector<float>>> _UVmMSets;
 		std::vector<std::string> _animNames;
+		std::vector<unsigned char> _data;
 	};
 }

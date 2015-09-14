@@ -16,19 +16,13 @@ namespace GameEngine {
 		~ResourceManager();
 
 		Animation getAnimation(std::string path);
-
-		//Allows for dynamic loading of texture data while gl context isn't available (each thread requires gl context otherwise)
 		GLTexture getTexture(std::string path);
-		void getTextures(std::vector<std::string> paths, ThreadState* taskState);
-
 
 		//Synchronously loads a file
 		void syncLoadAnimation(std::string path);
 		void syncLoadTexture(std::string path);
 
-		//Asynchronously loads a file
-		void asyncLoadAnimation(std::vector<std::string> paths, std::thread& currentThread, ThreadState* taskComplete);
-		void asyncLoadTexture(std::vector<std::string> paths, std::thread& currentThread, ThreadState* taskComplete);
+		void asyncAssetLoad(std::vector<std::string> textures, std::vector<std::string> animations, std::thread& currentThread, ThreadState* taskState);
 
 		//Debug getters for amount of textures
 		int getRawCount() { return _rawTextureMap.size(); }
@@ -39,5 +33,12 @@ namespace GameEngine {
 		std::map<std::string, GLTexture> _textureMap;
 		std::map<std::string, GLRawTexture> _rawTextureMap;
 		IOManager* _IOManager;
+
+		//Handles the async loading of textures and animations
+		void asyncLoad(std::vector<std::string> textures, std::vector<std::string> animations, ThreadState* taskState);
+		//Asynchronously loads a file list
+		void asyncLoadAnimations(std::vector<std::string> paths);
+		//Allows for dynamic loading of texture data while gl context isn't available (each thread requires gl context otherwise)
+		void asyncLoadTextures(std::vector<std::string> paths);
 	};
 }

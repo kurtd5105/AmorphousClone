@@ -12,8 +12,18 @@ namespace GameEngine {
 	}
 
 	Animation IOManager::loadAnimation(std::string path) {
-		//Parse animation file here
-		return Animation();
+		std::vector<unsigned char> in;
+		Animation newAnimation;
+
+		//Read file and check for load errors
+		if(!readFileToBuffer(path, in)) {
+			fatalIOError(path);
+		}
+
+		//Setup the animation and parse the data
+		newAnimation.init(in);
+		newAnimation.parseData();
+		return newAnimation;
 	}
 
 	GLTexture IOManager::loadPNG(std::string path) {

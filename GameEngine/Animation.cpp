@@ -10,4 +10,8 @@ namespace GameEngine {
 		} 
 		fatalGenericError("Animation name '" + name + "' not found.");
 	}
+
+	void Animation::parseData() {
+		//std::vector<std::string> animNames, std::vector<std::vector<std::vector<float>>> UVmMSets;
+	}
 }
