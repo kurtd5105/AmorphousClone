@@ -23,11 +23,14 @@ void MainGame::init() {
 	for(auto& filePath : TEXTURE_LIST_SYNC) {
 		_ResourceManager.syncLoadTexture(filePath);
 	}
+	for(auto& filePath : ANIMATION_LIST_SYNC) {
+		_ResourceManager.syncLoadAnimation(filePath);
+	}
 
 	_ShadingProgram.init("Shaders/shader.vert", "Shaders/shader.frag", SHADING_ATTRIBUTES, &_IOManager);
 	//Test textures with a large file size for extending async load time
 	//_ResourceManager.asyncLoadTexture(std::vector<std::string>{"Textures/01.png", "Textures/02.png", "Textures/03.png"}, _IOThread, &_IOThreadState);
-	_ResourceManager.asyncLoadTexture(TEXTURE_LIST_ASYNC, _IOThread, &_IOThreadState);
+	_ResourceManager.asyncAssetLoad(TEXTURE_LIST_ASYNC, std::vector<std::string>{}, _IOThread, &_IOThreadState);
 
 	//Init classes
 	_SpriteManager.init(GameEngine::sortType::TEXTURE, &_ResourceManager);
