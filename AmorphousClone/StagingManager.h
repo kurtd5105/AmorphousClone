@@ -6,8 +6,7 @@
 #include "Button.h"
 #include "GameState.h"
 #include "Player.h"
-#include "Goople.h"
-
+#include "SpawnManager.h"
 
 class StagingManager {
 public:
@@ -18,9 +17,9 @@ public:
 	void loadState();
 
 	std::vector<Button>* getButtonRefs() { return &_buttons; }
+	SpawnManager* getSpawnManager() { return &_SpawnManager; }
 
 	Player* getPlayer() { return &_player; }
-	std::list<Goople>* getGooples() { return &_gooples; }
 
 private:
 	GameEngine::SpriteManager* _SpriteManager;
@@ -28,7 +27,8 @@ private:
 	std::vector<Button> _buttons;
 
 	Player _player;
-	std::list<Goople> _gooples;
+
+	SpawnManager _SpawnManager;
 
 	GameState* _gameState;
 };

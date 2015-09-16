@@ -20,7 +20,7 @@ void MainGame::init() {
 	//Load textures into memory, either they are loaded at the start of the game or not and we track
 	//the status of the rest of the textures
 
-	for(auto& filePath : TEXTURE_LIST_SYNC) {
+	for (auto& filePath : TEXTURE_LIST_SYNC) {
 		_ResourceManager.syncLoadTexture(filePath);
 	}
 	for(auto& filePath : ANIMATION_LIST_SYNC) {
@@ -34,6 +34,7 @@ void MainGame::init() {
 
 	//Init classes
 	_SpriteManager.init(GameEngine::sortType::TEXTURE, &_ResourceManager);
+	//_SpawnManager.init(WINDOW_WIDTH, WINDOW_HEIGHT, 20, &_SpriteManager);
 	_StagingManager.init(&_gameState, &_SpriteManager);
 	_Camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
 	_Game.init(&_gameState, &_Camera, &_StagingManager);
@@ -49,42 +50,49 @@ void MainGame::gameLoop() {
 	Uint32 prevTick = SDL_GetTicks();
 	float prevFPS = _FPSManager.framespersecond;
 
-	while(_gameState != GameState::EXIT) {
+	while (_gameState != GameState::EXIT) {
 		//Handle thread state switching
-		if(_IOThreadState == ThreadState::FINISHED) {
+		if (_IOThreadState == ThreadState::FINISHED) {
 			std::cout << ">> Async loading complete. Thread closed." << std::endl;
 			_IOThreadState = ThreadState::POST_LOAD;
 		}
 
 		//If the game is loading then a post load can occur
-		if(_gameState == GameState::LOADING && _IOThreadState == ThreadState::POST_LOAD) {
-			for(auto& path : TEXTURE_LIST_ASYNC) {
+		if (_gameState == GameState::LOADING && _IOThreadState == ThreadState::POST_LOAD) {
+			for (auto& path : TEXTURE_LIST_ASYNC) {
 				_ResourceManager.getTexture(path);
 			}
 			_IOThreadState = ThreadState::OFF;
 		}
 
+		//Start spawning enemies when game is playing
+		//if (_gameState == GameState::PLAYING) {
+		//	_SpawnManager.startSpawn();
+		//}
+
 		//Handle state switching with threading
 		//
 		//Thread is off and switch request can switch instantly
-		if(currState != _gameState && _IOThreadState == ThreadState::OFF) {
+		if (currState != _gameState && _IOThreadState == ThreadState::OFF) {
 			_StagingManager.loadState();
 			currState = _gameState;
-		//Thread is on or post load and switch request requires switch to loading where thread will complete and post load will occur
-		//Game will be in loading state while thread completes loading and post load
-		} else if(currState != _gameState && (_IOThreadState == ThreadState::ON || _IOThreadState == ThreadState::POST_LOAD)) {
+			//Thread is on or post load and switch request requires switch to loading where thread will complete and post load will occur
+			//Game will be in loading state while thread completes loading and post load
+		}
+		else if (currState != _gameState && (_IOThreadState == ThreadState::ON || _IOThreadState == ThreadState::POST_LOAD)) {
 			std::cout << "Waiting on thread to complete or post load." << std::endl;
 			_gameState = GameState::LOADING;
 			currState = _gameState;
 			_StagingManager.loadState();
 			_Game.getStage();
-		//Thread is complete and game state is loading, switch can now occur
-		} else if(_gameState == GameState::LOADING && _IOThreadState == ThreadState::OFF) {
+			//Thread is complete and game state is loading, switch can now occur
+		}
+		else if (_gameState == GameState::LOADING && _IOThreadState == ThreadState::OFF) {
 			_gameState = GameState::PLAYING;
 			currState = _gameState;
 			_StagingManager.loadState();
 			_Game.getStage();
-		}
+		}	
 
 		//Process the game input
 		_Game.processInput();
@@ -93,11 +101,11 @@ void MainGame::gameLoop() {
 		//_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 
 		_FPSManager.fpsthink();
-		if((SDL_GetTicks() - prevTick) > _FPSManager.framespersecond/2) {
+		if ((SDL_GetTicks() - prevTick) > _FPSManager.framespersecond / 2) {
 			std::cout << "FPS: " << _FPSManager.framespersecond << std::endl;
 			prevTick = SDL_GetTicks();
 		}
-		
+
 		renderGame();
 	}
 }
@@ -135,9 +143,10 @@ void MainGame::renderGame() {
 }
 
 void MainGame::close() {
-	if(_IOThread.joinable()) {
+	if (_IOThread.joinable()) {
 		_IOThread.join();
-	} else {
+	}
+	else {
 		_IOThread.~thread();
 	}
 

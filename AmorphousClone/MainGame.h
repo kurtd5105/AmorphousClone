@@ -3,6 +3,7 @@
 #include <SDL/SDL.h>
 
 #include <iostream>
+#include <cstdint>
 
 #include <thread>
 
@@ -22,6 +23,7 @@
 #include "StagingManager.h"
 #include "GameState.h"
 #include "GameLogic.h"
+#include "SpawnManager.h"
 
 class MainGame {
 public:
@@ -40,7 +42,7 @@ public:
 
 	void startGame();
 	void init();
-	
+
 	void gameLoop();
 
 	void renderGame();
@@ -64,10 +66,10 @@ private:
 	GameEngine::FPSManager _FPSManager;
 
 	StagingManager _StagingManager;
-	GameLogic _Game;//more important than fps manager thx github
+	GameLogic _Game;
 	GameState _gameState;
+	//SpawnManager _SpawnManager;
 
 	std::thread _IOThread;
 	ThreadState _IOThreadState;
 };
-

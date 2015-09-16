@@ -18,9 +18,9 @@ void StagingManager::loadState() {
 	_SpriteManager->clearSprites();
 	_buttons.clear();
 	_player.~Player();
-	for(auto& goople : _gooples) {
+	/*for(auto& enemy : _enemies) {
 		goople.~Goople();
-	}
+	}*/
 	
 	Button button;
 	//Setup the new sprites on screen
@@ -38,11 +38,9 @@ void StagingManager::loadState() {
 		break;
 	case GameState::PLAYING:
 		_player.init(375.0f, 275.0f, 50.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/player.png", _SpriteManager);
-		_gooples.emplace_back();
-		_gooples.back().init(100.0f, 100.0f, 50.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/example_enemy.png", _SpriteManager);
-		_gooples.emplace_back();
-		_gooples.back().init(600.0f, 100.0f, 50.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/example_enemy.png", _SpriteManager);
 		//_SpriteManager->addSprite(0.0f, 0.0f, 160.0f, 90.0f, 1.0f, std::vector<float>{}, "Textures/01.png");
+		_SpawnManager.init(800, 600, 20, _SpriteManager);
+		//_SpawnManager.startSpawn();
 		break;
 	}
 }
