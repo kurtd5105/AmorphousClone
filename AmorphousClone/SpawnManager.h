@@ -6,6 +6,8 @@
 #include <vector>
 #include <time.h>
 
+#include <GameEngine/IOManager.h>
+
 #include "EnemySuper.h"
 #include "Goople.h"
 
@@ -22,13 +24,12 @@ public:
 	std::list<EnemySuper>* getEnemies() { return &_enemies; }
 
 private:
+	GameEngine::IOManager* _IOManager;
 	GameEngine::SpriteManager* _SpriteManager;
 
-	void update();
 	void spawn(int enemy);
 
-	int _height, _width;
-	int _size;
+	int _height, _width, _size, spritewidth, spriteheight;
 
 	std::list<EnemySuper> _enemies;
 

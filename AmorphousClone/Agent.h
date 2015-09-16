@@ -28,6 +28,7 @@ public:
 	glm::vec2 getPos() { return glm::vec2(_x, _y); }
 	glm::vec2 getCentered() { return _sprite->getCentered(); }
 
+
 protected:
 	float _x, _y, _width, _height, _depth, _rotation, _radius, _speed;
 
