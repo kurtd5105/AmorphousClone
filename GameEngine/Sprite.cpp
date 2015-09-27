@@ -39,8 +39,8 @@ namespace GameEngine {
 		_vertices.push_back(vertex);
 
 		//Top right [5] = [0]
-
 		_center = glm::vec2(_width / 2.0f, _height / 2.0f);
+		//_centerSprite = _center;
 	}
 
 	Sprite::~Sprite() {
