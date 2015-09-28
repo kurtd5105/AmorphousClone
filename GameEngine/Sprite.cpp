@@ -40,7 +40,7 @@ namespace GameEngine {
 
 		//Top right [5] = [0]
 		_center = glm::vec2(_width / 2.0f, _height / 2.0f);
-		//_centerSprite = _center;
+		_centerSprite = _center;
 	}
 
 	Sprite::~Sprite() {
@@ -98,7 +98,7 @@ namespace GameEngine {
 
 	void Sprite::pointAt(glm::vec2 pos) {
 		//Set the pos vector to be centered around the sprite
-		pos = pos - glm::vec2(_x, _y) - _center;
+		pos = pos - glm::vec2(_x, _y) - _centerSprite;
 		if(pos.x != 0 || pos.y != 0) {
 			//Rotate by the angle between the vector (1, 0) and pos 
 			//The dot product of (1, 0) with pos simplifies to pos.x / length(pos)

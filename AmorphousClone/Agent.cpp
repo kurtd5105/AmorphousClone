@@ -72,12 +72,18 @@ void Agent::lockOn(Agent* agent) {
 	float rotation = _sprite->getRotation();
 	_sprite->pointAt(agent->getCentered());
 	float angle = getRotation();
-	//Normalize later
-	float xMove = cos(angle) * _speed;
-	float yMove = sin(angle) * _speed;
-	_x += xMove;
-	_y += yMove;
-	_sprite->translate(xMove, yMove);
+	//Translate to the center and subtract the radius of the center to offset it
+	//float xMove = (cos(angle) * _speed) - (acos(angle) * 35.0f);
+	//float yMove = (sin(angle) * _speed) - (asin(angle) * 35.0f);
+	//_x += xMove;
+	//_y += yMove;
+	//Find the bottom left vector then use the angle to translate to the middle of that edge and use that as the before position
+	glm::vec2 before = _sprite->getCentered();
+	glm::vec2 pos = agent->getCentered();
+	_x = pos.x;
+	_y = pos.y;
+	_sprite->translate(_x - before.x, _y - before.y);
+	//_sprite->translate(xMove, yMove);
 	_sprite->rotate(rotation);
 }
 
