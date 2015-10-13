@@ -18,7 +18,7 @@ void Sword::init(float x, float y, float angle, GameEngine::SpriteManager* manag
 	_SpriteManager = manager;
 	//Constants, maybe they should be loaded some other way such as Player::giveSword and init a sword
 	_sprite = _SpriteManager->addSprite(_x, _y, _width, _height, _depth, std::vector<float>{}, "Textures/sword.png");
-	_sprite->setCenterOffset(glm::vec2(35.0f, 0.0f));
+	_sprite->setCenterOffset(std::vector<float>{1.0f, 0.0f});
 	_isInit = true;
 }
 

@@ -14,7 +14,7 @@ namespace GameEngine {
 		void init(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, ResourceManager* manager);
 
 		void setUVmM(std::vector<float> UVmM);
-		void setCenterOffset(glm::vec2 offset) { _center += offset; }
+		void setCenterOffset(std::vector<float> offset) { _offset = offset; }
 
 		void translate(float x, float y);
 		void rotate(float angle);
@@ -29,7 +29,7 @@ namespace GameEngine {
 	private:
 		glm::vec2 Sprite::rotatePoint(float x, float y, float angle);
 
-		glm::vec2 _centerSprite;
+		std::vector<float> _offset;
 		glm::vec2 _center;
 
 		GLTexture _texture;
