@@ -24,4 +24,5 @@ void EnemySuper::init(float x, float y, float width, float height, float depth, 
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
 	_hitbox.init(x, y, width, height, _radius);
 	_chance = 0.90f;
+	_isInit = true;
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "Agent.h"
+#include "Sword.h"
 
 class Player : public Agent {
 public:
@@ -11,5 +12,5 @@ public:
 	void init(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager);
 
 private:
-
+	Sword _sword;
 };

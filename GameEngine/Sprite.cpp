@@ -39,8 +39,8 @@ namespace GameEngine {
 		_vertices.push_back(vertex);
 
 		//Top right [5] = [0]
-
 		_center = glm::vec2(_width / 2.0f, _height / 2.0f);
+		_offset = std::vector<float>{0.0f, 0.0f};
 	}
 
 	Sprite::~Sprite() {
@@ -64,18 +64,28 @@ namespace GameEngine {
 
 	void Sprite::rotate(float angle) {
 		_rotation = angle;
-
-		//Center the sprite around the origin
 		glm::vec2 topLeft(-_center.x, _center.y);
 		glm::vec2 bottomLeft(-_center.x, -_center.y);
 		glm::vec2 bottomRight(_center.x, -_center.y);
 		glm::vec2 topRight(_center.x, _center.y);
 
+		glm::vec2 xShift(0.0f, 0.0f);
+		glm::vec2 yShift(0.0f, 0.0f);
+		//Shift the sprite by its offset from the center of the unit circle based on some multiplier
+		//Effect essentially is the same as rotating it around an offset point
+		if(_offset[0] != 0.0f) {
+			xShift.x = cos(_rotation) * _center.x * _offset[0];
+			xShift.y = sin(_rotation) * _center.x * _offset[0];
+		}
+		if(_offset[1] != 0.0f) {
+			yShift.x = cos(_rotation) * _center.y * _offset[1];
+			yShift.y = sin(_rotation) * _center.y * _offset[1];
+		}
 		//Rotate the sprite around the origin
-		topLeft = rotatePoint(topLeft.x, topRight.y, _rotation) + _center;
-		bottomLeft = rotatePoint(bottomLeft.x, bottomLeft.y, _rotation) + _center;
-		bottomRight = rotatePoint(bottomRight.x, bottomRight.y, _rotation) + _center;
-		topRight = rotatePoint(topRight.x, topRight.y, _rotation) + _center;
+		topLeft = rotatePoint(topLeft.x, topRight.y, _rotation) + _center + xShift + yShift;
+		bottomLeft = rotatePoint(bottomLeft.x, bottomLeft.y, _rotation) + _center + xShift + yShift;
+		bottomRight = rotatePoint(bottomRight.x, bottomRight.y, _rotation) + _center + xShift + yShift;
+		topRight = rotatePoint(topRight.x, topRight.y, _rotation) + _center + xShift + yShift;
 
 		//Triangle 1
 		//Top right
@@ -97,12 +107,14 @@ namespace GameEngine {
 	}
 
 	void Sprite::pointAt(glm::vec2 pos) {
-		//Set the pos vector to be centered around the sprite
-		pos = pos - glm::vec2(_x, _y) - _center;
-		if(pos.x != 0 || pos.y != 0) {
-			//Rotate by the angle between the vector (1, 0) and pos 
-			//The dot product of (1, 0) with pos simplifies to pos.x / length(pos)
-			rotate(acos(pos.x / glm::length(pos)) * (pos.y < 0.0f ? -1.0f : 1.0f));
+		if(pos.x != _x && pos.y != _y) {
+			//Set the pos vector to be centered around the sprite
+			pos = pos - glm::vec2(_x, _y) - _center;
+			if(pos.x != 0 || pos.y != 0) {
+				//Rotate by the angle between the vector (1, 0) and pos 
+				//The dot product of (1, 0) with pos simplifies to pos.x / length(pos)
+				rotate(acos(pos.x / glm::length(pos)) * (pos.y < 0.0f ? -1.0f : 1.0f));
+			}
 		}
 	}
 	

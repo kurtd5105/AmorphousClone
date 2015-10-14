@@ -20,4 +20,7 @@ void Player::init(float x, float y, float width, float height, float depth, std:
 	//Assumes player is a circle
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
 	_hitbox.init(x, y, width, height, _radius);
+	_sword.init(_x, _y, _rotation, manager);
+	_subAgents.push_back(&_sword);
+	_isInit = true;
 }
