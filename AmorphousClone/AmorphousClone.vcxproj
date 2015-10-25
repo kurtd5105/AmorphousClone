@@ -88,6 +88,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SpawnManager.cpp" />
     <ClCompile Include="StagingManager.cpp" />
+    <ClCompile Include="Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
@@ -100,6 +101,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SpawnManager.h" />
     <ClInclude Include="StagingManager.h" />
+    <ClInclude Include="Sword.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

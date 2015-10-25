@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Agents">
+      <UniqueIdentifier>{31d8c466-e98a-4109-ae6b-c38caaebda35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Agents">
+      <UniqueIdentifier>{930fe6e6-87f6-49e1-b193-8dc0fe102f94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Agents\Enemies">
+      <UniqueIdentifier>{32856d1b-28e6-4597-b735-4a221b09cc0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Agents\Enemies">
+      <UniqueIdentifier>{1885c4a5-09d0-4697-a1a4-f2af0419c5a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,20 +42,23 @@
     <ClCompile Include="GameLogic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="SpawnManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Agent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Agents</Filter>
     </ClCompile>
     <ClCompile Include="EnemySuper.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Agents\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Goople.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SpawnManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Agents\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,20 +77,23 @@
     <ClInclude Include="GameLogic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="SpawnManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Agent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Agents</Filter>
     </ClInclude>
     <ClInclude Include="EnemySuper.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Agents\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Goople.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpawnManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Agents\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
