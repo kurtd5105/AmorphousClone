@@ -42,6 +42,13 @@ void MainGame::init() {
 
 	//_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 
+	//TTF init
+	TTF_Font *font;
+	font = TTF_OpenFont("font.ttf", 16);
+	if (!font) {
+		printf("TTF_OpenFont: %s\n", TTF_GetError());
+	}
+
 	_FPSManager.fpsinit();
 }
 

@@ -25,6 +25,8 @@
 #include "GameLogic.h"
 #include "SpawnManager.h"
 
+#include <TTF/SDL_ttf.h>
+
 class MainGame {
 public:
 	MainGame();
