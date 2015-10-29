@@ -6,7 +6,13 @@ public:
 	Goople();
 	~Goople();
 
-private:
+	void think();
+	void onCollide();
 
+private:
+	int _hp;
+	glm::vec2 _target;
+
+	void logicInit(int side);
 };
 

@@ -11,7 +11,8 @@ EnemySuper::~EnemySuper()
 {
 }
 
-void EnemySuper::init(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager) {
+void EnemySuper::init(float x, float y, float width, float height, float depth, int side, 
+					  std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager, GameEngine::Random* Random) {
 	_x = x;
 	_y = y;
 	_width = width;
@@ -24,5 +25,7 @@ void EnemySuper::init(float x, float y, float width, float height, float depth, 
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
 	_hitbox.init(x, y, width, height, _radius);
 	_chance = 0.90f;
+	_Random = Random;
 	_isInit = true;
+	logicInit(side);
 }

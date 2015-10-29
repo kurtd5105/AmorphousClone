@@ -7,6 +7,7 @@
 #include <time.h>
 
 #include <GameEngine/IOManager.h>
+#include <GameEngine/Random.h>
 
 #include "EnemySuper.h"
 #include "Goople.h"
@@ -36,7 +37,7 @@ private:
 	Uint32 _startTime;
 	double _delayTime;
 
-	std::mt19937 _mt;
-
-	double random(int a, int b);
+	//std::mt19937 _mt;
+	GameEngine::Random _Random;
+	//double random(int a, int b);
 };
