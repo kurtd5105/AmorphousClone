@@ -46,22 +46,23 @@ void SpawnManager::spawn(int enemy) {
 	switch (int (side)) {
 		case 0://top
 			//std::cout << "Up" << std::endl;
-			_enemies.emplace_back();
+			//_enemies.emplace_back();
+			_enemies.push_back(Goople(0, &_Random));
 			_enemies.back().init((float)x, _height, 50.0f, 50.0f, 1.0f, side, VEC_F_E, "Textures/example_enemy.png", _SpriteManager, &_Random);
 			break;
 		case 1://left
 			//std::cout << "Left" << std::endl;
-			_enemies.emplace_back();
+			_enemies.push_back(Goople(1, &_Random));
 			_enemies.back().init(-spritewidth, (float)y, 50.0f, 50.0f, 1.0f, side, VEC_F_E, "Textures/example_enemy.png", _SpriteManager, &_Random);
 			break;
 		case 2://right
 			//std::cout << "Right" << std::endl;
-			_enemies.emplace_back();
+			_enemies.push_back(Goople(2, &_Random));
 			_enemies.back().init(_width, (float)y, 50.0f, 50.0f, 1.0f, side, VEC_F_E, "Textures/example_enemy.png", _SpriteManager, &_Random);
 			break;
 		case 3://bottom
 			//::cout << "Down" << std::endl;
-			_enemies.emplace_back();
+			_enemies.push_back(Goople(3, &_Random));
 			_enemies.back().init((float)x, -spriteheight, 50.0f, 50.0f, 1.0f, side, VEC_F_E, "Textures/example_enemy.png", _SpriteManager, &_Random);
 			break;
 	}

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "EnemySuper.h"
 
 EnemySuper::EnemySuper()
@@ -27,5 +25,31 @@ void EnemySuper::init(float x, float y, float width, float height, float depth, 
 	_chance = 0.90f;
 	_Random = Random;
 	_isInit = true;
-	logicInit(side);
+	//logicInit(side);
+}
+
+void EnemySuper::moveToTarget() {
+	if(getPos() != _target) {
+		_sprite->pointAt(_target);
+		float angle = getRotation();
+		//Normalize later
+
+		float xMove = 0;
+		float yMove = 0;
+
+		xMove = cos(angle) * _speed;
+		float offset = _target.x - _x;
+		if(xMove > abs(offset)) {
+			xMove = offset;
+		}
+		yMove = sin(angle) * _speed;
+		offset = _target.y - _y;
+		if(yMove > abs(offset)) {
+			yMove = offset;
+		}
+
+		_x += xMove;
+		_y += yMove;
+		_sprite->translate(xMove, yMove);
+	}
 }

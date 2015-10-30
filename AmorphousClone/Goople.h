@@ -1,9 +1,10 @@
 #pragma once
+#include <GameEngine/Random.h>
 #include "EnemySuper.h"
 
 class Goople : public EnemySuper {
 public:
-	Goople();
+	Goople(int side, GameEngine::Random* Random);
 	~Goople();
 
 	void think();
@@ -11,8 +12,7 @@ public:
 
 private:
 	int _hp;
-	glm::vec2 _target;
-
+	GameEngine::Random* _Random;
 	void logicInit(int side);
 };
 

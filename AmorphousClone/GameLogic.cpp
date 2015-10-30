@@ -32,7 +32,8 @@ void GameLogic::getStage() {
 
 void GameLogic::updateEnemy() {
 	for(auto& enemy : *_enemies) {
-		enemy.moveTo(_player);
+		//enemy.moveTo(_player);
+		enemy.moveToTarget();
 	}
 }
 
