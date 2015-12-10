@@ -1,12 +1,14 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <GL/glew.h>
-#include <TTF/SDL_ttf.h>
 #include <glm/glm.hpp>
+#include <GL/glew.h>
+#include <SDL/SDL.h>
+#include <TTF/SDL_ttf.h>
+
 
 #include "Errors.h"
-#include "Sprite.h"
+//#include "Sprite.h"
 
 namespace GameEngine {
 	struct CharGlyph {

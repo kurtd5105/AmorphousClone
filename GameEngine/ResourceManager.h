@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Animation.h"
+#include "Font.h"
 #include "GLTexture.h"
 #include "IOManager.h"
 #include "ThreadState.h"
@@ -16,10 +17,12 @@ namespace GameEngine {
 		~ResourceManager();
 
 		Animation getAnimation(std::string path);
+		Font getFont(std::string path, int point);
 		GLTexture getTexture(std::string path);
 
 		//Synchronously loads a file
 		void syncLoadAnimation(std::string path);
+		void syncLoadFont(std::string path, int point);
 		void syncLoadTexture(std::string path);
 
 		void asyncAssetLoad(std::vector<std::string> textures, std::vector<std::string> animations, std::thread& currentThread, ThreadState* taskState);
@@ -30,6 +33,7 @@ namespace GameEngine {
 
 	private:
 		std::map<std::string, Animation> _animationMap;
+		std::map<std::string, Font> _fontMap;
 		std::map<std::string, GLTexture> _textureMap;
 		std::map<std::string, GLRawTexture> _rawTextureMap;
 		IOManager* _IOManager;

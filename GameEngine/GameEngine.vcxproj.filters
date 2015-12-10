@@ -75,6 +75,12 @@
     <ClInclude Include="Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Header Files\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBatcher.h">
+      <Filter>Header Files\Text</Filter>
+    </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>Header Files\Sprite</Filter>
     </ClInclude>
@@ -88,12 +94,6 @@
       <Filter>Header Files\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
-      <Filter>Header Files\Text</Filter>
-    </ClInclude>
-    <ClInclude Include="Text.h">
-      <Filter>Header Files\Text</Filter>
-    </ClInclude>
-    <ClInclude Include="TextBatcher.h">
       <Filter>Header Files\Text</Filter>
     </ClInclude>
   </ItemGroup>
@@ -134,6 +134,12 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source Files\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBatcher.cpp">
+      <Filter>Source Files\Text</Filter>
+    </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files\Sprite</Filter>
     </ClCompile>
@@ -147,12 +153,6 @@
       <Filter>Source Files\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="Font.cpp">
-      <Filter>Source Files\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>Source Files\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="TextBatcher.cpp">
       <Filter>Source Files\Text</Filter>
     </ClCompile>
   </ItemGroup>

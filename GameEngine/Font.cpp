@@ -178,8 +178,11 @@ namespace GameEngine {
 		for(int i = 0; i < rectsLength; i++) {
 			// Find row for placement
 			int ri = 0;
-			for(int rii = 1; rii < r; rii++)
-				if(cw[rii] < cw[ri]) ri = rii;
+			for(int rii = 1; rii < r; rii++) {
+				if(cw[rii] < cw[ri]) {
+					ri = rii;
+				}
+			}	 
 
 			// Add width to that row
 			cw[ri] += rects[i].z + padding;
