@@ -1,20 +1,15 @@
 #pragma once
-#include <SDL/SDL.h>
-#include <GL/glew.h>
-#include "Sprite.h"
-#include "Vertex.h"
 #include <list>
 #include <vector>
+#include <GL/glew.h>
+#include <SDL/SDL.h>
+
+#include "RenderBatch.h"
+#include "Sprite.h"
+#include "Vertex.h"
+
 
 namespace GameEngine {
-	class RenderBatch {
-	public:
-		RenderBatch(GLuint Offset, GLuint NumVertices, GLuint Texture) : offset(Offset), numVertices(NumVertices), texture(Texture) {}
-		GLuint offset;
-		GLuint numVertices;
-		GLuint texture;
-	};
-
 	class SpriteBatcher {
 	public:
 		SpriteBatcher();

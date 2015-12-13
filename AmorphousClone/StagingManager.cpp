@@ -7,9 +7,10 @@ StagingManager::StagingManager() : _gameState(nullptr), _SpriteManager(nullptr) 
 StagingManager::~StagingManager() {
 }
 
-void StagingManager::init(GameState* gameState, GameEngine::SpriteManager* manager) {
+void StagingManager::init(GameState* gameState, GameEngine::SpriteManager* manager, GameEngine::FontBatcher* defaultFont) {
 	_gameState = gameState;
 	_SpriteManager = manager;
+	_defaultFont = defaultFont;
 	loadState();
 }
 
@@ -23,6 +24,8 @@ void StagingManager::loadState() {
 	}*/
 	
 	Button button;
+	GameEngine::Text text;
+	GameEngine::Color color;
 	//Setup the new sprites on screen
 	switch(*_gameState) {
 	case GameState::MAIN_MENU:
@@ -37,6 +40,16 @@ void StagingManager::loadState() {
 		_SpriteManager->addSprite(275.0f, 275.0f, 250.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/loading.png");
 		break;
 	case GameState::PLAYING:
+		color.r = 255;
+		color.g = 0;
+		color.b = 0;
+		color.a = 255;
+		std::string test = "\"";
+		for(int i = 32; i < 127; i++) {
+			test += char(i);
+		}
+		test += "\"";
+		text.init(test, glm::vec2(0, 0), glm::vec2(1, 1), 1.0f, color, _defaultFont);
 		_player.init(375.0f, 275.0f, 50.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/player.png", _SpriteManager);
 		//_SpriteManager->addSprite(0.0f, 0.0f, 160.0f, 90.0f, 1.0f, std::vector<float>{}, "Textures/01.png");
 		_SpawnManager.init(800, 600, 20, _SpriteManager);
