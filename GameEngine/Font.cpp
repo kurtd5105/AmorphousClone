@@ -29,6 +29,15 @@ namespace GameEngine {
 	Font::~Font() {
 	}
 
+	void Font::operator=(Font& font) {
+		_fontHeight = font.getFontHeight();
+		_start = font.getFontStart();
+		_length = font.getFontLength();
+
+		_chars = font.getFontGlyphs();
+		_id = font.getFontID();
+	}
+
 	void Font::init(std::string path, int point) {
 		// Initialize SDL_ttf
 		if(!TTF_WasInit()) {

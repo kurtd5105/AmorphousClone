@@ -96,6 +96,9 @@
     <ClInclude Include="FontBatcher.h">
       <Filter>Header Files\Text</Filter>
     </ClInclude>
+    <ClInclude Include="RenderBatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">

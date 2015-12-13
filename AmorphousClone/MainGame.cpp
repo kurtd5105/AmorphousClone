@@ -34,20 +34,17 @@ void MainGame::init() {
 
 	//Init classes
 	_SpriteManager.init(GameEngine::sortType::TEXTURE, &_ResourceManager);
+
+	//TTF init
+	_fontBatcher_arial16.init("Fonts/arial.ttf", 16, &_ResourceManager);
+
 	//_SpawnManager.init(WINDOW_WIDTH, WINDOW_HEIGHT, 20, &_SpriteManager);
-	_StagingManager.init(&_gameState, &_SpriteManager);
+	_StagingManager.init(&_gameState, &_SpriteManager, &_fontBatcher_arial16);
 	_Camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
 	_Game.init(&_gameState, &_Camera, &_StagingManager);
 	_SpriteBatcher.init();
 
 	//_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
-
-	//TTF init
-	TTF_Font *font;
-	font = TTF_OpenFont("font.ttf", 16);
-	if (!font) {
-		printf("TTF_OpenFont: %s\n", TTF_GetError());
-	}
 
 	_FPSManager.fpsinit();
 }
@@ -118,6 +115,7 @@ void MainGame::gameLoop() {
 }
 
 void MainGame::renderGame() {
+	std::vector<GameEngine::FontBatcher>* fonts = _StagingManager.getFonts();
 	_Camera.update();
 	//Clear the screen
 	glClearDepth(1.0);
@@ -141,6 +139,12 @@ void MainGame::renderGame() {
 	_SpriteBatcher.cleanUp();
 	_SpriteBatcher.setupBatches(_SpriteManager.getSprites());
 	_SpriteBatcher.renderBatch();
+
+	_fontBatcher_arial16.renderBatch();
+
+	for(auto& font : *fonts) {
+		font.renderBatch();
+	}
 
 	_ShadingProgram.unuse();
 

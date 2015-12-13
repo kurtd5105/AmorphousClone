@@ -101,6 +101,7 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="IOManager.h" />
     <ClInclude Include="picoPNG.h" />
+    <ClInclude Include="RenderBatch.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="ShadingProgram.h" />
     <ClInclude Include="Sprite.h" />

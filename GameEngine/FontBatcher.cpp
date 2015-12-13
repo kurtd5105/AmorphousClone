@@ -1,4 +1,5 @@
 #include "FontBatcher.h"
+#include <iostream>
 
 namespace GameEngine {
 	FontBatcher::FontBatcher() {
@@ -8,10 +9,13 @@ namespace GameEngine {
 	FontBatcher::~FontBatcher() {
 	}
 
+	void FontBatcher::extendCharLimit(unsigned int length) {
+		_vertices.resize(_vertices.size() + (6 * length));
+	}
+
 	unsigned int FontBatcher::add(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, const Color color) {
-		unsigned int size = _vertices.size();
-		_vertices.resize(size + 6);
-		_renderBatch.numVertices += 6;
+		unsigned int size = _renderBatch.numVertices;
+		_renderBatch.numVertices += 12;
 
 		Vertex vertex;
 		//Triangle 1
@@ -83,8 +87,9 @@ namespace GameEngine {
 		glBindVertexArray(0);
 	}
 
-	void FontBatcher::init(std::string path, int point) {
-		_font.init(path, point);
+	void FontBatcher::init(std::string path, int point, ResourceManager* manager) {
+		_ResourceManager = manager;
+		_font = _ResourceManager->getFont(path, point);
 
 		_renderBatch.texture = _font.getFontID();
 
@@ -100,6 +105,7 @@ namespace GameEngine {
 	}
 
 	void FontBatcher::renderBatch() {
+		createRenderBatches();
 		glBindVertexArray(_vaoID);
 		glBindTexture(GL_TEXTURE_2D, _renderBatch.texture);
 		glDrawArrays(GL_TRIANGLES, _renderBatch.offset, _renderBatch.numVertices);

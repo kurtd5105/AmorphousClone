@@ -23,6 +23,7 @@ namespace GameEngine {
 
 		const int MAX_TEXTURE_RES = 4096;
 
+		void operator=(Font& font);
 		void init(std::string path, int point);
 
 		int getFontHeight() { return _fontHeight; }
