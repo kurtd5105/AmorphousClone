@@ -1,29 +1,30 @@
 #pragma once
+#include <cstdint>
+#include <iostream>
+#include <thread>
 #include <GL/glew.h>
 #include <SDL/SDL.h>
+//#include <TTF/SDL_ttf.h>
 
-#include <iostream>
-#include <cstdint>
-
-#include <thread>
-
-#include <GameEngine/Window.h>
+#include <GameEngine/Camera.h>
+#include <GameEngine/FontBatcher.h>
+#include <GameEngine/FPSManager.h>
 #include <GameEngine/InputManager.h>
 #include <GameEngine/IOManager.h>
 #include <GameEngine/ResourceManager.h>
 #include <GameEngine/ShadingProgram.h>
-#include <GameEngine/SpriteManager.h>
-#include <GameEngine/SpriteBatcher.h>
 #include <GameEngine/Sprite.h>
-#include <GameEngine/Camera.h>
-#include <GameEngine/FPSManager.h>
-
+#include <GameEngine/SpriteBatcher.h>
+#include <GameEngine/SpriteManager.h>
+#include <GameEngine/Text.h>
 #include <GameEngine/ThreadState.h>
+#include <GameEngine/Window.h>
 
 #include "StagingManager.h"
 #include "GameState.h"
 #include "GameLogic.h"
 #include "SpawnManager.h"
+
 
 class MainGame {
 public:
@@ -60,6 +61,8 @@ private:
 	GameEngine::ShadingProgram _ShadingProgram;
 	GameEngine::SpriteManager _SpriteManager;
 	GameEngine::SpriteBatcher _SpriteBatcher;
+
+	GameEngine::FontBatcher _fontBatcher_arial16;
 
 	GameEngine::Camera _Camera;
 

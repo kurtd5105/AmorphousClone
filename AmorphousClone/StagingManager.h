@@ -2,6 +2,8 @@
 #include <list>
 
 #include <GameEngine/SpriteManager.h>
+#include <GameEngine/FontBatcher.h>
+#include <GameEngine/Text.h>
 
 #include "Button.h"
 #include "GameState.h"
@@ -13,18 +15,22 @@ public:
 	StagingManager();
 	~StagingManager();
 
-	void init(GameState* gameState, GameEngine::SpriteManager* manager);
+	void init(GameState* gameState, GameEngine::SpriteManager* manager, GameEngine::FontBatcher* defaultFont);
 	void loadState();
 
 	std::vector<Button>* getButtonRefs() { return &_buttons; }
+	std::vector<GameEngine::FontBatcher>* getFonts() { return &_fonts; }
 	SpawnManager* getSpawnManager() { return &_SpawnManager; }
 
 	Player* getPlayer() { return &_player; }
 
 private:
 	GameEngine::SpriteManager* _SpriteManager;
+	GameEngine::FontBatcher* _defaultFont;
 
 	std::vector<Button> _buttons;
+	std::vector<GameEngine::Text> _text;
+	std::vector<GameEngine::FontBatcher> _fonts;
 
 	Player _player;
 

@@ -60,6 +60,9 @@
     <ClCompile Include="Goople.cpp">
       <Filter>Source Files\Agents\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h">
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="Goople.h">
       <Filter>Header Files\Agents\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -28,6 +28,24 @@ namespace GameEngine {
 		return result->second;
 	}
 
+	Font ResourceManager::getFont(std::string path, int point) {
+		char temp[3];
+		std::string pathPoint = path + ":";
+		pathPoint += _itoa_s(point, temp, 10);
+		auto result = _fontMap.find(pathPoint);
+
+		//If it wasn't found fully loaded then load it
+		if(result == _fontMap.end()) {
+			Font newFont;
+			newFont.init(path, point);
+			_fontMap.insert(make_pair(pathPoint, newFont));
+			std::cout << "New font loaded: " << path << std::endl;
+			return newFont;
+		}
+		std::cout << "Font already loaded." << std::endl;
+		return result->second;
+	}
+
 	GLTexture ResourceManager::getTexture(std::string path) {
 		auto result = _textureMap.find(path);
 
@@ -54,6 +72,10 @@ namespace GameEngine {
 
 	void ResourceManager::syncLoadAnimation(std::string path) {
 		getAnimation(path);
+	}
+
+	void ResourceManager::syncLoadFont(std::string path, int point) {
+		getFont(path, point);
 	}
 
 	void ResourceManager::syncLoadTexture(std::string path) {
