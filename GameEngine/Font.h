@@ -6,9 +6,7 @@
 #include <SDL/SDL.h>
 #include <TTF/SDL_ttf.h>
 
-
 #include "Errors.h"
-//#include "Sprite.h"
 
 namespace GameEngine {
 	struct CharGlyph {
@@ -26,6 +24,13 @@ namespace GameEngine {
 		const int MAX_TEXTURE_RES = 4096;
 
 		void init(std::string path, int point);
+
+		int getFontHeight() { return _fontHeight; }
+		int getFontStart() { return _start; }
+		int getFontLength() { return _length; }
+
+		CharGlyph* getFontGlyphs() { return _chars; }
+		GLuint getFontID() { return _id; }
 	private:
 		static std::vector<int>* createRows(glm::ivec4* rects, int rectsLength, int r, int padding, int& w);
 		glm::vec2 measure(const char* s);

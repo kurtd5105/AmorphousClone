@@ -108,7 +108,7 @@
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="Text.h" />
-    <ClInclude Include="TextBatcher.h" />
+    <ClInclude Include="FontBatcher.h" />
     <ClInclude Include="ThreadState.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />
@@ -131,7 +131,7 @@
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="Text.cpp" />
-    <ClCompile Include="TextBatcher.cpp" />
+    <ClCompile Include="FontBatcher.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
