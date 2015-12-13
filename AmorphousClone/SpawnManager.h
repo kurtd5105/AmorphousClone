@@ -30,7 +30,8 @@ private:
 
 	void spawn(int enemy);
 
-	int _height, _width, _size, spritewidth, spriteheight;
+	int _height, _width, spritewidth, spriteheight;
+	unsigned int _size;
 
 	std::list<EnemySuper> _enemies;
 

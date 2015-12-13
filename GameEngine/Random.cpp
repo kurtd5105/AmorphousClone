@@ -14,8 +14,12 @@ namespace GameEngine {
 		return dist(_mt);
 	}
 
-	int Random::randomInt(int lowerBound, int upperBound) {
+	int Random::randomInt(const int lowerBound, const int upperBound) {
 		std::uniform_int_distribution<int> dist(lowerBound, upperBound);
+		return dist(_mt);
+	}
+
+	int Random::randomInt(std::uniform_int_distribution<int> dist) {
 		return dist(_mt);
 	}
 

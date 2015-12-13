@@ -16,6 +16,7 @@ namespace GameEngine {
 		
 		float random(float lowerBound, float upperBound);
 		int randomInt(int lowerBound, int upperBound);
+		int randomInt(std::uniform_int_distribution<int> dist);
 		int randomIntDist(std::discrete_distribution<int> dist);
 	private:
 		std::mt19937 _mt;

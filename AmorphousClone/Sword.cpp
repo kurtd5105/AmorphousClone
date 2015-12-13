@@ -14,7 +14,7 @@ void Sword::init(float x, float y, float angle, GameEngine::SpriteManager* manag
 	_height = 20.0f;
 	_rotation = angle;
 	_speed = 0.5f;
-	_rotationOffset = 3.927;//approximation of 5pi/4
+	_rotationOffset = 3.927f;//approximation of 5pi/4
 	_SpriteManager = manager;
 	//Constants, maybe they should be loaded some other way such as Player::giveSword and init a sword
 	_sprite = _SpriteManager->addSprite(_x, _y, _width, _height, _depth, std::vector<float>{}, "Textures/sword.png");
