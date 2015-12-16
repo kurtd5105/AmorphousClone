@@ -36,7 +36,7 @@ void MainGame::init() {
 	_SpriteManager.init(GameEngine::sortType::TEXTURE, &_ResourceManager);
 
 	//TTF init
-	_fontBatcher_arial16.init("Fonts/arial.ttf", 16, &_ResourceManager);
+	_fontBatcher_arial16.init("Fonts/OpenSans-Regular.ttf", 16, &_ResourceManager);
 
 	//_SpawnManager.init(WINDOW_WIDTH, WINDOW_HEIGHT, 20, &_SpriteManager);
 	_StagingManager.init(&_gameState, &_SpriteManager, &_fontBatcher_arial16);
