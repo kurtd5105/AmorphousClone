@@ -62,7 +62,7 @@ private:
 	GameEngine::SpriteManager _SpriteManager;
 	GameEngine::SpriteBatcher _SpriteBatcher;
 
-	GameEngine::FontBatcher _fontBatcher_arial16;
+	GameEngine::FontBatcher _fontBatcher_sans16;
 
 	GameEngine::Camera _Camera;
 
