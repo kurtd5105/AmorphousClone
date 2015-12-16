@@ -7,6 +7,7 @@
 #include <time.h>
 
 #include <GameEngine/IOManager.h>
+#include <GameEngine/Random.h>
 
 #include "EnemySuper.h"
 #include "Goople.h"
@@ -29,14 +30,15 @@ private:
 
 	void spawn(int enemy);
 
-	int _height, _width, _size, spritewidth, spriteheight;
+	int _height, _width, spritewidth, spriteheight;
+	unsigned int _size;
 
 	std::list<EnemySuper> _enemies;
 
 	Uint32 _startTime;
 	double _delayTime;
 
-	std::mt19937 _mt;
-
-	double random(int a, int b);
+	//std::mt19937 _mt;
+	GameEngine::Random _Random;
+	//double random(int a, int b);
 };

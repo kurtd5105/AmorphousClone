@@ -5,6 +5,7 @@
 #include <GameEngine/SpriteManager.h>
 #include <GameEngine/Sprite.h>
 #include <GameEngine/Hitbox.h>
+#include <GameEngine/Random.h>
 
 class EnemySuper;
 class Goople;
@@ -40,6 +41,7 @@ protected:
 	std::vector<Agent*> _subAgents;
 	GameEngine::SpriteManager* _SpriteManager;
 	GameEngine::Sprite* _sprite;
+	GameEngine::Random* _Random;
 	GameEngine::Hitbox _hitbox;
 };
 

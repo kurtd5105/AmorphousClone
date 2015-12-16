@@ -36,10 +36,10 @@ void MainGame::init() {
 	_SpriteManager.init(GameEngine::sortType::TEXTURE, &_ResourceManager);
 
 	//TTF init
-	_fontBatcher_arial16.init("Fonts/arial.ttf", 16, &_ResourceManager);
+	_fontBatcher_sans16.init("Fonts/OpenSans-Regular.ttf", 16, &_ResourceManager);
 
 	//_SpawnManager.init(WINDOW_WIDTH, WINDOW_HEIGHT, 20, &_SpriteManager);
-	_StagingManager.init(&_gameState, &_SpriteManager, &_fontBatcher_arial16);
+	_StagingManager.init(&_gameState, &_SpriteManager, &_fontBatcher_sans16);
 	_Camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
 	_Game.init(&_gameState, &_Camera, &_StagingManager);
 	_SpriteBatcher.init();
@@ -140,7 +140,7 @@ void MainGame::renderGame() {
 	_SpriteBatcher.setupBatches(_SpriteManager.getSprites());
 	_SpriteBatcher.renderBatch();
 
-	_fontBatcher_arial16.renderBatch();
+	_fontBatcher_sans16.renderBatch();
 
 	for(auto& font : *fonts) {
 		font.renderBatch();

@@ -24,7 +24,7 @@ void Agent::translate(float x, float y) {
 	_y += y;
 	_sprite->translate(x, y);
 	//_hitbox.translate(x, y);
-	for(int i = 0; i < _subAgents.size(); i++) {
+	for(unsigned int i = 0; i < _subAgents.size(); i++) {
 		_subAgents[i]->translate(x, y);
 	}
 }
@@ -33,7 +33,7 @@ void Agent::rotate(float angle) {
 	_rotation = angle;
 	_sprite->rotate(angle);
 	//_hitbox->rotate(angle);
-	for(int i = 0; i < _subAgents.size(); i++) {
+	for(unsigned int i = 0; i < _subAgents.size(); i++) {
 		_subAgents[i]->rotate(angle + _subAgents[i]->getRotationOffset());
 	}
 }
@@ -41,7 +41,7 @@ void Agent::rotate(float angle) {
 void Agent::pointAt(glm::vec2 pos) {
 	_sprite->pointAt(pos);
 	_rotation = _sprite->getRotation();
-	for(int i = 0; i < _subAgents.size(); i++) {
+	for(unsigned int i = 0; i < _subAgents.size(); i++) {
 		_subAgents[i]->rotate(_rotation + _subAgents[i]->getRotationOffset());
 		_subAgents[i]->lockOn(this);
 	}
