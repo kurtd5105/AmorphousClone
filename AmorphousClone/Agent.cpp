@@ -19,13 +19,13 @@ Agent::~Agent() {
 	}
 }
 
-void Agent::translate(float x, float y) {
-	_x += x;
-	_y += y;
+void Agent::translate(float x, float y, float speed) {
+	_x += x * speed;
+	_y += y * speed;
 	_sprite->translate(x, y);
 	//_hitbox.translate(x, y);
 	for(unsigned int i = 0; i < _subAgents.size(); i++) {
-		_subAgents[i]->translate(x, y);
+		_subAgents[i]->translate(x, y, speed);
 	}
 }
 
@@ -47,7 +47,7 @@ void Agent::pointAt(glm::vec2 pos) {
 	}
 }
 
-void Agent::moveTo(Agent* agent) {
+void Agent::moveTo(Agent* agent, float speed) {
 	glm::vec2 agentPos = agent->getPos();
 	if(getPos() != agentPos) {
 		_sprite->pointAt(agent->getCentered());
@@ -68,9 +68,10 @@ void Agent::moveTo(Agent* agent) {
 			yMove = offset;
 		}
 
-		_x += xMove;
-		_y += yMove;
-		_sprite->translate(xMove, yMove);
+		//_x += xMove;
+		//_y += yMove;
+		//_sprite->translate(xMove, yMove);
+		this->translate(xMove, yMove, speed);
 	}
 }
 

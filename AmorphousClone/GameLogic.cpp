@@ -33,7 +33,7 @@ void GameLogic::getStage() {
 void GameLogic::updateEnemy() {
 	for(auto& enemy : *_enemies) {
 		//enemy.moveTo(_player);
-		enemy.moveToTarget();
+		enemy.moveToTarget(1.0f);
 	}
 }
 
@@ -76,10 +76,12 @@ void GameLogic::processInput() {
 		//Check if A or D and W or S are pressed for diagonal movement
 		if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
 			//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
-			_player->translate(_player->PLAYER_SPEED * (float)(_keys->at(D) - _keys->at(A)) / sqrt(2.0f), _player->PLAYER_SPEED * (float)(_keys->at(W) - _keys->at(S)) / sqrt(2.0f));
+			_player->translate(_player->PLAYER_SPEED * (float)(_keys->at(D) - _keys->at(A)) / sqrt(2.0f), 
+							   _player->PLAYER_SPEED * (float)(_keys->at(W) - _keys->at(S)) / sqrt(2.0f),
+							   1.0f);
 		} else {
 			//Move the player by the additions of the key presses
-			_player->translate(_player->PLAYER_SPEED * (_keys->at(D) - _keys->at(A)), _player->PLAYER_SPEED * (_keys->at(W) - _keys->at(S)));
+			_player->translate(_player->PLAYER_SPEED * (_keys->at(D) - _keys->at(A)), _player->PLAYER_SPEED * (_keys->at(W) - _keys->at(S)), 1.0f);
 		}
 		if(_keys->at(Q) != _keys->at(E)) {
 			_Camera->setScale(_Camera->getScale() + _Camera->SCALE_SPEED * (_keys->at(Q) - _keys->at(E)));

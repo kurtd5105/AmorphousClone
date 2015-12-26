@@ -13,7 +13,7 @@ public:
 
 	void init(float x, float y, float width, float height, float depth, int side, 
 			  std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager, GameEngine::Random* Random);
-	void moveToTarget();
+	void moveToTarget(float speed);
 	virtual void think() {}
 	virtual void onCollide() {}
 	double getChance(){ return _chance; };
