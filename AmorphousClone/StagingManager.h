@@ -18,6 +18,7 @@ public:
 	void init(GameState* gameState, GameEngine::SpriteManager* manager, GameEngine::FontBatcher* defaultFont);
 	void loadState();
 
+	GameState getStageState() { return _stageState; }
 	std::vector<Button>* getButtonRefs() { return &_buttons; }
 	std::vector<GameEngine::FontBatcher>* getFonts() { return &_fonts; }
 	SpawnManager* getSpawnManager() { return &_SpawnManager; }
@@ -37,5 +38,6 @@ private:
 	SpawnManager _SpawnManager;
 
 	GameState* _gameState;
+	GameState _stageState;
 };
 

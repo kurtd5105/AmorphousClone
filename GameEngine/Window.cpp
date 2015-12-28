@@ -67,7 +67,7 @@ namespace GameEngine {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//Turn on VSync
-		//SDL_GL_SetSwapInterval(1);
+		SDL_GL_SetSwapInterval(1);
 	}
 
 	void Window::swapBuffer() {

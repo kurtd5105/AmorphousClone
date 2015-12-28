@@ -12,6 +12,7 @@ namespace GameEngine {
 
 		void fpsinit();
 		void fpsthink();
+		Uint32 getFrameTime();
 
 	private:
 		Uint32 frametimes[FRAME_VALUES];

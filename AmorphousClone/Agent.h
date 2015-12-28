@@ -17,10 +17,10 @@ public:
 	Agent();
 	virtual ~Agent();
 
-	virtual void translate(float x, float y);
+	virtual void translate(float x, float y, float speed);
 	void rotate(float angle);
 	void pointAt(glm::vec2 pos);
-	void moveTo(Agent* agent);
+	void moveTo(Agent* agent, float speed);
 	void lockOn(Agent* agent);
 
 	virtual void attack();

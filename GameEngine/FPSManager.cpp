@@ -36,4 +36,8 @@ namespace GameEngine {
 		framespersecond /= count;
 		framespersecond = 1000.f / framespersecond;
 	}
+
+	Uint32 FPSManager::getFrameTime() {
+		return frametimes[framecount % FRAME_VALUES];
+	}
 }

@@ -28,7 +28,7 @@ void EnemySuper::init(float x, float y, float width, float height, float depth, 
 	//logicInit(side);
 }
 
-void EnemySuper::moveToTarget() {
+void EnemySuper::moveToTarget(float speed) {
 	if(getPos() != _target) {
 		_sprite->pointAt(_target);
 		float angle = getRotation();
@@ -37,12 +37,12 @@ void EnemySuper::moveToTarget() {
 		float xMove = 0;
 		float yMove = 0;
 
-		xMove = cos(angle) * _speed;
+		xMove = cos(angle) * _speed * speed;
 		float offset = _target.x - _x;
 		if(xMove > abs(offset)) {
 			xMove = offset;
 		}
-		yMove = sin(angle) * _speed;
+		yMove = sin(angle) * _speed * speed;
 		offset = _target.y - _y;
 		if(yMove > abs(offset)) {
 			yMove = offset;
@@ -51,5 +51,6 @@ void EnemySuper::moveToTarget() {
 		_x += xMove;
 		_y += yMove;
 		_sprite->translate(xMove, yMove);
+		//this->translate(xMove, yMove, speed);
 	}
 }

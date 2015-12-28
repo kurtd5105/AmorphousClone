@@ -9,11 +9,11 @@ public:
 	EnemySuper();
 	virtual ~EnemySuper();
 
-	float ENEMY_SPEED = 0.025f;
+	float ENEMY_SPEED = 2.0f;
 
 	void init(float x, float y, float width, float height, float depth, int side, 
 			  std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager, GameEngine::Random* Random);
-	void moveToTarget();
+	void moveToTarget(float speed);
 	virtual void think() {}
 	virtual void onCollide() {}
 	double getChance(){ return _chance; };

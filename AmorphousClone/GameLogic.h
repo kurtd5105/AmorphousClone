@@ -24,8 +24,8 @@ public:
 
 	void init(GameState* gameState, GameEngine::Camera* camera, StagingManager* manager);
 
-	void updateEnemy();
-	void processInput();
+	void updateEnemy(float step);
+	void processInput(float step);
 	void getStage();
 
 private:

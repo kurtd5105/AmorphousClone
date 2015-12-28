@@ -52,7 +52,17 @@ void MainGame::init() {
 void MainGame::gameLoop() {
 	GameState currState = _gameState;
 	Uint32 prevTick = SDL_GetTicks();
+	Uint32 currTick = prevTick;
+	Uint32 currFPSTick = prevTick;
+	Uint32 prevFPSTick = prevTick;
+	Uint32 frameTime = 0;
 	float prevFPS = _FPSManager.framespersecond;
+	Uint32 accumulator = 0;
+	Uint32 maxTime = 6000 / 60;
+	float dt = 1000.0f / 60.0f;
+	Uint32 dtOvercount = 17;
+	Uint32 dtUndercount = 16;
+	int overcount = 0;
 
 	while (_gameState != GameState::EXIT) {
 		//Handle thread state switching
@@ -69,11 +79,6 @@ void MainGame::gameLoop() {
 			_IOThreadState = ThreadState::OFF;
 		}
 
-		//Start spawning enemies when game is playing
-		//if (_gameState == GameState::PLAYING) {
-		//	_SpawnManager.startSpawn();
-		//}
-
 		//Handle state switching with threading
 		//
 		//Thread is off and switch request can switch instantly
@@ -87,6 +92,7 @@ void MainGame::gameLoop() {
 			std::cout << "Waiting on thread to complete or post load." << std::endl;
 			_gameState = GameState::LOADING;
 			currState = _gameState;
+			accumulator = 0;
 			_StagingManager.loadState();
 			_Game.getStage();
 			//Thread is complete and game state is loading, switch can now occur
@@ -94,21 +100,63 @@ void MainGame::gameLoop() {
 		else if (_gameState == GameState::LOADING && _IOThreadState == ThreadState::OFF) {
 			_gameState = GameState::PLAYING;
 			currState = _gameState;
+			accumulator = 0;
 			_StagingManager.loadState();
 			_Game.getStage();
-		}	
+		}
 
-		//Process the game input
-		_Game.processInput();
+		_FPSManager.fpsthink();
+
+		//Set up the ticks to count the frame time
+		//Possible to use the FPS manager in the future?
+		prevTick = currTick;
+		currTick = SDL_GetTicks();
+		currFPSTick = currTick;
+		frameTime = currTick - prevTick;
+
+		//Cap the speed of the game at 10 FPS min, then slow the game down
+		if(frameTime > maxTime) {
+			std::cout << "FPS is low, frame time exceeded max allowed frame time." << std::endl;
+			frameTime = maxTime;
+		}
+		accumulator += frameTime;
+
+		//Overcount twice, undercount once. (17 + 17 + 16)/3 = 1000/60
+		//Overcount the 60 fps count by 1 ms (17 ms)
+		while(accumulator >= dtOvercount) {
+			_Game.processInput(1.0f);
+			if(overcount > 2) {
+				accumulator -= dtUndercount;
+				overcount = 0;
+			} else {
+				accumulator -= dtOvercount;
+				overcount++;
+			}
+
+		}
+		//Undercount the 60 fps count by 1 ms (16 ms)
+		if(overcount > 2) {
+			if(accumulator >= dtUndercount) {
+				_Game.processInput(1.0f);
+				accumulator -= dtUndercount;
+				overcount = 0;
+			}
+		}
+
+		//Or game could be updated for every frame, but there will be more slowdown effect if frame times are inconsistent
+		//_Game.processInput(frameTime/(1000.0f/60.0f));
+
+		//Process input no matter what
+		_Game.processInput(0.0f);
+		
+		//Print out the FPS and the accumulator every 2 seconds
+		if (currFPSTick - prevFPSTick > 2000) {
+			std::cout << "FPS: " << _FPSManager.framespersecond << ", " << accumulator << std::endl;
+			prevFPSTick = currFPSTick;
+		}
 
 		//Optional to update the batch, could be moved to automatically update every batch creation
 		//_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
-
-		_FPSManager.fpsthink();
-		if ((SDL_GetTicks() - prevTick) > _FPSManager.framespersecond / 2) {
-			std::cout << "FPS: " << _FPSManager.framespersecond << std::endl;
-			prevTick = SDL_GetTicks();
-		}
 
 		renderGame();
 	}
@@ -154,6 +202,7 @@ void MainGame::renderGame() {
 }
 
 void MainGame::close() {
+	std::cout << "Closing program." << std::endl;
 	if (_IOThread.joinable()) {
 		_IOThread.join();
 	}
