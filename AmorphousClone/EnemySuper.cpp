@@ -37,20 +37,20 @@ void EnemySuper::moveToTarget(float speed) {
 		float xMove = 0;
 		float yMove = 0;
 
-		xMove = cos(angle) * _speed;
+		xMove = cos(angle) * _speed * speed;
 		float offset = _target.x - _x;
 		if(xMove > abs(offset)) {
 			xMove = offset;
 		}
-		yMove = sin(angle) * _speed;
+		yMove = sin(angle) * _speed * speed;
 		offset = _target.y - _y;
 		if(yMove > abs(offset)) {
 			yMove = offset;
 		}
 
-		//_x += xMove;
-		//_y += yMove;
-		//_sprite->translate(xMove, yMove);
-		this->translate(xMove, yMove, speed);
+		_x += xMove;
+		_y += yMove;
+		_sprite->translate(xMove, yMove);
+		//this->translate(xMove, yMove, speed);
 	}
 }

@@ -1,6 +1,6 @@
 #include "StagingManager.h"
 
-StagingManager::StagingManager() : _gameState(nullptr), _SpriteManager(nullptr) {
+StagingManager::StagingManager() : _gameState(nullptr), _SpriteManager(nullptr), _stageState(EXIT) {
 }
 
 
@@ -15,6 +15,10 @@ void StagingManager::init(GameState* gameState, GameEngine::SpriteManager* manag
 }
 
 void StagingManager::loadState() {
+	//Return if the stage is in the correct state already
+	if(*_gameState == _stageState) {
+		return;
+	}
 	//Cleanup the sprites on screen and any buttons
 	_SpriteManager->clearSprites();
 	_buttons.clear();
@@ -34,7 +38,7 @@ void StagingManager::loadState() {
 
 		button.init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "EXIT", GameState::EXIT, _SpriteManager);
 		_buttons.push_back(button);
-
+		_stageState = *_gameState;
 		break;
 	case GameState::LOADING:
 		_SpriteManager->addSprite(275.0f, 275.0f, 250.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/loading.png");
@@ -54,6 +58,7 @@ void StagingManager::loadState() {
 		//_SpriteManager->addSprite(0.0f, 0.0f, 160.0f, 90.0f, 1.0f, std::vector<float>{}, "Textures/01.png");
 		_SpawnManager.init(800, 600, 20, _SpriteManager);
 		//_SpawnManager.startSpawn();
+		_stageState = *_gameState;
 		break;
 	}
 }
