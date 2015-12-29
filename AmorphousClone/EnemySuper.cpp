@@ -1,5 +1,4 @@
 #include "EnemySuper.h"
-#include <iostream>
 
 EnemySuper::EnemySuper() : _enabled(false) {
 }
@@ -18,7 +17,7 @@ void EnemySuper::init(float x, float y, float width, float height, float depth, 
 	_radius = width / 2;
 	_speed = ENEMY_SPEED;
 	_SpriteManager = manager;
-	//Assumes player is a circle
+	//Assumes enemy is a circle
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
 	_hitbox.init(x, y, width, height, _radius);
 	_chance = 0.90f;
@@ -30,15 +29,15 @@ void EnemySuper::init(float x, float y, float width, float height, float depth, 
 void EnemySuper::moveToTarget(float speed) {
 	if(_enabled) {
 		if(getPos() != _target) {
+			//Get the distance to the target and point at it
 			glm::vec2 distanceTo = getCentered() - _target;
-			//std::cout << distanceTo.x << ", " << distanceTo.y << std::endl;
 			_sprite->pointAt(_target);
 			float angle = getRotation();
-			//Normalize later
 
 			float xMove = 0;
 			float yMove = 0;
 
+			//Prevent the target from being overshot
 			xMove = cos(angle) * _speed * speed;
 			if(xMove >= abs(distanceTo.x)) {
 				xMove = distanceTo.x;
@@ -57,9 +56,8 @@ void EnemySuper::moveToTarget(float speed) {
 			_sprite->translate(xMove, yMove);
 			//this->translate(xMove, yMove, speed);
 		} else {
-			std::cout << "Deleting sprite." << std::endl;
-			//Causes list iterator not incrementable error
-			//_SpriteManager->deleteSprite(_sprite);
+			_SpriteManager->deleteSprite(_sprite);
+			_sprite = nullptr;
 			_enabled = false;
 		}
 	}
