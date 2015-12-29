@@ -4,7 +4,6 @@
 
 #include <random>
 #include <vector>
-#include <time.h>
 
 #include <GameEngine/IOManager.h>
 #include <GameEngine/Random.h>
@@ -18,9 +17,9 @@ public:
 	SpawnManager();
 	~SpawnManager();
 
-	void init(int width, int height, int size, GameEngine::SpriteManager* manager);
+	void init(int width, int height, unsigned int size, GameEngine::SpriteManager* manager);
 
-	void startSpawn();
+	void spawn();
 
 	std::list<EnemySuper>* getEnemies() { return &_enemies; }
 
@@ -28,17 +27,17 @@ private:
 	GameEngine::IOManager* _IOManager;
 	GameEngine::SpriteManager* _SpriteManager;
 
-	void spawn(int enemy);
+	void createSpawn(int enemy);
 
 	int _height, _width, spritewidth, spriteheight;
-	unsigned int _size;
+	unsigned int _size, _currIndex;
 
 	std::list<EnemySuper> _enemies;
+	std::vector<int> _spawnTimes;
 
-	Uint32 _startTime;
-	double _delayTime;
+	std::list<EnemySuper>::iterator _currEnemy;
 
-	//std::mt19937 _mt;
+	Uint32 _startTime, _lastSpawn;
+
 	GameEngine::Random _Random;
-	//double random(int a, int b);
 };

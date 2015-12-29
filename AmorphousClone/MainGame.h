@@ -1,10 +1,11 @@
 #pragma once
+
+#include <chrono>
 #include <cstdint>
 #include <iostream>
 #include <thread>
 #include <GL/glew.h>
 #include <SDL/SDL.h>
-//#include <TTF/SDL_ttf.h>
 
 #include <GameEngine/Camera.h>
 #include <GameEngine/FontBatcher.h>
