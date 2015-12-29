@@ -61,6 +61,7 @@ namespace GameEngine {
 		_spriteList.erase(spriteLocation);
 		//sprite->~Sprite();
 		delete sprite;
+		sprite = nullptr;
 	}
 
 	void SpriteManager::sortSprites(sortType cmp) {

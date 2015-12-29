@@ -1,4 +1,5 @@
 #include "EnemySuper.h"
+#include <iostream>
 
 EnemySuper::EnemySuper() : _enabled(false) {
 }
@@ -29,6 +30,8 @@ void EnemySuper::init(float x, float y, float width, float height, float depth, 
 void EnemySuper::moveToTarget(float speed) {
 	if(_enabled) {
 		if(getPos() != _target) {
+			glm::vec2 distanceTo = getCentered() - _target;
+			//std::cout << distanceTo.x << ", " << distanceTo.y << std::endl;
 			_sprite->pointAt(_target);
 			float angle = getRotation();
 			//Normalize later
@@ -37,20 +40,27 @@ void EnemySuper::moveToTarget(float speed) {
 			float yMove = 0;
 
 			xMove = cos(angle) * _speed * speed;
-			float offset = _target.x - _x;
-			if(xMove > abs(offset)) {
-				xMove = offset;
+			if(xMove >= abs(distanceTo.x)) {
+				xMove = distanceTo.x;
+				_x = _target.x;
+			} else {
+				_x += xMove;
 			}
 			yMove = sin(angle) * _speed * speed;
-			offset = _target.y - _y;
-			if(yMove > abs(offset)) {
-				yMove = offset;
+			if(yMove >= abs(distanceTo.y)) {
+				yMove = distanceTo.y;
+				_y = _target.y;
+			} else {
+				_y += yMove;
 			}
-
-			_x += xMove;
-			_y += yMove;
+			
 			_sprite->translate(xMove, yMove);
 			//this->translate(xMove, yMove, speed);
+		} else {
+			std::cout << "Deleting sprite." << std::endl;
+			//Causes list iterator not incrementable error
+			//_SpriteManager->deleteSprite(_sprite);
+			_enabled = false;
 		}
 	}
 }

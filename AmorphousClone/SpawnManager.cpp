@@ -13,7 +13,7 @@ SpawnManager::~SpawnManager(){
 	while(it != _enemies.end()) {
 		it = _enemies.erase(it);
 	}*/
-	//_enemies.clear();
+	_enemies.clear();
 }
 
 void SpawnManager::init(int width, int height, unsigned int size, GameEngine::SpriteManager* manager) {
