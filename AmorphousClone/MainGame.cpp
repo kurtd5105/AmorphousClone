@@ -51,18 +51,16 @@ void MainGame::init() {
 
 void MainGame::gameLoop() {
 	GameState currState = _gameState;
-	Uint32 prevTick = SDL_GetTicks();
-	Uint32 currTick = prevTick;
-	Uint32 currFPSTick = prevTick;
-	Uint32 prevFPSTick = prevTick;
-	Uint32 frameTime = 0;
+	Uint32 currFPSTick = SDL_GetTicks();
+	Uint32 prevFPSTick = currFPSTick;
 	float prevFPS = _FPSManager.framespersecond;
-	Uint32 accumulator = 0;
-	Uint32 maxTime = 6000 / 60;
-	float dt = 1000.0f / 60.0f;
-	Uint32 dtOvercount = 17;
-	Uint32 dtUndercount = 16;
-	int overcount = 0;
+
+	auto prevTick = std::chrono::system_clock::now().time_since_epoch().count();
+	auto currTick = prevTick;
+	auto frameTime = currTick - prevTick;
+	std::chrono::system_clock::rep accumulator = 0;
+	std::chrono::system_clock::rep maxTime = 60000000 / 60;
+	std::chrono::system_clock::rep dt = 10000000 / 60;
 
 	while (_gameState != GameState::EXIT) {
 		//Handle thread state switching
@@ -110,37 +108,21 @@ void MainGame::gameLoop() {
 		//Set up the ticks to count the frame time
 		//Possible to use the FPS manager in the future?
 		prevTick = currTick;
-		currTick = SDL_GetTicks();
-		currFPSTick = currTick;
+		currTick = std::chrono::system_clock::now().time_since_epoch().count();
+		currFPSTick = SDL_GetTicks();
 		frameTime = currTick - prevTick;
 
 		//Cap the speed of the game at 10 FPS min, then slow the game down
 		if(frameTime > maxTime) {
-			std::cout << "FPS is low, frame time exceeded max allowed frame time." << std::endl;
+			std::cout << "FPS is low, frame time exceeded max allowed frame time: " << frameTime << std::endl;
 			frameTime = maxTime;
 		}
 		accumulator += frameTime;
 
-		//Overcount twice, undercount once. (17 + 17 + 16)/3 = 1000/60
-		//Overcount the 60 fps count by 1 ms (17 ms)
-		while(accumulator >= dtOvercount) {
+		//Process steps of 1 frame
+		while(accumulator >= dt) {
 			_Game.processInput(1.0f);
-			if(overcount > 2) {
-				accumulator -= dtUndercount;
-				overcount = 0;
-			} else {
-				accumulator -= dtOvercount;
-				overcount++;
-			}
-
-		}
-		//Undercount the 60 fps count by 1 ms (16 ms)
-		if(overcount > 2) {
-			if(accumulator >= dtUndercount) {
-				_Game.processInput(1.0f);
-				accumulator -= dtUndercount;
-				overcount = 0;
-			}
+			accumulator -= dt;
 		}
 
 		//Or game could be updated for every frame, but there will be more slowdown effect if frame times are inconsistent
@@ -152,6 +134,7 @@ void MainGame::gameLoop() {
 		//Print out the FPS and the accumulator every 2 seconds
 		if (currFPSTick - prevFPSTick > 2000) {
 			std::cout << "FPS: " << _FPSManager.framespersecond << ", " << accumulator << std::endl;
+			//std::cout << std::chrono::system_clock::now().time_since_epoch().count() << std::endl;
 			prevFPSTick = currFPSTick;
 		}
 
