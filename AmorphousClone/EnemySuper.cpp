@@ -1,12 +1,10 @@
 #include "EnemySuper.h"
 
-EnemySuper::EnemySuper()
-{
+EnemySuper::EnemySuper() : _enabled(false) {
 }
 
 
-EnemySuper::~EnemySuper()
-{
+EnemySuper::~EnemySuper() {
 }
 
 void EnemySuper::init(float x, float y, float width, float height, float depth, int side, 
@@ -29,28 +27,30 @@ void EnemySuper::init(float x, float y, float width, float height, float depth, 
 }
 
 void EnemySuper::moveToTarget(float speed) {
-	if(getPos() != _target) {
-		_sprite->pointAt(_target);
-		float angle = getRotation();
-		//Normalize later
+	if(_enabled) {
+		if(getPos() != _target) {
+			_sprite->pointAt(_target);
+			float angle = getRotation();
+			//Normalize later
 
-		float xMove = 0;
-		float yMove = 0;
+			float xMove = 0;
+			float yMove = 0;
 
-		xMove = cos(angle) * _speed * speed;
-		float offset = _target.x - _x;
-		if(xMove > abs(offset)) {
-			xMove = offset;
+			xMove = cos(angle) * _speed * speed;
+			float offset = _target.x - _x;
+			if(xMove > abs(offset)) {
+				xMove = offset;
+			}
+			yMove = sin(angle) * _speed * speed;
+			offset = _target.y - _y;
+			if(yMove > abs(offset)) {
+				yMove = offset;
+			}
+
+			_x += xMove;
+			_y += yMove;
+			_sprite->translate(xMove, yMove);
+			//this->translate(xMove, yMove, speed);
 		}
-		yMove = sin(angle) * _speed * speed;
-		offset = _target.y - _y;
-		if(yMove > abs(offset)) {
-			yMove = offset;
-		}
-
-		_x += xMove;
-		_y += yMove;
-		_sprite->translate(xMove, yMove);
-		//this->translate(xMove, yMove, speed);
 	}
 }
