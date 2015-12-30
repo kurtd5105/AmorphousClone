@@ -9,11 +9,6 @@ SpawnManager::SpawnManager() : _size(0), _currIndex(0), _width(0), _height(0), _
 
 
 SpawnManager::~SpawnManager(){
-	/*auto it = _enemies.begin();
-	while(it != _enemies.end()) {
-		it = _enemies.erase(it);
-	}*/
-	//_enemies.clear();
 }
 
 void SpawnManager::init(int width, int height, unsigned int size, GameEngine::SpriteManager* manager) {

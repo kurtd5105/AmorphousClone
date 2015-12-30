@@ -56,10 +56,9 @@ namespace GameEngine {
 	}
 
 	void SpriteManager::deleteSprite(Sprite* sprite) {
-		//Remove the reference from the linked list
+		//Remove the reference from the linked list and then delete the sprite
 		auto spriteLocation = std::find(_spriteList.begin(), _spriteList.end(), sprite);
 		_spriteList.erase(spriteLocation);
-		//sprite->~Sprite();
 		delete sprite;
 	}
 

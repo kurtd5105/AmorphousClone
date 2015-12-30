@@ -6,6 +6,7 @@ GameLogic::GameLogic() : W(0), A(1), S(2), D(3), Q(4), E(5) {
 
 
 GameLogic::~GameLogic() {
+	_enemies = nullptr;
 }
 
 void GameLogic::init(GameState* gameState, GameEngine::Camera* camera, StagingManager* manager) {
