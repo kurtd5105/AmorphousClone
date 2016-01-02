@@ -7,10 +7,18 @@
 *.sap
 
 # Build results
-[Dd]ebug/
+[Dd]ebug/*.exe
+[Dd]ebug/*.pdb
+[Dd]ebug/*.ilk
+[Dd]ebug/*.exe.*
+*/[Dd]ebug/
 [Dd]ebugPublic/
-[Rr]elease/
+[Rr]elease/*.exe
+[Rr]elease/*.pdb
+[Rr]elease/*.ilk
+[Rr]elease/*.exe.*
 [Rr]eleases/
+*/[Rr]elease/
 x64/
 x86/
 build/
