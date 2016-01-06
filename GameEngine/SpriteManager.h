@@ -25,16 +25,13 @@ namespace GameEngine {
 		std::list<Sprite*>* getSprites() { return &_spriteList; }
 		ResourceManager* getResourceManager() { return _ResourceManager; }
 		
-		void clearSprites() { _spriteList.clear(); }//_sprites.clear(); _spriteRefs.clear(); }
+		void clearSprites();
 		
 	private:
 		ResourceManager* _ResourceManager;
 
 		sortType _sortType;
-		//std::vector<Sprite> _sprites;
-		//std::vector<Sprite*> _spriteRefs;
-
-		//To be replaced in the future
+		
 		std::list<Sprite*> _spriteList;
 
 		static bool cmpTexture(Sprite* a, Sprite* b);

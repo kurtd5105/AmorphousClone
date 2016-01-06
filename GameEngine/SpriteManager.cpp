@@ -62,6 +62,13 @@ namespace GameEngine {
 		delete sprite;
 	}
 
+	void SpriteManager::clearSprites() {
+		for(auto it = _spriteList.begin(); it != _spriteList.end(); it++) {
+			delete *it;
+		}
+		_spriteList.clear();
+	}
+
 	void SpriteManager::sortSprites(sortType cmp) {
 		switch(cmp) {
 		case sortType::TEXTURE:
