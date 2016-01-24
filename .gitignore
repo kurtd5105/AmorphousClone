@@ -25,6 +25,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+dependencies/ORIGINALS/
 
 # User-specific files
 *.suo
