@@ -1,4 +1,5 @@
 #include "StagingManager.h"
+#include <iostream>
 
 StagingManager::StagingManager() : _gameState(nullptr), _SpriteManager(nullptr), _stageState(EXIT) {
 }
@@ -27,16 +28,18 @@ void StagingManager::loadState() {
 		goople.~Goople();
 	}*/
 	
-	Button button;
+	GameEngine::Button button;
 	GameEngine::Text text;
 	GameEngine::Color color;
+	std::function<void(void)> callback;
 	//Setup the new sprites on screen
 	switch(*_gameState) {
 	case GameState::MAIN_MENU:
-		button.init(300.0f, 350.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "PLAY", GameState::PLAYING, _SpriteManager);
+		callback = []() { std::cout << "Callback 1." << std::endl; };
+		button.init(300.0f, 350.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "PLAY", callback, _SpriteManager);
 		_buttons.push_back(button);
-
-		button.init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "EXIT", GameState::EXIT, _SpriteManager);
+		callback = []() { std::cout << "Callback 2." << std::endl; };
+		button.init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "EXIT", callback, _SpriteManager);
 		_buttons.push_back(button);
 		_stageState = *_gameState;
 		break;

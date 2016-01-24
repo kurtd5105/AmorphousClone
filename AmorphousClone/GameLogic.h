@@ -6,11 +6,11 @@
 #include <SDL/SDL.h>
 #include <glm/glm.hpp>
 
+#include <GameEngine/Button.h>
 #include <GameEngine/Camera.h>
 #include <GameEngine/CollisionManager.h>
 #include <GameEngine/InputManager.h>
 
-#include "Button.h"
 #include "GameState.h"
 #include "Player.h"
 #include "EnemySuper.h"
@@ -38,7 +38,7 @@ private:
 
 	std::vector<bool>* _keys;
 
-	std::vector<Button>* _buttonRefs;
+	std::vector<GameEngine::Button>* _buttonRefs;
 	Player* _player;
 	std::list<EnemySuper>* _enemies;
 

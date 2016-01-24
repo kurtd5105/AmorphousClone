@@ -1,6 +1,8 @@
 #pragma once
+#include <functional>
 #include <list>
 
+#include <GameEngine/Button.h>
 #include <GameEngine/SpriteManager.h>
 #include <GameEngine/FontBatcher.h>
 #include <GameEngine/Text.h>
@@ -19,7 +21,7 @@ public:
 	void loadState();
 
 	GameState getStageState() { return _stageState; }
-	std::vector<Button>* getButtonRefs() { return &_buttons; }
+	std::vector<GameEngine::Button>* getButtonRefs() { return &_buttons; }
 	std::vector<GameEngine::FontBatcher>* getFonts() { return &_fonts; }
 	SpawnManager* getSpawnManager() { return &_SpawnManager; }
 
@@ -29,7 +31,7 @@ private:
 	GameEngine::SpriteManager* _SpriteManager;
 	GameEngine::FontBatcher* _defaultFont;
 
-	std::vector<Button> _buttons;
+	std::vector<GameEngine::Button> _buttons;
 	std::vector<GameEngine::Text> _text;
 	std::vector<GameEngine::FontBatcher> _fonts;
 

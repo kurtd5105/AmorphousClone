@@ -68,7 +68,9 @@ void GameLogic::processInput(float step) {
 		if(_InputManager.getMousePress()) {
 			for(auto& button : *_buttonRefs) {
 				if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
-					*_gameState = button.click();
+					//*_gameState = button.click();
+					auto callback = button.onClick();
+					callback();
 					std::cout << "State change to: " << (*_gameState == GameState::PLAYING ? "playing." : *_gameState == GameState::MAIN_MENU ? "main menu." : "exit.") << std::endl;
 				}
 			}
