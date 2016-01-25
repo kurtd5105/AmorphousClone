@@ -35,10 +35,11 @@ void StagingManager::loadState() {
 	//Setup the new sprites on screen
 	switch(*_gameState) {
 	case GameState::MAIN_MENU:
-		callback = []() { std::cout << "Callback 1." << std::endl; };
+		//Set the callback to be capturing (uses _gameState passed by reference) (done with [&])
+		callback = [&]() { *_gameState = GameState::PLAYING; };
 		button.init(300.0f, 350.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "PLAY", callback, _SpriteManager);
 		_buttons.push_back(button);
-		callback = []() { std::cout << "Callback 2." << std::endl; };
+		callback = [&]() { *_gameState = GameState::EXIT; };
 		button.init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "EXIT", callback, _SpriteManager);
 		_buttons.push_back(button);
 		_stageState = *_gameState;

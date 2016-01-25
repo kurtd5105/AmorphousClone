@@ -7,7 +7,6 @@
 #include <GameEngine/FontBatcher.h>
 #include <GameEngine/Text.h>
 
-#include "Button.h"
 #include "GameState.h"
 #include "Player.h"
 #include "SpawnManager.h"
