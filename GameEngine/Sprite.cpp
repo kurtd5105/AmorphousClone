@@ -41,6 +41,12 @@ namespace GameEngine {
 		//Top right [5] = [0]
 		_center = glm::vec2(_width / 2.0f, _height / 2.0f);
 		_offset = std::vector<float>{0.0f, 0.0f};
+
+		//Trying to fix release mode. [4] = [3] = [2], [5] = [5] = [0]
+		vertex.setVertex(x, y, 255, 255, 255, 255, UVmM[0], UVmM[2]);
+		_vertices.push_back(vertex);
+		vertex.setVertex(x + width, y + height, 255, 255, 255, 255, UVmM[1], UVmM[3]);
+		_vertices.push_back(vertex);
 	}
 
 	Sprite::~Sprite() {
@@ -51,6 +57,10 @@ namespace GameEngine {
 		_vertices[1].setUV(UVmM[0], UVmM[3]);
 		_vertices[2].setUV(UVmM[0], UVmM[2]);
 		_vertices[3].setUV(UVmM[1], UVmM[2]);
+
+		//Trying to fix release mode.
+		_vertices[4].setUV(UVmM[0], UVmM[2]);
+		_vertices[5].setUV(UVmM[1], UVmM[3]);
 	}
 
 	void Sprite::translate(float x, float y) {

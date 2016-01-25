@@ -38,9 +38,11 @@ namespace GameEngine {
 			vertices[n++] = sprite->getVertexAt(0);
 			vertices[n++] = sprite->getVertexAt(1);
 			vertices[n++] = sprite->getVertexAt(2);
-			vertices[n++] = vertices[n - 2];//vertex[2]
+			vertices[n] = vertices[n - 1];//vertex[2]
+			n++;
 			vertices[n++] = sprite->getVertexAt(3);
-			vertices[n++] = vertices[n - 6];//vertex[0]
+			vertices[n] = vertices[n - 5];//vertex[0]
+			n++;
 
 			offset += 6;
 		}
