@@ -1,7 +1,7 @@
 #include "GameLogic.h"
 #include <iostream>
 
-GameLogic::GameLogic() : W(0), A(1), S(2), D(3), Q(4), E(5), _clickHold(false) {
+GameLogic::GameLogic() : W(0), A(1), S(2), D(3), Q(4), E(5), _clickHold(false), _currClicked(nullptr) {
 }
 
 
@@ -63,26 +63,56 @@ void GameLogic::processInput(float step) {
 	//cannot be applied before the correct stage is applied
 	switch(_StagingManager->getStageState()) {
 	case GameState::MAIN_MENU:
-		//std::cout << mouseCoords[0] << ", " << mouseCoords[1] << std::endl;
-		//check for button clicks
-		//std::cout << _InputManager.getMousePress() << std::endl;
+		//Check to see if the mouse is clicked
 		if(_InputManager.getMousePress()) {
+			//If the mouse is clicked, check to see if it is being held or not and on what button
 			if(!_clickHold) {
+				//If this is the first frame that a button is being clicked, set the clicked button
 				for(auto& button : *_simpleButtonRefs) {
 					if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
-						button.onClick()();
-						std::cout << "State change to: " << (*_gameState == GameState::PLAYING ? "playing." : *_gameState == GameState::MAIN_MENU ? "main menu." : "exit.") << std::endl;
+						_currClicked = &button;
 					}
 				}
 				for(auto& button : *_checkboxRefs) {
 					if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
-						button.onClick()();
+						_currClicked = &button;
 					}
+				}
+			} else {
+				//If the mouse button is being held and it was clicking a button
+				if(_currClicked != nullptr) {
+					_currClicked->onPush();
 				}
 			}
 			_clickHold = true;
 		} else {
+			//If the mouse button isn't being pressed
 			_clickHold = false;
+
+			//If there was a button that was being pressed then click it if the mouse is still over it
+			if(_currClicked != nullptr) {
+				_currClicked->onIdle();
+				if(GameEngine::Collision::checkClick(*(_currClicked->getHitbox()), mouseCoords[0], mouseCoords[1])) {
+					_currClicked->onClick()();
+				}
+				_currClicked = nullptr;
+			}
+
+			//Check to see if the mouse is hovering over a button or not
+			for(auto& button : *_simpleButtonRefs) {
+				if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
+					button.onHover();
+				} else {
+					button.onIdle();
+				}
+			}
+			for(auto& button : *_checkboxRefs) {
+				if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
+					button.onHover();
+				} else {
+					button.onIdle();
+				}
+			}
 		}
 		break;
 	case GameState::PLAYING:

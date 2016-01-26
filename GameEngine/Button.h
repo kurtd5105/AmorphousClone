@@ -18,6 +18,7 @@ namespace GameEngine {
 		~Button();
 
 		virtual std::function<void(void)> onClick() { return _callback; };
+		void onIdle();
 		void onHover();
 		void onPush();
 		Hitbox* getHitbox() { return &_hitbox; }

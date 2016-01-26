@@ -40,6 +40,7 @@ private:
 
 	std::vector<GameEngine::SimpleButton>* _simpleButtonRefs;
 	std::vector<GameEngine::Checkbox>* _checkboxRefs;
+	GameEngine::Button* _currClicked;
 	Player* _player;
 	std::list<EnemySuper>* _enemies;
 

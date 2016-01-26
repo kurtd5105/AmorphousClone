@@ -7,6 +7,10 @@ namespace GameEngine {
 	Button::~Button() {
 	}
 
+	void Button::onIdle() {
+		_sheet.setAnim(_name + "IDLE");
+	}
+
 	void Button::onHover() {
 		_sheet.setAnim(_name + "HOVER");
 	}
