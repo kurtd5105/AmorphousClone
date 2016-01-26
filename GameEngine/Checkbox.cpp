@@ -10,6 +10,7 @@ namespace GameEngine {
 
 	void Checkbox::init(float x, float y, float width, float height, float depth, std::string texPath, std::string aniPath,
 						std::string text, Color color, std::function<void(void)> callback, SpriteManager* manager, FontBatcher* fontBatcher) {
+		_name = "OFF";
 		_callback = callback;
 		_SpriteManager = manager;
 		_FontBatcher = fontBatcher;
@@ -24,9 +25,11 @@ namespace GameEngine {
 	std::function<void(void)> Checkbox::onClick() {
 		if(_isPushed) {
 			_isPushed = false;
+			_name = "OFF";
 			_sheet.setAnim("OFFIDLE");
 		} else {
 			_isPushed = true;
+			_name = "ON";
 			_sheet.setAnim("ONIDLE");
 		}
 		

@@ -24,6 +24,7 @@ void StagingManager::loadState() {
 	_SpriteManager->clearSprites();
 	_simpleButtons.clear();
 	_player.~Player();
+	_defaultFont->cleanUp();
 	/*for(auto& enemy : _enemies) {
 		goople.~Goople();
 	}*/

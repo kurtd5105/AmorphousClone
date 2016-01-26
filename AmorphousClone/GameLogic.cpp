@@ -67,15 +67,17 @@ void GameLogic::processInput(float step) {
 		//check for button clicks
 		//std::cout << _InputManager.getMousePress() << std::endl;
 		if(_InputManager.getMousePress()) {
-			for(auto& button : *_simpleButtonRefs) {
-				if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
-					button.onClick()();
-					std::cout << "State change to: " << (*_gameState == GameState::PLAYING ? "playing." : *_gameState == GameState::MAIN_MENU ? "main menu." : "exit.") << std::endl;
+			if(!_clickHold) {
+				for(auto& button : *_simpleButtonRefs) {
+					if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
+						button.onClick()();
+						std::cout << "State change to: " << (*_gameState == GameState::PLAYING ? "playing." : *_gameState == GameState::MAIN_MENU ? "main menu." : "exit.") << std::endl;
+					}
 				}
-			}
-			for(auto& button : *_checkboxRefs) {
-				if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
-					button.onClick()();
+				for(auto& button : *_checkboxRefs) {
+					if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
+						button.onClick()();
+					}
 				}
 			}
 			_clickHold = true;
