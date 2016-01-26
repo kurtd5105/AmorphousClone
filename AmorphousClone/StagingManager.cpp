@@ -41,9 +41,14 @@ void StagingManager::loadState() {
 		callback = [&]() { *_gameState = GameState::PLAYING; };
 		button.init(300.0f, 350.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "PLAY", callback, _SpriteManager);
 		_simpleButtons.push_back(button);
-		callback = [&]() { *_gameState = GameState::EXIT; };
-		button.init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "EXIT", callback, _SpriteManager);
+		callback = []() {};//callback = [&]() { *_gameState = GameState::PLAYING; };
+		button.init(300.0f, 250.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "OPTIONS", callback, _SpriteManager);
 		_simpleButtons.push_back(button);
+		callback = [&]() { *_gameState = GameState::EXIT; };
+		button.init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "QUIT", callback, _SpriteManager);
+		_simpleButtons.push_back(button);
+
+		//Empty callback
 		callback = []() {};
 		color.r = 0;
 		color.g = 0;
