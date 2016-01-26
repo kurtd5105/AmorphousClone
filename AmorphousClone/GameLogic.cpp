@@ -1,7 +1,7 @@
 #include "GameLogic.h"
 #include <iostream>
 
-GameLogic::GameLogic() : W(0), A(1), S(2), D(3), Q(4), E(5) {
+GameLogic::GameLogic() : W(0), A(1), S(2), D(3), Q(4), E(5), _clickHold(false) {
 }
 
 
@@ -21,6 +21,7 @@ void GameLogic::getStage() {
 	switch(_StagingManager->getStageState()) {
 	case GameState::MAIN_MENU:
 		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
+		_checkboxRefs = _StagingManager->getCheckboxRefs();
 		break;
 	case GameState::PLAYING:
 		_SpawnManager = _StagingManager->getSpawnManager();
@@ -68,13 +69,18 @@ void GameLogic::processInput(float step) {
 		if(_InputManager.getMousePress()) {
 			for(auto& button : *_simpleButtonRefs) {
 				if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
-					//*_gameState = button.click();
-					//auto callback = button.onClick();
-					//callback();
 					button.onClick()();
 					std::cout << "State change to: " << (*_gameState == GameState::PLAYING ? "playing." : *_gameState == GameState::MAIN_MENU ? "main menu." : "exit.") << std::endl;
 				}
 			}
+			for(auto& button : *_checkboxRefs) {
+				if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
+					button.onClick()();
+				}
+			}
+			_clickHold = true;
+		} else {
+			_clickHold = false;
 		}
 		break;
 	case GameState::PLAYING:

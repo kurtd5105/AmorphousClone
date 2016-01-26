@@ -7,7 +7,8 @@ namespace GameEngine {
 	SimpleButton::~SimpleButton() {
 	}
 
-	void SimpleButton::init(float x, float y, float width, float height, float depth, std::string texPath, std::string aniPath, std::string name, std::function<void(void)> callback, GameEngine::SpriteManager* manager) {
+	void SimpleButton::init(float x, float y, float width, float height, float depth, std::string texPath,
+							std::string aniPath, std::string name, std::function<void(void)> callback, SpriteManager* manager) {
 		_name = name;
 		_callback = callback;
 		_SpriteManager = manager;

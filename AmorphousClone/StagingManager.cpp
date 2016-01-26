@@ -29,6 +29,7 @@ void StagingManager::loadState() {
 	}*/
 	
 	GameEngine::SimpleButton button;
+	GameEngine::Checkbox checkbox;
 	GameEngine::Text text;
 	GameEngine::Color color;
 	std::function<void(void)> callback;
@@ -42,6 +43,13 @@ void StagingManager::loadState() {
 		callback = [&]() { *_gameState = GameState::EXIT; };
 		button.init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "EXIT", callback, _SpriteManager);
 		_simpleButtons.push_back(button);
+		callback = []() {};
+		color.r = 0;
+		color.g = 0;
+		color.b = 255;
+		color.a = 255;
+		checkbox.init(50, 50, 20, 20, 1.0f, "Textures/checkbox.png", "Animations/checkbox.ani", "Test", color, callback, _SpriteManager, _defaultFont);
+		_checkboxes.push_back(checkbox);
 		_stageState = *_gameState;
 		break;
 	case GameState::LOADING:

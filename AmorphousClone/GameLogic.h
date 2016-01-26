@@ -39,9 +39,11 @@ private:
 	std::vector<bool>* _keys;
 
 	std::vector<GameEngine::SimpleButton>* _simpleButtonRefs;
+	std::vector<GameEngine::Checkbox>* _checkboxRefs;
 	Player* _player;
 	std::list<EnemySuper>* _enemies;
 
 	int W, A, S, D, Q, E;
+	bool _clickHold;
 };
 
