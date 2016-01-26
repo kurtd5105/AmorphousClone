@@ -20,7 +20,7 @@ void GameLogic::getStage() {
 	//Get the stage in its current state from the stage, the stage must be updated first
 	switch(_StagingManager->getStageState()) {
 	case GameState::MAIN_MENU:
-		_buttonRefs = _StagingManager->getButtonRefs();
+		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
 		break;
 	case GameState::PLAYING:
 		_SpawnManager = _StagingManager->getSpawnManager();
@@ -66,11 +66,12 @@ void GameLogic::processInput(float step) {
 		//check for button clicks
 		//std::cout << _InputManager.getMousePress() << std::endl;
 		if(_InputManager.getMousePress()) {
-			for(auto& button : *_buttonRefs) {
+			for(auto& button : *_simpleButtonRefs) {
 				if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
 					//*_gameState = button.click();
-					auto callback = button.onClick();
-					callback();
+					//auto callback = button.onClick();
+					//callback();
+					button.onClick()();
 					std::cout << "State change to: " << (*_gameState == GameState::PLAYING ? "playing." : *_gameState == GameState::MAIN_MENU ? "main menu." : "exit.") << std::endl;
 				}
 			}

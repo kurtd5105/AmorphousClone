@@ -3,6 +3,8 @@
 #include <list>
 
 #include <GameEngine/Button.h>
+#include <GameEngine/SimpleButton.h>
+
 #include <GameEngine/SpriteManager.h>
 #include <GameEngine/FontBatcher.h>
 #include <GameEngine/Text.h>
@@ -20,7 +22,7 @@ public:
 	void loadState();
 
 	GameState getStageState() { return _stageState; }
-	std::vector<GameEngine::Button>* getButtonRefs() { return &_buttons; }
+	std::vector<GameEngine::SimpleButton>* getSimpleButtonRefs() { return &_simpleButtons; }
 	std::vector<GameEngine::FontBatcher>* getFonts() { return &_fonts; }
 	SpawnManager* getSpawnManager() { return &_SpawnManager; }
 
@@ -30,7 +32,7 @@ private:
 	GameEngine::SpriteManager* _SpriteManager;
 	GameEngine::FontBatcher* _defaultFont;
 
-	std::vector<GameEngine::Button> _buttons;
+	std::vector<GameEngine::SimpleButton> _simpleButtons;
 	std::vector<GameEngine::Text> _text;
 	std::vector<GameEngine::FontBatcher> _fonts;
 

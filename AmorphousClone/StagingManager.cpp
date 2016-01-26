@@ -22,13 +22,13 @@ void StagingManager::loadState() {
 	}
 	//Cleanup the sprites on screen and any buttons
 	_SpriteManager->clearSprites();
-	_buttons.clear();
+	_simpleButtons.clear();
 	_player.~Player();
 	/*for(auto& enemy : _enemies) {
 		goople.~Goople();
 	}*/
 	
-	GameEngine::Button button;
+	GameEngine::SimpleButton button;
 	GameEngine::Text text;
 	GameEngine::Color color;
 	std::function<void(void)> callback;
@@ -38,10 +38,10 @@ void StagingManager::loadState() {
 		//Set the callback to be capturing (uses _gameState passed by reference) (done with [&])
 		callback = [&]() { *_gameState = GameState::PLAYING; };
 		button.init(300.0f, 350.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "PLAY", callback, _SpriteManager);
-		_buttons.push_back(button);
+		_simpleButtons.push_back(button);
 		callback = [&]() { *_gameState = GameState::EXIT; };
 		button.init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "EXIT", callback, _SpriteManager);
-		_buttons.push_back(button);
+		_simpleButtons.push_back(button);
 		_stageState = *_gameState;
 		break;
 	case GameState::LOADING:

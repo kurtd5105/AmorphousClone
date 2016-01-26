@@ -38,7 +38,7 @@ private:
 
 	std::vector<bool>* _keys;
 
-	std::vector<GameEngine::Button>* _buttonRefs;
+	std::vector<GameEngine::SimpleButton>* _simpleButtonRefs;
 	Player* _player;
 	std::list<EnemySuper>* _enemies;
 
