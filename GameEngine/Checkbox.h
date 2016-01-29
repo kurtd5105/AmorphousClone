@@ -12,7 +12,6 @@ namespace GameEngine {
 				  std::string text, Color color, std::function<void(void)> callback, SpriteManager* manager, FontBatcher* fontBatcher);
 
 		std::function<void(void)> onClick();
-	private:
-		bool _isPushed;
+		bool isPushed() { return _isPushed; }
 	};
 }

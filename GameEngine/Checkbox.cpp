@@ -1,7 +1,7 @@
 #include "Checkbox.h"
 
 namespace GameEngine {
-	Checkbox::Checkbox() : _isPushed(false) {
+	Checkbox::Checkbox() {
 	}
 
 

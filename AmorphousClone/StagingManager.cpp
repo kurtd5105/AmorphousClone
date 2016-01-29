@@ -8,9 +8,10 @@ StagingManager::StagingManager() : _gameState(nullptr), _SpriteManager(nullptr),
 StagingManager::~StagingManager() {
 }
 
-void StagingManager::init(GameState* gameState, GameEngine::SpriteManager* manager, GameEngine::FontBatcher* defaultFont) {
+void StagingManager::init(GameState* gameState, GameEngine::SpriteManager* manager, GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager) {
 	_gameState = gameState;
 	_SpriteManager = manager;
+	_InputManager = inputManager;
 	_defaultFont = defaultFont;
 	loadState();
 }
@@ -31,6 +32,7 @@ void StagingManager::loadState() {
 	
 	GameEngine::SimpleButton button;
 	GameEngine::Checkbox checkbox;
+	GameEngine::Slider slider;
 	GameEngine::Text text;
 	GameEngine::Color color;
 	std::function<void(void)> callback;
@@ -56,6 +58,9 @@ void StagingManager::loadState() {
 		color.a = 255;
 		checkbox.init(50, 50, 20, 20, 1.0f, "Textures/checkbox.png", "Animations/checkbox.ani", "Test", color, callback, _SpriteManager, _defaultFont);
 		_checkboxes.push_back(checkbox);
+
+		slider.init(250, 50, 10, 20, 100, 7, 1.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback, _SpriteManager, _defaultFont, _InputManager);
+		_sliders.push_back(slider);
 		_stageState = *_gameState;
 		break;
 	case GameState::LOADING:

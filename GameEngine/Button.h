@@ -3,6 +3,7 @@
 
 #include "FontBatcher.h"
 #include "Hitbox.h"
+#include "InputManager.h"
 #include "Sprite.h"
 #include "SpriteManager.h"
 #include "SpriteSheet.h"
@@ -18,9 +19,9 @@ namespace GameEngine {
 		~Button();
 
 		virtual std::function<void(void)> onClick() { return _callback; };
-		void onIdle();
-		void onHover();
-		void onPush();
+		virtual void onIdle();
+		virtual void onHover();
+		virtual void onPush();
 		Hitbox* getHitbox() { return &_hitbox; }
 
 	protected:
@@ -29,6 +30,7 @@ namespace GameEngine {
 		SpriteSheet _sheet;
 		SpriteManager* _SpriteManager;
 		FontBatcher* _FontBatcher;
+		InputManager* _InputManager;
 
 		Sprite* _sprite;
 		Text _text;
@@ -36,5 +38,7 @@ namespace GameEngine {
 		Hitbox _hitbox;
 
 		std::string _name;
+
+		bool _isPushed;
 	};
 }

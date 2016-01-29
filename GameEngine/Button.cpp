@@ -1,7 +1,7 @@
 #include "Button.h"
 
 namespace GameEngine {
-	Button::Button() {
+	Button::Button() : _isPushed(false) {
 	}
 
 	Button::~Button() {
