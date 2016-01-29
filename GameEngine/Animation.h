@@ -15,7 +15,7 @@ namespace GameEngine {
 
 		//Getters
 		std::vector<float>* getUVSet(int set, int step) { return &_UVmMSets[set][step]; }
-		int getUVLocation(std::string name);
+		unsigned int getUVLocation(std::string name);
 		int getAnimSize(int set) { return _UVmMSets[set].size(); }
 
 	private:

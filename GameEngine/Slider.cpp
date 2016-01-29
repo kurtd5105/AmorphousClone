@@ -35,7 +35,7 @@ namespace GameEngine {
 			_sheet.setAnim(_name + "PUSH");
 			_isPushed = true;
 		}
-		int x = _InputManager->getMouseCoords()[0];
+		float x = _InputManager->getMouseCoords()[0];
 		if(x > _max) {
 			_sprite->translate(_max - _x, 0);
 			_hitbox.translate(_max - _x, 0);

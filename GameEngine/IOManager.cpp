@@ -126,7 +126,7 @@ namespace GameEngine {
 		//Reduce file size by anything that won't be read at the start
 		fileSize -= file.tellg();
 
-		buffer.resize(fileSize);
+		buffer.resize((unsigned int)fileSize);
 		file.read((char *)&(buffer[0]), fileSize);
 		file.close();
 		return true;
