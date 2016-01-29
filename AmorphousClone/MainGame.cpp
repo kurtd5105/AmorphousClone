@@ -47,13 +47,6 @@ void MainGame::init() {
 	//_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
 
 	_FPSManager.fpsinit();
-
-	b2Vec2 gravity(0.0f, 0.0);
-	m_world = std::unique_ptr<b2World>();
-
-	//Circle newCircle;
-	//newCircle.init(m_world.get(), glm::vec2(0.0f, 50.0f), 20);
-	//m_circles.push_back(newCircle);
 }
 
 void MainGame::gameLoop() {

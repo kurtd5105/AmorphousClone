@@ -55,7 +55,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;opengl32.lib;glew32.lib;GameEngine.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;opengl32.lib;glew32.lib;GameEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -73,13 +73,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;opengl32.lib;glew32.lib;GameEngine.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;opengl32.lib;glew32.lib;GameEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
-    <ClCompile Include="Circle.cpp" />
     <ClCompile Include="EnemySuper.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="Goople.cpp" />
@@ -92,7 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
-    <ClInclude Include="Circle.h" />
     <ClInclude Include="EnemySuper.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameState.h" />

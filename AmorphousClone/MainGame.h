@@ -2,7 +2,6 @@
 
 #include <chrono>
 #include <cstdint>
-#include <Box2D/Box2D.h>
 #include <iostream>
 #include <thread>
 #include <GL/glew.h>
@@ -23,7 +22,6 @@
 #include <GameEngine/Window.h>
 
 #include "StagingManager.h"
-#include "Circle.h"
 #include "GameState.h"
 #include "GameLogic.h"
 #include "SpawnManager.h"
@@ -78,8 +76,4 @@ private:
 
 	std::thread _IOThread;
 	ThreadState _IOThreadState;
-
-	std::vector<Circle> m_circles;
-	std::unique_ptr<b2World> m_world;
-
 };
