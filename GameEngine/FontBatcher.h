@@ -17,6 +17,7 @@ namespace GameEngine {
 
 		void init(std::string path, int point, ResourceManager* manager);//add resource manager control of fonts
 		void cleanUp();
+		void remove(unsigned int start, unsigned int amount);
 		unsigned int add(const glm::vec4& destRect, const glm::vec4& UVmM, float Depth, const Color color);
 		void extendCharLimit(unsigned int length);
 		void renderBatch();

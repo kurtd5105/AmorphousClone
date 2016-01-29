@@ -39,9 +39,9 @@ void MainGame::init() {
 	_fontBatcher_sans16.init("Fonts/OpenSans-Regular.ttf", 16, &_ResourceManager);
 
 	//_SpawnManager.init(WINDOW_WIDTH, WINDOW_HEIGHT, 20, &_SpriteManager);
-	_StagingManager.init(&_gameState, &_SpriteManager, &_fontBatcher_sans16);
+	_StagingManager.init(&_gameState, &_SpriteManager, &_fontBatcher_sans16, &_InputManager);
 	_Camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
-	_Game.init(&_gameState, &_Camera, &_StagingManager);
+	_Game.init(&_gameState, &_Camera, &_StagingManager, &_InputManager);
 	_SpriteBatcher.init();
 
 	//_SpriteBatcher.setNewBatch(_SpriteManager.getSprites());
