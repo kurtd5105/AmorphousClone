@@ -13,8 +13,24 @@ namespace GameEngine {
 		_vertices.resize(_vertices.size() + (6 * length));
 	}
 
+	void FontBatcher::remove(unsigned int start, unsigned int amount) {
+		_renderBatch.numVertices -= amount * 12;
+		unsigned int end = start + amount;
+		std::vector<Vertex> vertices;
+		vertices.resize(_vertices.size() - (12 * amount));
+		unsigned int k = 0;
+		for(unsigned int i = 0; i < vertices.size(); i++) {
+			if(i < start || i > end) {
+				vertices[k] = _vertices[i];
+				k++;
+			}
+		}
+		_vertices.clear();
+		_vertices = vertices;
+	}
+
 	unsigned int FontBatcher::add(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, const Color color) {
-		unsigned int size = _renderBatch.numVertices;
+		unsigned int size = _vertices.size();
 		_renderBatch.numVertices += 12;
 
 		Vertex vertex;

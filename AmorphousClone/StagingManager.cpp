@@ -1,4 +1,5 @@
 #include "StagingManager.h"
+#include <iostream>
 
 StagingManager::StagingManager() : _gameState(nullptr), _SpriteManager(nullptr), _stageState(EXIT) {
 }
@@ -7,9 +8,10 @@ StagingManager::StagingManager() : _gameState(nullptr), _SpriteManager(nullptr),
 StagingManager::~StagingManager() {
 }
 
-void StagingManager::init(GameState* gameState, GameEngine::SpriteManager* manager, GameEngine::FontBatcher* defaultFont) {
+void StagingManager::init(GameState* gameState, GameEngine::SpriteManager* manager, GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager) {
 	_gameState = gameState;
 	_SpriteManager = manager;
+	_InputManager = inputManager;
 	_defaultFont = defaultFont;
 	loadState();
 }
@@ -21,23 +23,44 @@ void StagingManager::loadState() {
 	}
 	//Cleanup the sprites on screen and any buttons
 	_SpriteManager->clearSprites();
-	_buttons.clear();
+	_simpleButtons.clear();
 	_player.~Player();
+	_defaultFont->cleanUp();
 	/*for(auto& enemy : _enemies) {
 		goople.~Goople();
 	}*/
 	
-	Button button;
+	GameEngine::SimpleButton button;
+	GameEngine::Checkbox checkbox;
+	GameEngine::Slider slider;
 	GameEngine::Text text;
 	GameEngine::Color color;
+	std::function<void(void)> callback;
 	//Setup the new sprites on screen
 	switch(*_gameState) {
 	case GameState::MAIN_MENU:
-		button.init(300.0f, 350.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "PLAY", GameState::PLAYING, _SpriteManager);
-		_buttons.push_back(button);
+		//Set the callback to be capturing (uses _gameState passed by reference) (done with [&])
+		callback = [&]() { *_gameState = GameState::PLAYING; };
+		button.init(300.0f, 350.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "PLAY", callback, _SpriteManager);
+		_simpleButtons.push_back(button);
+		callback = []() {};//callback = [&]() { *_gameState = GameState::PLAYING; };
+		button.init(300.0f, 250.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "OPTIONS", callback, _SpriteManager);
+		_simpleButtons.push_back(button);
+		callback = [&]() { *_gameState = GameState::EXIT; };
+		button.init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "QUIT", callback, _SpriteManager);
+		_simpleButtons.push_back(button);
 
-		button.init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "EXIT", GameState::EXIT, _SpriteManager);
-		_buttons.push_back(button);
+		//Empty callback
+		callback = []() {};
+		color.r = 0;
+		color.g = 0;
+		color.b = 255;
+		color.a = 255;
+		checkbox.init(50, 50, 20, 20, 1.0f, "Textures/checkbox.png", "Animations/checkbox.ani", "Test", color, callback, _SpriteManager, _defaultFont);
+		_checkboxes.push_back(checkbox);
+
+		slider.init(250, 50, 10, 20, 100, 7, 1.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback, _SpriteManager, _defaultFont, _InputManager);
+		_sliders.push_back(slider);
 		_stageState = *_gameState;
 		break;
 	case GameState::LOADING:
