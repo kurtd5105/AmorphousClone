@@ -21,5 +21,7 @@ namespace GameEngine {
 		Sprite* _sprite;
 		ResourceManager* _ResourceManager;
 		Animation _animation;
+
+		std::string _currAnim;
 	};
 }

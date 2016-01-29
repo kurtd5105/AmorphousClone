@@ -74,6 +74,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -90,7 +91,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Checkbox.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Errors.h" />
     <ClInclude Include="Font.h" />
@@ -104,6 +107,8 @@
     <ClInclude Include="RenderBatch.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="ShadingProgram.h" />
+    <ClInclude Include="SimpleButton.h" />
+    <ClInclude Include="Slider.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteBatcher.h" />
     <ClInclude Include="SpriteManager.h" />
@@ -116,7 +121,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Checkbox.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Errors.cpp" />
     <ClCompile Include="Font.cpp" />
@@ -128,6 +135,8 @@
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ShadingProgram.cpp" />
+    <ClCompile Include="SimpleButton.cpp" />
+    <ClCompile Include="Slider.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteBatcher.cpp" />
     <ClCompile Include="SpriteManager.cpp" />

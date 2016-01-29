@@ -6,11 +6,11 @@
 #include <SDL/SDL.h>
 #include <glm/glm.hpp>
 
+#include <GameEngine/Button.h>
 #include <GameEngine/Camera.h>
 #include <GameEngine/CollisionManager.h>
 #include <GameEngine/InputManager.h>
 
-#include "Button.h"
 #include "GameState.h"
 #include "Player.h"
 #include "EnemySuper.h"
@@ -22,14 +22,14 @@ public:
 	GameLogic();
 	~GameLogic();
 
-	void init(GameState* gameState, GameEngine::Camera* camera, StagingManager* manager);
+	void init(GameState* gameState, GameEngine::Camera* camera, StagingManager* manager, GameEngine::InputManager* inputManager);
 
 	void updateEnemy(float step);
 	void processInput(float step);
 	void getStage();
 
 private:
-	GameEngine::InputManager _InputManager;
+	GameEngine::InputManager* _InputManager;
 	GameEngine::Camera* _Camera;
 	StagingManager* _StagingManager;
 	SpawnManager* _SpawnManager;
@@ -38,10 +38,14 @@ private:
 
 	std::vector<bool>* _keys;
 
-	std::vector<Button>* _buttonRefs;
+	std::vector<GameEngine::SimpleButton>* _simpleButtonRefs;
+	std::vector<GameEngine::Checkbox>* _checkboxRefs;
+	std::vector<GameEngine::Slider>* _sliderRefs;
+	GameEngine::Button* _currClicked;
 	Player* _player;
 	std::list<EnemySuper>* _enemies;
 
 	int W, A, S, D, Q, E;
+	bool _clickHold;
 };
 

@@ -24,7 +24,7 @@ Modified By: Benjamin Arnold, kurtd5105
 
 
 namespace GameEngine {
-	Text::Text() : _index(0), _text(""), _position(0.0f, 0.0f), _scaling(0.0f, 0.0f), _depth(1.0f), _batcher(nullptr) {
+	Text::Text() : _index(0), _text(""), _position(0.0f, 0.0f), _scaling(0.0f, 0.0f), _depth(1.0f), _batcher(nullptr), _used(false) {
 		Color color;
 		color.r = 255;
 		color.g = 255;
@@ -44,8 +44,16 @@ namespace GameEngine {
 		_depth = depth;
 		_tint = tint;
 		_batcher = batcher;
-
+		if(_used) {
+			clear();
+		}
 		display();
+		_length = _text.length();
+		_used = true;
+	}
+
+	void Text::clear() {
+		_batcher->remove(_index, _length);
 	}
 
 	void Text::display() {
