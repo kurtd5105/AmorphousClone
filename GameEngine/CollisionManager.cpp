@@ -5,6 +5,8 @@ namespace GameEngine {
 	bool Collision::checkCollide(Hitbox a, Hitbox b) {
 		if(a.getType() == b.getType()) {
 			switch(a.getType()) {
+			case HitboxType::CIRC:
+			case HitboxType::RECT:
 			default:
 				return false;
 			}

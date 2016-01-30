@@ -13,7 +13,7 @@ Goople::~Goople(){
 
 void Goople::logicInit(int side, float width, float height) {
 	//0 top, 1 left, 2 right, 3 bottom
-	int targetSide;
+	int targetSide = 0;
 	if(side == 0) {
 		targetSide = _Random->randomIntDist(std::discrete_distribution<int>{0, 1, 1, 1});
 	} else if(side == 1) {
