@@ -37,7 +37,7 @@ public:
 
 	//Vectors containing all the required textures
 	std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/buttons.png", "Textures/loading.png", "Textures/checkbox.png",
-		"Textures/line.png", "Textures/slider.png"};
+		"Textures/slider.png", "Textures/line.png"};
 	std::vector<std::string> TEXTURE_LIST_ASYNC = std::vector<std::string>{"Textures/player.png", "Textures/tile1.png", "Textures/example_enemy.png", "Textures/sword.png"};
 	std::vector<std::string> ANIMATION_LIST_SYNC = std::vector<std::string>{"Animations/buttons.ani", "Animations/checkbox.ani", "Animations/slider.ani"};
 

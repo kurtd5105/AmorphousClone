@@ -16,7 +16,8 @@ namespace GameEngine {
 	}
 
 	bool SpriteManager::cmpDepth(Sprite* a, Sprite* b) {
-		return (a->getDepth() < b->getDepth());
+		//Sort so sprites with higher depth are behind other sprites
+		return (a->getDepth() > b->getDepth());
 	}
 
 	bool SpriteManager::cmpTexture(Sprite* a, Sprite* b) {
@@ -51,7 +52,8 @@ namespace GameEngine {
 				_spriteList.insert(insertLocation, sprite);
 			}
 		}
-		
+		//Sort the sprites again based on their depth
+		sortSprites(sortType::DEPTH);
 		return sprite;
 	}
 
