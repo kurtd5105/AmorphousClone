@@ -28,6 +28,7 @@ public:
 	void processInput(float step);
 	void checkButtons(glm::vec2& mouseCoords);
 	void getStage();
+	void collisionAgents();
 
 private:
 	GameEngine::InputManager* _InputManager;

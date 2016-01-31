@@ -114,6 +114,29 @@ void Agent::setVisible() {
 	}
 }
 
+bool Agent::collideAgents(Agent* agent) {
+
+	const float minDist = getRadius() + agent->getRadius();
+
+	glm::vec2 centerA = getPos() + glm::vec2(getRadius());
+	glm::vec2 centerB = agent->getPos() + glm::vec2(agent->getRadius());
+
+	glm::vec2 diff = centerA - centerB;
+
+	float distlength = glm::length(centerA - centerB);
+	float depth = minDist - distlength;
+
+	if (depth > 0) {
+		getPos() -= diff / 2.0f;
+		agent->getPos() += diff / 2.0f;
+
+		printf("collision occured\n");
+		return true;
+	}
+	return false;
+
+}
+
 void Agent::attack() {
 
 }
