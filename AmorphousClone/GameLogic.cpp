@@ -42,6 +42,25 @@ void GameLogic::updateEnemy(float step) {
 	}
 }
 
+void GameLogic::collisionAgents() {
+
+	//Player collision with enemies
+	for (auto& enemy : *_enemies) {	
+		_player->collideAgents(&enemy);
+	}
+
+	/*
+	//Enemy collisions
+	for (auto& enemy : *_enemies) {
+		for (auto& enemy2 : *_enemies) {
+			if (&enemy != &enemy2) {
+				enemy.collideAgents(&enemy2);
+			}
+		}
+	}
+	*/
+}
+
 void GameLogic::processInput(float step) {
 	SDL_Event event;
 	//_InputManager.update();
@@ -70,6 +89,9 @@ void GameLogic::processInput(float step) {
 	case GameState::PLAYING:
 	{
 		_SpawnManager->spawn();
+
+		collisionAgents();
+
 		//Check if A or D and W or S are pressed for diagonal movement
 		if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
 			//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
@@ -85,7 +107,9 @@ void GameLogic::processInput(float step) {
 			//_player->rotate((_keys->at(Q) - _keys->at(E)) * 0.01f);
 		}
 		_player->pointAt(_Camera->toWorldCoords(mouseCoords));
+
 		updateEnemy(step);
+
 		break;
 	}
 	default:

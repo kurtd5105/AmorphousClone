@@ -22,12 +22,14 @@ public:
 	void pointAt(glm::vec2 pos);
 	void moveTo(Agent* agent, float speed);
 	void lockOn(Agent* agent);
+	bool collideAgents(Agent *agent);
 
 	virtual void attack();
 	virtual void kill();
 
 	float getRotation() { return _sprite->getRotation(); }
 	float getRotationOffset() { return _rotationOffset; }
+	float getRadius() { return _radius; }
 	glm::vec2 getPos() { return glm::vec2(_x, _y); }
 	glm::vec2 getCentered() { return _sprite->getCentered(); }
 

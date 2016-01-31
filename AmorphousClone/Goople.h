@@ -7,6 +7,8 @@ public:
 	Goople(int side, GameEngine::Random* Random, float width, float height);
 	~Goople();
 
+	int _damage = 0;
+
 	void think();
 	void onCollide();
 
