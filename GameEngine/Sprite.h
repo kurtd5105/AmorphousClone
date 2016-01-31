@@ -26,6 +26,10 @@ namespace GameEngine {
 		Vertex getVertexAt(int i) { return _vertices[i]; }
 		glm::vec2 getCentered() { return glm::vec2(_x, _y) + _center; }
 
+		void setInvisible() { _visible = false; }
+		void setVisible() { _visible = true; }
+		bool isVisible() { return _visible; }
+
 	private:
 		glm::vec2 Sprite::rotatePoint(float x, float y, float angle);
 
@@ -34,6 +38,7 @@ namespace GameEngine {
 
 		GLTexture _texture;
 		float _x, _y, _width, _height, _depth, _rotation;
+		bool _visible;
 		std::vector<Vertex> _vertices;
 	};
 }

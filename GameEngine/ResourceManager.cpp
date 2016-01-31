@@ -24,7 +24,7 @@ namespace GameEngine {
 			std::cout << "New animation loaded: " << path << std::endl;
 			return newAnimation;
 		}
-		std::cout << "Animation already loaded." << std::endl;
+		std::cout << "Animation already loaded: " << path << std::endl;
 		return result->second;
 	}
 
@@ -42,7 +42,7 @@ namespace GameEngine {
 			std::cout << "New font loaded: " << path << std::endl;
 			return newFont;
 		}
-		std::cout << "Font already loaded." << std::endl;
+		std::cout << "Font already loaded: " << path << std::endl;
 		return result->second;
 	}
 
@@ -66,7 +66,7 @@ namespace GameEngine {
 			std::cout << "New texture loaded: " << path << std::endl;
 			return newTexture;
 		}
-		std::cout << "Texture already loaded." << std::endl;
+		//std::cout << "Texture already loaded." << std::endl;
 		return result->second;
 	}
 

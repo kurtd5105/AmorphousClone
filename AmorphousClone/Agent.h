@@ -33,9 +33,17 @@ public:
 
 	bool isInit() { return _isInit; }
 
+	void setInvisible();
+	void setVisible();
+	bool isVisible() { return _visible; }
+
+	void disable() { _enabled = false; }
+	void enable() { _enabled = true; }
+	bool isEnabled() { return _enabled; }
+
 protected:
 	float _x, _y, _width, _height, _depth, _rotation, _radius, _speed, _rotationOffset;
-	bool _isInit;
+	bool _isInit, _visible, _enabled;
 	glm::vec2 centerOffset;
 
 	std::vector<Agent*> _subAgents;

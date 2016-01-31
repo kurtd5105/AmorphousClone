@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace GameEngine {
-	Sprite::Sprite() : _x(0.0f), _y(0.0f), _width(0.0f), _height(0.0f), _depth(0.0f), _rotation(0.0f) {}
+	Sprite::Sprite() : _x(0.0f), _y(0.0f), _width(0.0f), _height(0.0f), _depth(0.0f), _rotation(0.0f), _visible(true) {}
 		
 	void Sprite::init(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, ResourceManager* manager) {
 		_texture = manager->getTexture(path);

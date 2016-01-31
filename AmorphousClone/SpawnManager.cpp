@@ -17,8 +17,6 @@ void SpawnManager::init(int width, int height, unsigned int size, GameEngine::Sp
 	_height = height;
 	_Random.setScreenDimensions(_width, _height);
 	_SpriteManager = manager;
-	_startTime = SDL_GetTicks();
-	_lastSpawn = _startTime;
 
 	//needs to be refactor later doesn't take into account dynamic sizes of sprites
 	spriteheight = 50;
@@ -31,6 +29,8 @@ void SpawnManager::init(int width, int height, unsigned int size, GameEngine::Sp
 		createSpawn(0);
 	}
 	_currEnemy = _enemies.begin();
+	_startTime = SDL_GetTicks();
+	_lastSpawn = _startTime;
 }
 
 void SpawnManager::spawn() {
@@ -40,6 +40,7 @@ void SpawnManager::spawn() {
 		//Enable the next enemy if enough time has elapsed
 		if((int)(curr - _lastSpawn) >= _spawnTimes[_currIndex]) {
 			_currEnemy->enable();
+			_currEnemy->setVisible();
 			_currEnemy = std::next(_currEnemy);
 			_currIndex++;
 			_lastSpawn = curr;
@@ -61,21 +62,29 @@ void SpawnManager::createSpawn(int enemy) {
 			//_enemies.emplace_back();
 			_enemies.push_back(Goople(0, &_Random, 50.0f, 50.0f));
 			_enemies.back().init((float)x, (float)_height, 50.0f, 50.0f, 1.0f, side, VEC_F_E, "Textures/example_enemy.png", _SpriteManager, &_Random);
+			_enemies.back().setInvisible();
+			_enemies.back().disable();
 			break;
 		case 1://left
 			//std::cout << "Left" << std::endl;
 			_enemies.push_back(Goople(1, &_Random, 50.0f, 50.0f));
 			_enemies.back().init((float)-spritewidth, (float)y, 50.0f, 50.0f, 1.0f, side, VEC_F_E, "Textures/example_enemy.png", _SpriteManager, &_Random);
+			_enemies.back().setInvisible();
+			_enemies.back().disable();
 			break;
 		case 2://right
 			//std::cout << "Right" << std::endl;
 			_enemies.push_back(Goople(2, &_Random, 50.0f, 50.0f));
 			_enemies.back().init((float)_width, (float)y, 50.0f, 50.0f, 1.0f, side, VEC_F_E, "Textures/example_enemy.png", _SpriteManager, &_Random);
+			_enemies.back().setInvisible();
+			_enemies.back().disable();
 			break;
 		case 3://bottom
 			//::cout << "Down" << std::endl;
 			_enemies.push_back(Goople(3, &_Random, 50.0f, 50.0f));
 			_enemies.back().init((float)x, (float)-spriteheight, 50.0f, 50.0f, 1.0f, side, VEC_F_E, "Textures/example_enemy.png", _SpriteManager, &_Random);
+			_enemies.back().setInvisible();
+			_enemies.back().disable();
 			break;
 	}
 }

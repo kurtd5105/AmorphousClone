@@ -79,7 +79,7 @@ void StagingManager::loadState() {
 		text.init(test, glm::vec2(0, 0), glm::vec2(1, 1), 1.0f, color, _defaultFont);
 		_player.init(375.0f, 275.0f, 50.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/player.png", _SpriteManager);
 		//_SpriteManager->addSprite(0.0f, 0.0f, 160.0f, 90.0f, 1.0f, std::vector<float>{}, "Textures/01.png");
-		_SpawnManager.init(800, 600, 20, _SpriteManager);
+		_SpawnManager.init(800, 600, 1000, _SpriteManager);
 		//_SpawnManager.startSpawn();
 		_stageState = *_gameState;
 		break;

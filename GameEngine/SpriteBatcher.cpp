@@ -24,27 +24,29 @@ namespace GameEngine {
 		GLuint currentTexture = 0, textureID = 0;
 
 		for(auto& sprite : _spritePointers) {
-			//If the texture is unique then add a new grouping of vertices
-			textureID = sprite->getTextureID();
-			if(textureID != currentTexture) {
-				_renderBatches.emplace_back(offset, 6, textureID);
-				currentTexture = textureID;
-				//Otherwise just increase the amount of vertices for that one batch
-			} else {
-				_renderBatches.back().numVertices += 6;
-			}
-			//Add in all the vertices
-			//Assumes bottom left and top right vertices are shared
-			vertices[n++] = sprite->getVertexAt(0);
-			vertices[n++] = sprite->getVertexAt(1);
-			vertices[n++] = sprite->getVertexAt(2);
-			vertices[n] = vertices[n - 1];//vertex[2]
-			n++;
-			vertices[n++] = sprite->getVertexAt(3);
-			vertices[n] = vertices[n - 5];//vertex[0]
-			n++;
+			if(sprite->isVisible()) {
+				//If the texture is unique then add a new grouping of vertices
+				textureID = sprite->getTextureID();
+				if(textureID != currentTexture) {
+					_renderBatches.emplace_back(offset, 6, textureID);
+					currentTexture = textureID;
+					//Otherwise just increase the amount of vertices for that one batch
+				} else {
+					_renderBatches.back().numVertices += 6;
+				}
+				//Add in all the vertices
+				//Assumes bottom left and top right vertices are shared
+				vertices[n++] = sprite->getVertexAt(0);
+				vertices[n++] = sprite->getVertexAt(1);
+				vertices[n++] = sprite->getVertexAt(2);
+				vertices[n] = vertices[n - 1];//vertex[2]
+				n++;
+				vertices[n++] = sprite->getVertexAt(3);
+				vertices[n] = vertices[n - 5];//vertex[0]
+				n++;
 
-			offset += 6;
+				offset += 6;
+			}
 		}
 		//Bind the vbo
 		glBindBuffer(GL_ARRAY_BUFFER, _vboID);

@@ -1,6 +1,6 @@
 #include "EnemySuper.h"
 
-EnemySuper::EnemySuper() : _enabled(false) {
+EnemySuper::EnemySuper() {
 }
 
 
