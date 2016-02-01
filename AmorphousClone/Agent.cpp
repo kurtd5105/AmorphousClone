@@ -116,6 +116,7 @@ void Agent::setVisible() {
 
 bool Agent::collideAgents(Agent* agent) {
 
+	//Minimum distance for a collision to occur, can be diffrent of diffrent radiuses
 	const float minDist = getRadius() + agent->getRadius();
 
 	glm::vec2 centerA = getPos() + glm::vec2(getRadius());
@@ -127,10 +128,7 @@ bool Agent::collideAgents(Agent* agent) {
 	float depth = minDist - distlength;
 
 	if (depth > 0) {
-		getPos() -= diff / 2.0f;
-		agent->getPos() += diff / 2.0f;
-
-		printf("collision occured\n");
+		//printf("A collision occured\n");
 		return true;
 	}
 	return false;
