@@ -49,16 +49,16 @@ void GameLogic::collisionAgents() {
 		_player->collideAgents(&enemy);
 	}
 
-	/*
 	//Enemy collisions
 	for (auto& enemy : *_enemies) {
-		for (auto& enemy2 : *_enemies) {
-			if (&enemy != &enemy2) {
-				enemy.collideAgents(&enemy2);
+		if (enemy.isEnabled()) {
+			for (auto& enemy2 : *_enemies) {
+				if (&enemy != &enemy2 && enemy2.isEnabled()) {
+					enemy.collideAgents(&enemy2);
+				}
 			}
 		}
 	}
-	*/
 }
 
 void GameLogic::processInput(float step) {
@@ -88,9 +88,10 @@ void GameLogic::processInput(float step) {
 		break;
 	case GameState::PLAYING:
 	{
-		_SpawnManager->spawn();
 
 		collisionAgents();
+
+		_SpawnManager->spawn();
 
 		//Check if A or D and W or S are pressed for diagonal movement
 		if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
