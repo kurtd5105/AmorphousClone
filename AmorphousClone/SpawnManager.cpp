@@ -23,7 +23,7 @@ void SpawnManager::init(int width, int height, unsigned int size, GameEngine::Sp
 	spritewidth = 50;
 
 	//Create spawn times for each enemy and create them
-	for(unsigned int i = 0; i < _size; i++) {
+	for(unsigned int i = 0; i <= _size; i++) {
 		_spawnTimes.push_back(_Random.randomInt(1000, 4000));
 		//In the future replace 0 with a random for which enemy
 		createSpawn(0);

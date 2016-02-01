@@ -18,6 +18,10 @@ public:
 	virtual void onCollide() {}
 	double getChance(){ return _chance; };
 
+	void enable() { _enabled = true; }
+	void disable() { _enabled = false; }
+	bool isEnabled() { return _enabled; };
+
 protected:
 	float _chance;
 	glm::vec2 _target;
