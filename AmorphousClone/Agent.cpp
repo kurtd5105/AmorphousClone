@@ -135,6 +135,27 @@ bool Agent::collideAgents(Agent* agent) {
 
 }
 
+bool Agent::collideAgents(Agent* agent) {
+
+	//Minimum distance for a collision to occur, can be diffrent of diffrent radiuses
+	const float minDist = getRadius() + agent->getRadius();
+
+	glm::vec2 centerA = getPos() + glm::vec2(getRadius());
+	glm::vec2 centerB = agent->getPos() + glm::vec2(agent->getRadius());
+
+	glm::vec2 diff = centerA - centerB;
+
+	float distlength = glm::length(centerA - centerB);
+	float depth = minDist - distlength;
+
+	if (depth > 0) {
+		//printf("A collision occured\n");
+		return true;
+	}
+	return false;
+
+}
+
 void Agent::attack() {
 
 }
