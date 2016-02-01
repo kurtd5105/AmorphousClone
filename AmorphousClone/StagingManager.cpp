@@ -97,7 +97,7 @@ void StagingManager::loadState() {
 		_player.init(375.0f, 275.0f, 50.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/player.png", _SpriteManager);
 
 		//Begin spawning enemies
-		_SpawnManager.init(800, 600, 20, _SpriteManager);
+		_SpawnManager.init(800, 600, 1000, _SpriteManager);
 
 		//Set the stage state to the game state now that everything is setup
 		_stageState = *_gameState;
