@@ -14,15 +14,20 @@ namespace GameEngine {
 		_callback = callback;
 		_SpriteManager = manager;
 		_FontBatcher = fontBatcher;
+
+		_color = color;
+
 		_sprite = _SpriteManager->addSprite(x, y, width, height, depth, std::vector<float>{}, texPath);
+		_hitbox.init(x, y, width, height, 0);
+
 		_sheet.init(aniPath, _sprite, _SpriteManager->getResourceManager());
 		_sheet.setAnim("OFFIDLE");
-		_hitbox.init(x, y, width, height, 0);
-		_color = color;
+		
 		_text.init(text, glm::vec2(x + width, y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
 	}
 
 	std::function<void(void)> Checkbox::onClick() {
+		//Toggle the button between unchecked and checked
 		if(_isPushed) {
 			_isPushed = false;
 			_name = "OFF";
@@ -33,6 +38,7 @@ namespace GameEngine {
 			_sheet.setAnim("ONIDLE");
 		}
 		
+		//Also return the callback when it gets clicked
 		return _callback;
 	}
 }

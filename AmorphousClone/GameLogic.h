@@ -26,6 +26,7 @@ public:
 
 	void updateEnemy(float step);
 	void processInput(float step);
+	void checkButtons(glm::vec2& mouseCoords);
 	void getStage();
 
 private:

@@ -12,9 +12,11 @@ namespace GameEngine {
 		_name = name;
 		_callback = callback;
 		_SpriteManager = manager;
+
 		_sprite = _SpriteManager->addSprite(x, y, width, height, depth, std::vector<float>{}, texPath);
+		_hitbox.init(x, y, width, height, 0);
+
 		_sheet.init(aniPath, _sprite, _SpriteManager->getResourceManager());
 		_sheet.setAnim(_name + "IDLE");
-		_hitbox.init(x, y, width, height, 0);
 	}
 }
