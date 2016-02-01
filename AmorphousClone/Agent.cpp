@@ -128,7 +128,7 @@ bool Agent::collideAgents(Agent* agent) {
 	float depth = minDist - distlength;
 
 	if (depth > 0) {
-		//printf("A collision occured\n");
+		printf("A collision occured\n");
 		return true;
 	}
 	return false;

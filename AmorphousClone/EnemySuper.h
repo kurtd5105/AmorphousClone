@@ -18,13 +18,10 @@ public:
 	virtual void onCollide() {}
 	double getChance(){ return _chance; };
 
-<<<<<<< HEAD
-=======
 	void enable() { _enabled = true; }
 	void disable() { _enabled = false; }
 	bool isEnabled() { return _enabled; };
 
->>>>>>> Enemy agents collide with one another
 protected:
 	float _chance;
 	glm::vec2 _target;
