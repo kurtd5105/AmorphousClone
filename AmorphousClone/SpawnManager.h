@@ -27,7 +27,6 @@ private:
 	GameEngine::IOManager* _IOManager;
 	GameEngine::SpriteManager* _SpriteManager;
 
-	void createSpawn(int enemy);
 	void enemyInit();
 	
 	int _height, _width, spritewidth, spriteheight;
@@ -44,10 +43,14 @@ private:
 	GameEngine::Random _Random;
 
 	struct enemyinfo {
+		std::string _name;
 		int _spawnrate;
-		int _size;
+		float _size;
 		std::string _texture;
 	};
 
 	std::vector<enemyinfo> enemyalmanac;
+
+	SpawnManager::enemyinfo weightedRand();
+	void createSpawn(struct enemyinfo);
 };
