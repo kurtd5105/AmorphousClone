@@ -110,7 +110,7 @@ void SpawnManager::createSpawn(struct enemyinfo enemy) {
 		case 3://bottom
 			//::cout << "Down" << std::endl;
 			_enemies.push_back(Goople(3, &_Random, 50.0f, 50.0f));
-			_enemies.back().init((float)x, (float)-_size, 50.0f, 50.0f, 2.0f, side, VEC_F_E, "Textures/example_enemy.png", _SpriteManager, &_Random);
+			_enemies.back().init((float)x, (float)-_size, 50.0f, 50.0f, 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
 			_enemies.back().setInvisible();
 			_enemies.back().disable();
 			break;
