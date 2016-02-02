@@ -28,9 +28,11 @@ private:
 	GameEngine::SpriteManager* _SpriteManager;
 
 	void createSpawn(int enemy);
-
+	void enemyInit();
+	
 	int _height, _width, spritewidth, spriteheight;
 	unsigned int _size, _currIndex;
+	std::string enemytexture;
 
 	std::list<EnemySuper> _enemies;
 	std::vector<int> _spawnTimes;
@@ -40,4 +42,12 @@ private:
 	Uint32 _startTime, _lastSpawn;
 
 	GameEngine::Random _Random;
+
+	struct enemyinfo {
+		int _spawnrate;
+		int _size;
+		std::string _texture;
+	};
+
+	std::vector<enemyinfo> enemyalmanac;
 };

@@ -48,6 +48,14 @@ void SpawnManager::spawn() {
 	}
 }
 
+void SpawnManager::enemyInit() {
+	//Instationation of enemy data struct, consists of spawnrate int, size of sprite int and string for texture
+
+	//Gloople instantiation data
+	struct enemyinfo gloople = { 90, 50, "Textures/example_enemy.png" };
+	enemyalmanac.push_back(gloople);
+}
+
 void SpawnManager::createSpawn(int enemy) {
 	float x = _Random.random(0.0f, (float)_width);
 	float y = _Random.random(0.0f, (float)_height);
