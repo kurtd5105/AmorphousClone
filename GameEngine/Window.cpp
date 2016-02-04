@@ -15,10 +15,10 @@ namespace GameEngine {
 	Window::~Window() {
 	}
 
-	void Window::createWindow(int width, int height, std::string name, WindowMode windowMode) {
-		_height = height;
-		_width = width;
-		_windowMode = windowMode;
+	void Window::createWindow(Options* options, std::string name) {
+		_height = options->height;
+		_width = options->width;
+		_windowMode = options->mode;
 
 		//Setup the appropriate flag for the SDL window mode
 		auto windowFlag = SDL_WINDOW_OPENGL;

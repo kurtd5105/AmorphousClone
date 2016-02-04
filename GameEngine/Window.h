@@ -3,17 +3,16 @@
 #include <SDL/SDL.h>
 #include <string>
 
-namespace GameEngine {
-	enum WindowMode {
-		FULLSCREEN, BORDERLESS, WINDOWED
-	};
+#include "Options.h"
+#include "WindowMode.h"
 
+namespace GameEngine {
 	class Window {
 	public:
 		Window();
 		~Window();
 
-		void createWindow(int width, int height, std::string name, WindowMode windowMode = WindowMode::WINDOWED);
+		void createWindow(Options* options, std::string name);
 		void swapBuffer();
 		void destroySDLWindow();
 

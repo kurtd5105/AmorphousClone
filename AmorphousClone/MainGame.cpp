@@ -15,7 +15,9 @@ void MainGame::startGame() {
 }
 
 void MainGame::init() {
-	_Window.createWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Amorphous Clone", GameEngine::WindowMode::WINDOWED);
+	_Options = new GameEngine::Options;
+	_IOManager.loadOptions(_Options);
+	_Window.createWindow(_Options, "Amorphous Clone");
 
 	//Load textures into memory, either they are loaded at the start of the game or not and we track
 	//the status of the rest of the textures
@@ -195,6 +197,8 @@ void MainGame::close() {
 
 	_Window.destroySDLWindow();
 	SDL_Quit();
+
+	_IOManager.saveOptions(_Options);
 	//int a;
 	//std::cout << "Enter a key to close. ";
 	//std::cin >> a;

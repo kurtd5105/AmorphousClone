@@ -1,12 +1,8 @@
 #include "IOManager.h"
-#include "picoPNG.h"
-#include "Errors.h"
-#include <fstream>
 
 namespace GameEngine {
 	IOManager::IOManager() {
 	}
-
 
 	IOManager::~IOManager() {
 	}
@@ -130,5 +126,93 @@ namespace GameEngine {
 		file.read((char *)&(buffer[0]), fileSize);
 		file.close();
 		return true;
+	}
+
+	void IOManager::loadOptions(Options* options) {
+		std::ifstream file("options.cfg");
+
+		options->width = 800;
+		options->height = 600;
+		options->music = 1.0f;
+		options->sfx = 1.0f;
+		options->mode = WindowMode::WINDOWED;
+
+		if(file.is_open()) {
+			//std::cout << "File is open." << std::endl;
+			std::string width, height, music, sfx, mode;
+			std::regex integer("[[:digit:]]+");
+			std::regex decimal("[[:digit:]]+(.[[:digit:]]+)?");
+			file >> width;
+			file >> height;
+			file >> music;
+			file >> sfx;
+			file >> mode;
+
+			//Check to see if width and height can be parsed to integers
+			if(regex_match(width, integer) && regex_match(height, integer)) {
+				//std::cout << "\t> WH match found." << std::endl;
+				int w = std::stoi(width);
+				int h = std::stoi(height);
+				unsigned int i;
+
+				//Check to see if the provided width and height are a valid display resolution
+				for(i = 0; i < validWidths.size(); i++) {
+					if(validWidths[i] == w) {
+						if(validHeights[i] == h) {
+							//std::cout << "\t\tWH are valid." << std::endl;
+							options->width = w;
+							options->height = h;
+						}
+						break;
+					}
+				}
+			}
+
+			//Check to see if music volume is a float from 0 to 1
+			if(regex_match(music, decimal)) {
+				//std::cout << "\t> Music match found." << std::endl;
+				float v = std::stof(music);
+				if(v >= 0.0f && v <= 1.0f) {
+					//std::cout << "\t\t Music is valid." << std::endl;
+					options->music = v;
+				}
+			}
+
+			//Check to see if sfx volume is a float from 0 to 1
+			if(regex_match(sfx, decimal)) {
+				//std::cout << "\t> SFX match found." << std::endl;
+				float v = std::stof(sfx);
+				if(v >= 0.0f && v <= 1.0f) {
+					//std::cout << "\t\t SFX is valid." << std::endl;
+					options->sfx = v;
+				}
+			}
+
+			//Check to see if the window mode is set to any of the window modes
+			if(mode == "BORDERLESS") {
+				//std::cout << "\t> Borderless." << std::endl;
+				options->mode = WindowMode::BORDERLESS;
+			} else if(mode == "FULLSCREEN") {
+				//std::cout << "\t> Fullscreen." << std::endl;
+				options->mode = WindowMode::FULLSCREEN;
+			} else if(mode == "WINDOWED") {
+				//std::cout << "\t> Windowed." << std::endl;
+				options->mode = WindowMode::WINDOWED;
+			}
+		}
+	}
+
+	void IOManager::saveOptions(Options* options) {
+		//Open the file for reading and clearing it
+		std::ofstream file("options.cfg", std::ios::out | std::ios::trunc);
+		file << options->width << std::endl << options->height << std::endl << options->music << std::endl << options->sfx << std::endl;
+
+		if(options->mode == WindowMode::BORDERLESS) {
+			file << "BORDERLESS" << std::endl;
+		} else if(options->mode == WindowMode::FULLSCREEN) {
+			file << "FULLSCREEN" << std::endl;
+		} else if(options->mode == WindowMode::WINDOWED) {
+			file << "WINDOWED" << std::endl;
+		}
 	}
 }
