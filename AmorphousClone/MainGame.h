@@ -71,7 +71,7 @@ private:
 
 	GameEngine::FPSManager _FPSManager;
 
-	GameEngine::Options* _Options;
+	GameEngine::Options* _options;
 
 	StagingManager _StagingManager;
 	GameLogic _Game;

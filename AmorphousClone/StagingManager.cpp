@@ -8,11 +8,13 @@ StagingManager::StagingManager() : _gameState(nullptr), _SpriteManager(nullptr),
 StagingManager::~StagingManager() {
 }
 
-void StagingManager::init(GameState* gameState, GameEngine::SpriteManager* manager, GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager) {
+void StagingManager::init(GameState* gameState, GameEngine::Options* options, GameEngine::SpriteManager* manager,
+						  GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager) {
 	_gameState = gameState;
 	_SpriteManager = manager;
 	_InputManager = inputManager;
 	_defaultFont = defaultFont;
+	_options = options;
 	loadState();
 }
 
@@ -111,11 +113,6 @@ void StagingManager::loadState() {
 		break;
 	}
 	case GameState::OPTIONS:
-		callback = [&]() { *_gameState = GameState::MAIN_MENU; };
-		//Create the quit button
-		_simpleButtons.emplace_back();
-		_simpleButtons[0].init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
-
 		//Empty callback
 		callback = []() {};
 
@@ -127,25 +124,37 @@ void StagingManager::loadState() {
 
 		_text.emplace_back();
 		_text.emplace_back();
+		_text.emplace_back();
+		_text.emplace_back();
 
 		_text[0].init("Music Volume:", glm::vec2(20, 500), glm::vec2(1, 1), 1.0f, color, _defaultFont);
 		_text[1].init("SFX Volume:", glm::vec2(20, 400), glm::vec2(1, 1), 1.0f, color, _defaultFont);
+		_text[2].init("Spawn Count:", glm::vec2(500, 500), glm::vec2(1, 1), 1.0f, color, _defaultFont);
+		_text[3].init("Spawn Rate:", glm::vec2(500, 400), glm::vec2(1, 1), 1.0f, color, _defaultFont);
 
 		//Create sliders for music and sfx volumes
 		_sliders.emplace_back();
 		_sliders.emplace_back();
 		_sliders.emplace_back();
-		//_sliders[0] = new GameEngine::Slider();
-		//_sliders[1] = new GameEngine::Slider();
-		//_sliders[2] = new GameEngine::Slider();
+		_sliders.emplace_back();
 
 		_sliders[0].init(150.0f, 500.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
 					_SpriteManager, _defaultFont, _InputManager);
 		_sliders[1].init(150.0f, 400.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
 					_SpriteManager, _defaultFont, _InputManager);
-		_sliders[2].init(150.0f, 300.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
+		_sliders[2].init(620.0f, 500.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
 						  _SpriteManager, _defaultFont, _InputManager);
+		_sliders[3].init(620.0f, 400.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
+						 _SpriteManager, _defaultFont, _InputManager);
 
+		callback = [&]() {
+			_options->music = _sliders[0].getPercent() / 100.0f;
+			_options->sfx = _sliders[1].getPercent() / 100.0f;
+			*_gameState = GameState::MAIN_MENU;
+		};
+		//Create the quit button
+		_simpleButtons.emplace_back();
+		_simpleButtons[0].init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
 		//Set the stage state to the game state now that everything is setup
 		_stageState = *_gameState;
 		break;
