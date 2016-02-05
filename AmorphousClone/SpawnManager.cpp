@@ -22,7 +22,7 @@ void SpawnManager::init(int width, int height, unsigned int size, GameEngine::Sp
 
 	//Create spawn times for each enemy and create them
 	for(unsigned int i = 0; i <= _size; i++) {
-		_spawnTimes.push_back(_Random.randomInt(1000, 4000));
+		_spawnTimes.push_back(_Random.randomInt(500, 2000));
 		//Decide on enemy to spawn
 		createSpawn(weightedRand());
 	}

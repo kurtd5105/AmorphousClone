@@ -15,6 +15,8 @@ void GameLogic::init(GameState* gameState, GameEngine::Camera* camera, StagingMa
 	_StagingManager = manager;
 	_InputManager = inputManager;
 	_keys = _InputManager->getKeyPresses();
+
+	startTime = 0;
 }
 
 void GameLogic::getStage() {
@@ -54,10 +56,19 @@ void GameLogic::collisionAgents() {
 		if (enemy.isEnabled()) {
 			for (auto& enemy2 : *_enemies) {
 				if (&enemy != &enemy2 && enemy2.isEnabled()) {
-					enemy.collideAgents(&enemy2);
+					if (enemy.collideAgents(&enemy2) && !enemy.getCollided() && !enemy2.getCollided()) {
+						enemy.setCollided(true);
+						enemy2.setCollided(true);
+						_tempTarget = enemy.getTarget();
+						enemy.setTarget(enemy2.getTarget());
+						enemy2.setTarget(_tempTarget);
+					}
 				}
 			}
 		}
+	}
+	for (auto& enemy : *_enemies) {
+		enemy.setCollided(false);
 	}
 }
 
@@ -89,7 +100,10 @@ void GameLogic::processInput(float step) {
 	case GameState::PLAYING:
 	{
 
-		collisionAgents();
+		if (SDL_GetTicks() > startTime + 200) {
+			startTime = SDL_GetTicks();
+			collisionAgents();
+		}
 
 		_SpawnManager->spawn();
 
