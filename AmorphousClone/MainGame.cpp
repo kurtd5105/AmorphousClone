@@ -53,6 +53,8 @@ void MainGame::init() {
 
 void MainGame::gameLoop() {
 	GameState currState = _gameState;
+	GameState desiredState = _gameState;
+
 	Uint32 currFPSTick = SDL_GetTicks();
 	Uint32 prevFPSTick = currFPSTick;
 	float prevFPS = _FPSManager.framespersecond;
@@ -90,6 +92,7 @@ void MainGame::gameLoop() {
 		}
 		else if (currState != _gameState && (_IOThreadState == ThreadState::ON || _IOThreadState == ThreadState::POST_LOAD)) {
 			std::cout << "Waiting on thread to complete or post load." << std::endl;
+			desiredState = _gameState;
 			_gameState = GameState::LOADING;
 			currState = _gameState;
 			accumulator = 0;
@@ -98,7 +101,7 @@ void MainGame::gameLoop() {
 			//Thread is complete and game state is loading, switch can now occur
 		}
 		else if (_gameState == GameState::LOADING && _IOThreadState == ThreadState::OFF) {
-			_gameState = GameState::PLAYING;
+			_gameState = desiredState;
 			currState = _gameState;
 			accumulator = 0;
 			_StagingManager.loadState();
@@ -190,8 +193,7 @@ void MainGame::close() {
 	std::cout << "Closing program." << std::endl;
 	if (_IOThread.joinable()) {
 		_IOThread.join();
-	}
-	else {
+	} else {
 		_IOThread.~thread();
 	}
 

@@ -6,6 +6,7 @@ namespace GameEngine {
 
 
 	Slider::~Slider() {
+		//delete _text;
 	}
 
 	void Slider::init(float x, float y, float width, float height, float lineWidth, float lineHeight, float depth, std::string texPath, std::string aniPath,
@@ -32,6 +33,7 @@ namespace GameEngine {
 		_sheet.init(aniPath, _sprite, _SpriteManager->getResourceManager());
 		_sheet.setAnim("IDLE");
 
+		//_text = new Text();
 		_text.init("0", glm::vec2(x + lineWidth + 10, _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
 	}
 
