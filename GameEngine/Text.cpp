@@ -1,5 +1,5 @@
 #include "Text.h"
-
+#include <iostream>
 //Adapted from Benjamin Arnold's SpriteFont
 /*
 This is a modified version of the SpriteFont class from the
@@ -35,6 +35,10 @@ namespace GameEngine {
 
 
 	Text::~Text() {
+		if(_used) {
+			clear();
+			_batcher->updateBatch();
+		}
 	}
 
 	void Text::init(std::string text, glm::vec2 position, glm::vec2 scaling, float depth, Color tint, FontBatcher* batcher) {
@@ -46,14 +50,18 @@ namespace GameEngine {
 		_batcher = batcher;
 		if(_used) {
 			clear();
-		}
-		display();
+		}// else {
+		//	_batcher->addRef();
+		//}
 		_length = _text.length();
+		display();
 		_used = true;
+		_batcher->updateBatch();
 	}
 
 	void Text::clear() {
-		_batcher->remove(_index, _length);
+		_batcher->remove(_index);
+		//_batcher->remove(this);
 	}
 
 	void Text::display() {
@@ -68,7 +76,9 @@ namespace GameEngine {
 		int temp = 0;
 
 		CharGlyph* glyphs = font->getFontGlyphs();
-		_batcher->extendCharLimit(_text.length());
+		if(!_used) {
+			_index = _batcher->addString();
+		}
 
 		for(int i = 0; _text[i] != 0; i++) {
 			char c = _text[i];
@@ -82,11 +92,8 @@ namespace GameEngine {
 					gi = length;
 				glm::vec4 destRect(tp, glyphs[gi].size * _scaling);
 				//Add the character to the font batcher
-				temp = _batcher->add(destRect, glyphs[gi].uvRect, _depth, _tint);
+				_batcher->add(destRect, glyphs[gi].uvRect, _depth, _tint, _index);
 				tp.x += glyphs[gi].size.x * _scaling.x;
-				if(i == 0) {
-					_index = temp;
-				}
 			}
 		}
 	}

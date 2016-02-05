@@ -6,6 +6,7 @@ namespace GameEngine {
 
 
 	Checkbox::~Checkbox() {
+		//delete _text;
 	}
 
 	void Checkbox::init(float x, float y, float width, float height, float depth, std::string texPath, std::string aniPath,
@@ -23,6 +24,7 @@ namespace GameEngine {
 		_sheet.init(aniPath, _sprite, _SpriteManager->getResourceManager());
 		_sheet.setAnim("OFFIDLE");
 		
+		//_text = new Text();
 		_text.init(text, glm::vec2(x + width, y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
 	}
 

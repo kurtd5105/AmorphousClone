@@ -12,6 +12,7 @@
 #include <GameEngine/FPSManager.h>
 #include <GameEngine/InputManager.h>
 #include <GameEngine/IOManager.h>
+#include <GameEngine/Options.h>
 #include <GameEngine/ResourceManager.h>
 #include <GameEngine/ShadingProgram.h>
 #include <GameEngine/Sprite.h>
@@ -36,12 +37,12 @@ public:
 	const int WINDOW_HEIGHT = 600;
 
 	//Vectors containing all the required textures
-	std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/buttons.png", "Textures/loading.png", "Textures/checkbox.png",
+	const std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/buttons.png", "Textures/loading.png", "Textures/checkbox.png",
 		"Textures/slider.png", "Textures/line.png"};
-	std::vector<std::string> TEXTURE_LIST_ASYNC = std::vector<std::string>{"Textures/player.png", "Textures/tile1.png", "Textures/example_enemy.png", "Textures/sword.png"};
-	std::vector<std::string> ANIMATION_LIST_SYNC = std::vector<std::string>{"Animations/buttons.ani", "Animations/checkbox.ani", "Animations/slider.ani"};
+	const std::vector<std::string> TEXTURE_LIST_ASYNC = std::vector<std::string>{"Textures/player.png", "Textures/tile1.png", "Textures/example_enemy.png", "Textures/sword.png"};
+	const std::vector<std::string> ANIMATION_LIST_SYNC = std::vector<std::string>{"Animations/buttons.ani", "Animations/checkbox.ani", "Animations/slider.ani"};
 
-	std::vector<std::string> SHADING_ATTRIBUTES = std::vector<std::string>{"vertexPosition", "vertexColor", "vertexUV"};
+	const std::vector<std::string> SHADING_ATTRIBUTES = std::vector<std::string>{"vertexPosition", "vertexColor", "vertexUV"};
 
 	void startGame();
 	void init();
@@ -69,6 +70,8 @@ private:
 	GameEngine::Camera _Camera;
 
 	GameEngine::FPSManager _FPSManager;
+
+	GameEngine::Options* _options;
 
 	StagingManager _StagingManager;
 	GameLogic _Game;

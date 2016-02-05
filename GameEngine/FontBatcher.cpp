@@ -9,62 +9,87 @@ namespace GameEngine {
 	FontBatcher::~FontBatcher() {
 	}
 
-	void FontBatcher::extendCharLimit(unsigned int length) {
+	/*void FontBatcher::extendCharLimit(unsigned int length) {
 		_vertices.resize(_vertices.size() + (6 * length));
+	}*/
+
+	unsigned int FontBatcher::addString() {
+		_vertexGroups.emplace_back();
+		return _vertexGroups.size() - 1;
 	}
 
-	void FontBatcher::remove(unsigned int start, unsigned int amount) {
-		_renderBatch.numVertices -= amount * 12;
-		unsigned int end = start + amount;
+	void FontBatcher::remove(unsigned int index) {
+		/*_renderBatch.numVertices -= amount * 6;
+		unsigned int end = start + (amount * 6);
 		std::vector<Vertex> vertices;
-		vertices.resize(_vertices.size() - (12 * amount));
+		vertices.resize(_vertices.size() - (6 * amount));
 		unsigned int k = 0;
+		std::cout << "Start: " << start << " End: " << end << std::endl;
 		for(unsigned int i = 0; i < vertices.size(); i++) {
-			if(i < start || i > end) {
+			if(i < start || i >= end) {
 				vertices[k] = _vertices[i];
 				k++;
 			}
 		}
 		_vertices.clear();
 		_vertices = vertices;
+		std::cout << "Everything removed: " << _vertices.size() << std::endl;*/
+		_vertexGroups[index] = std::vector<Vertex>();
 	}
 
-	unsigned int FontBatcher::add(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, const Color color) {
-		unsigned int size = _vertices.size();
-		_renderBatch.numVertices += 12;
+	void FontBatcher::updateBatch() {
+		_vertices.clear();
 
+		unsigned int size = 0, i = 0;
+		for(auto& g : _vertexGroups) {
+			size += g.size();
+		}
+
+		_vertices.resize(size);
+		_renderBatch.numVertices = size;
+
+		for(auto& g : _vertexGroups) {
+			for(auto& v : g) {
+				_vertices[i] = v;
+				i++;
+			}
+		}
+	}
+
+	void FontBatcher::add(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, const Color color, unsigned int i) {
+		//_renderBatch.numVertices += 6;
+		//std::cout << _vertices.size() << ", ";
 		Vertex vertex;
 		//Triangle 1
 		//Top right [0]
 		vertex.setVertex(destRect.x + destRect.z, destRect.y + destRect.w, 255, 255, 255, 255, uvRect.x + uvRect.z, uvRect.y + uvRect.w);
 		vertex.color = color;
-		_vertices.push_back(vertex);
+		_vertexGroups[i].push_back(vertex);
 
 		//Top left [1]
 		vertex.setVertex(destRect.x, destRect.y + destRect.w, 255, 255, 255, 255, uvRect.x, uvRect.y + uvRect.w);
 		vertex.color = color;
-		_vertices.push_back(vertex);
+		_vertexGroups[i].push_back(vertex);
 
 		//Bottom left [2]
 		vertex.setVertex(destRect.x, destRect.y, 255, 255, 255, 255, uvRect.x, uvRect.y);
 		vertex.color = color;
-		_vertices.push_back(vertex);
+		_vertexGroups[i].push_back(vertex);
 
 		//Triangle 2
 		//Bottom left [3] = [2]
-		_vertices.push_back(vertex);
+		_vertexGroups[i].push_back(vertex);
 
 		//Bottom right [4]
 		vertex.setVertex(destRect.x + destRect.z, destRect.y, 255, 255, 255, 255, uvRect.x + uvRect.z, uvRect.y);
 		vertex.color = color;
-		_vertices.push_back(vertex);
+		_vertexGroups[i].push_back(vertex);
 
 		//Top right [5] = [0]
 		vertex.setVertex(destRect.x + destRect.z, destRect.y + destRect.w, 255, 255, 255, 255, uvRect.x + uvRect.z, uvRect.y + uvRect.w);
 		vertex.color = color;
-		_vertices.push_back(vertex);
-
-		return size;
+		_vertexGroups[i].push_back(vertex);
+		//std::cout << _vertices.size() << std::endl;
 	}
 
 	void FontBatcher::createRenderBatches() {
@@ -118,6 +143,7 @@ namespace GameEngine {
 		_renderBatch.numVertices = 0;
 		_renderBatch.offset = 0;
 		_vertices.clear();
+		_vertexGroups.clear();
 	}
 
 	void FontBatcher::renderBatch() {

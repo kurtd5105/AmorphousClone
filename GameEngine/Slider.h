@@ -16,7 +16,7 @@ namespace GameEngine {
 		void onHover() { _isPushed = false; _sheet.setAnim(_name + "HOVER"); }
 		void onPush();
 
-		float getValue();
+		float getPercent() { return _percent; }
 	private:
 		float _x, _y, _start, _lineWidth, _percent, _max, _width;
 		Sprite* _line;

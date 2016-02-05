@@ -9,6 +9,7 @@
 
 #include <GameEngine/FontBatcher.h>
 #include <GameEngine/InputManager.h>
+#include <GameEngine/Options.h>
 #include <GameEngine/SpriteManager.h>
 #include <GameEngine/Text.h>
 #include <GameEngine/Vertex.h>
@@ -22,7 +23,7 @@ public:
 	StagingManager();
 	~StagingManager();
 
-	void init(GameState* gameState, GameEngine::SpriteManager* manager, GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager);
+	void init(GameState* gameState, GameEngine::Options* options, GameEngine::SpriteManager* manager, GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager);
 	void loadState();
 
 	GameState getStageState() { return _stageState; }
@@ -38,6 +39,7 @@ private:
 	GameEngine::SpriteManager* _SpriteManager;
 	GameEngine::InputManager* _InputManager;
 	GameEngine::FontBatcher* _defaultFont;
+	GameEngine::Options* _options;
 
 	//Refactor later so they are all in one vector
 	std::vector<GameEngine::SimpleButton> _simpleButtons;

@@ -25,6 +25,11 @@ void GameLogic::getStage() {
 		_checkboxRefs = _StagingManager->getCheckboxRefs();
 		_sliderRefs = _StagingManager->getSliderRefs();
 		break;
+	case GameState::OPTIONS:
+		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
+		_checkboxRefs = _StagingManager->getCheckboxRefs();
+		_sliderRefs = _StagingManager->getSliderRefs();
+		break;
 	case GameState::PLAYING:
 		_SpawnManager = _StagingManager->getSpawnManager();
 		_player = _StagingManager->getPlayer();
@@ -84,6 +89,9 @@ void GameLogic::processInput(float step) {
 	//cannot be applied before the correct stage is applied
 	switch(_StagingManager->getStageState()) {
 	case GameState::MAIN_MENU:
+		checkButtons(mouseCoords);
+		break;
+	case GameState::OPTIONS:
 		checkButtons(mouseCoords);
 		break;
 	case GameState::PLAYING:
