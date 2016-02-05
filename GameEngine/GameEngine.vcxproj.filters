@@ -126,6 +126,9 @@
     <ClInclude Include="Options.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SelectionBox.h">
+      <Filter>Header Files\Buttons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -198,6 +201,9 @@
       <Filter>Source Files\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="Slider.cpp">
+      <Filter>Source Files\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectionBox.cpp">
       <Filter>Source Files\Buttons</Filter>
     </ClCompile>
   </ItemGroup>

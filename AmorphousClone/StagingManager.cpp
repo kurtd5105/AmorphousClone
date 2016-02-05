@@ -75,8 +75,8 @@ void StagingManager::loadState() {
 		//Create slider for testing purposes
 		_sliders.emplace_back();
 		//_sliders[0] = new GameEngine::Slider();
-		_sliders[0].init(250.0f, 50.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
-					_SpriteManager, _defaultFont, _InputManager);
+		_sliders[0].init(250.0f, 50.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, 0.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
+					_SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(100, 1000));
 		//_sliders.push_back(slider);
 
 		//Set the stage state to the game state now that everything is setup
@@ -138,13 +138,17 @@ void StagingManager::loadState() {
 		_sliders.emplace_back();
 		_sliders.emplace_back();
 
-		_sliders[0].init(150.0f, 500.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
-					_SpriteManager, _defaultFont, _InputManager);
-		_sliders[1].init(150.0f, 400.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
-					_SpriteManager, _defaultFont, _InputManager);
-		_sliders[2].init(620.0f, 500.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
+		//Music Volume
+		_sliders[0].init(150.0f, 500.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, _options->music * 100, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", 
+						 color, callback, _SpriteManager, _defaultFont, _InputManager);
+		//SFX Volume
+		_sliders[1].init(150.0f, 400.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, _options->sfx * 100, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", 
+						 color, callback, _SpriteManager, _defaultFont, _InputManager);
+		//Spawn Count
+		_sliders[2].init(620.0f, 500.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, 0.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
 						  _SpriteManager, _defaultFont, _InputManager);
-		_sliders[3].init(620.0f, 400.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
+		//Spawn Rate
+		_sliders[3].init(620.0f, 400.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, 0.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
 						 _SpriteManager, _defaultFont, _InputManager);
 
 		callback = [&]() {

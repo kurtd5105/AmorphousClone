@@ -10,8 +10,6 @@
 #include "Text.h"
 #include "Vertex.h"
 
-class SimpleButton;
-
 namespace GameEngine {
 	class Button {
 	public:
