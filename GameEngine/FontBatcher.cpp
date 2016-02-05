@@ -46,6 +46,7 @@ namespace GameEngine {
 		}
 
 		_vertices.resize(size);
+		_renderBatch.numVertices = size;
 
 		for(auto& g : _vertexGroups) {
 			for(auto& v : g) {
@@ -56,7 +57,7 @@ namespace GameEngine {
 	}
 
 	void FontBatcher::add(const glm::vec4& destRect, const glm::vec4& uvRect, float Depth, const Color color, unsigned int i) {
-		_renderBatch.numVertices += 6;
+		//_renderBatch.numVertices += 6;
 		//std::cout << _vertices.size() << ", ";
 		Vertex vertex;
 		//Triangle 1
