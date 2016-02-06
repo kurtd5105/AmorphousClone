@@ -25,6 +25,7 @@ namespace GameEngine {
 		float getRotation() { return _rotation; }
 		Vertex getVertexAt(int i) { return _vertices[i]; }
 		glm::vec2 getCentered() { return glm::vec2(_x, _y) + _center; }
+		glm::vec2 getPosition() { return glm::vec2(_x, _y); }
 
 		void setInvisible() { _visible = false; }
 		void setVisible() { _visible = true; }
