@@ -24,11 +24,13 @@ void GameLogic::getStage() {
 		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
 		_checkboxRefs = _StagingManager->getCheckboxRefs();
 		_sliderRefs = _StagingManager->getSliderRefs();
+		_selectionRefs = _StagingManager->getSelectionRefs();
 		break;
 	case GameState::OPTIONS:
 		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
 		_checkboxRefs = _StagingManager->getCheckboxRefs();
 		_sliderRefs = _StagingManager->getSliderRefs();
+		_selectionRefs = _StagingManager->getSelectionRefs();
 		break;
 	case GameState::PLAYING:
 		_SpawnManager = _StagingManager->getSpawnManager();
@@ -147,6 +149,13 @@ void GameLogic::checkButtons(glm::vec2& mouseCoords) {
 					_currClicked = &button;
 				}
 			}
+			for(auto& button : *_selectionRefs) {
+				if(GameEngine::Collision::checkClick(*(button.getLeft()->getHitbox()), mouseCoords[0], mouseCoords[1])) {
+					_currClicked = button.getLeft();
+				} else if(GameEngine::Collision::checkClick(*(button.getRight()->getHitbox()), mouseCoords[0], mouseCoords[1])) {
+					_currClicked = button.getRight();
+				}
+			}
 		} else {
 			//If the mouse button is being held and it was clicking a button
 			if(_currClicked != nullptr) {
@@ -187,6 +196,18 @@ void GameLogic::checkButtons(glm::vec2& mouseCoords) {
 				button.onHover();
 			} else {
 				button.onIdle();
+			}
+		}
+		for(auto& button : *_selectionRefs) {
+			if(GameEngine::Collision::checkClick(*(button.getLeft()->getHitbox()), mouseCoords[0], mouseCoords[1])) {
+				button.getLeft()->onHover();
+			} else {
+				button.getLeft()->onIdle();
+			}
+			if(GameEngine::Collision::checkClick(*(button.getRight()->getHitbox()), mouseCoords[0], mouseCoords[1])) {
+				button.getRight()->onHover();
+			} else {
+				button.getRight()->onIdle();
 			}
 		}
 	}

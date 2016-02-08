@@ -7,6 +7,11 @@
 #include <glm/glm.hpp>
 
 #include <GameEngine/Button.h>
+#include <GameEngine/Checkbox.h>
+#include <GameEngine/SimpleButton.h>
+#include <GameEngine/Slider.h>
+#include <GameEngine/SelectionBox.h>
+
 #include <GameEngine/Camera.h>
 #include <GameEngine/CollisionManager.h>
 #include <GameEngine/InputManager.h>
@@ -43,6 +48,8 @@ private:
 	std::vector<GameEngine::SimpleButton>* _simpleButtonRefs;
 	std::vector<GameEngine::Checkbox>* _checkboxRefs;
 	std::vector<GameEngine::Slider>* _sliderRefs;
+	std::vector<GameEngine::SelectionBox>* _selectionRefs;
+
 	GameEngine::Button* _currClicked;
 	Player* _player;
 	std::list<EnemySuper>* _enemies;

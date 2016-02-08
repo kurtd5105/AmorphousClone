@@ -32,6 +32,8 @@ namespace GameEngine {
 
 		SimpleButton* getLeft() { return &_left; }
 		SimpleButton* getRight() { return &_right; }
+		unsigned int getIndex() { return _index; }
+		std::vector<std::string> getStrings() { return _options; }
 
 	private:
 		float _leftX, _rightX, _textX, _y, _buttonWidth, _textWidth, _depth;
