@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include <list>
+#include <math.h>
 #include <sstream>
 
 #include <GameEngine/Button.h>
@@ -15,6 +16,7 @@
 #include <GameEngine/SpriteManager.h>
 #include <GameEngine/Text.h>
 #include <GameEngine/Vertex.h>
+#include <GameEngine/WindowMode.h>
 
 #include "GameState.h"
 #include "Player.h"
