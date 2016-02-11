@@ -139,11 +139,13 @@ namespace GameEngine {
 
 		if(file.is_open()) {
 			//std::cout << "File is open." << std::endl;
-			std::string width, height, music, sfx, mode;
-			std::regex integer("[[:digit:]]+");
+			std::string width, height, spawnCount, spawnRate, music, sfx, mode;
+			std::regex integer("[[:digit:]]+"); //(unsigned integer since there can't be a '-' in front)
 			std::regex decimal("[[:digit:]]+(.[[:digit:]]+)?");
 			file >> width;
 			file >> height;
+			file >> spawnCount;
+			file >> spawnRate;
 			file >> music;
 			file >> sfx;
 			file >> mode;
@@ -166,6 +168,15 @@ namespace GameEngine {
 						break;
 					}
 				}
+			}
+
+			if(regex_match(spawnCount, integer)) {
+				unsigned int c = std::stoi(spawnCount);
+				options->spawnCount = c;
+			}
+			if(regex_match(spawnRate, integer)) {
+				unsigned int r = std::stoi(spawnRate);
+				options->spawnRate = r;
 			}
 
 			//Check to see if music volume is a float from 0 to 1
@@ -205,7 +216,8 @@ namespace GameEngine {
 	void IOManager::saveOptions(Options* options) {
 		//Open the file for reading and clearing it
 		std::ofstream file("options.cfg", std::ios::out | std::ios::trunc);
-		file << options->width << std::endl << options->height << std::endl << options->music << std::endl << options->sfx << std::endl;
+		file << options->width << std::endl << options->height << std::endl << options->spawnCount << std::endl << options->spawnRate << std::endl
+			 << options->music << std::endl << options->sfx << std::endl;
 
 		if(options->mode == WindowMode::BORDERLESS) {
 			file << "BORDERLESS" << std::endl;

@@ -7,6 +7,11 @@
 #include <glm/glm.hpp>
 
 #include <GameEngine/Button.h>
+#include <GameEngine/Checkbox.h>
+#include <GameEngine/SimpleButton.h>
+#include <GameEngine/Slider.h>
+#include <GameEngine/SelectionBox.h>
+
 #include <GameEngine/Camera.h>
 #include <GameEngine/CollisionManager.h>
 #include <GameEngine/InputManager.h>
@@ -30,6 +35,9 @@ public:
 	void getStage();
 	void collisionAgents();
 
+	const std::vector<int> validWidths = std::vector<int>{800, 1024, 1280, 1360, 1366, 1440, 1600, 1980};
+	const std::vector<int> validHeights = std::vector<int>{600, 768, 720, 768, 768, 900, 900, 1080};
+
 private:
 	GameEngine::InputManager* _InputManager;
 	GameEngine::Camera* _Camera;
@@ -43,6 +51,8 @@ private:
 	std::vector<GameEngine::SimpleButton>* _simpleButtonRefs;
 	std::vector<GameEngine::Checkbox>* _checkboxRefs;
 	std::vector<GameEngine::Slider>* _sliderRefs;
+	std::vector<GameEngine::SelectionBox>* _selectionRefs;
+
 	GameEngine::Button* _currClicked;
 	Player* _player;
 	std::list<EnemySuper>* _enemies;
