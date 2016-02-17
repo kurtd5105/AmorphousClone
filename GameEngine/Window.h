@@ -1,5 +1,4 @@
 #pragma once
-#include <GL/glew.h>
 #include <SDL/SDL.h>
 #include <string>
 
@@ -13,12 +12,12 @@ namespace GameEngine {
 		~Window();
 
 		void createWindow(Options* options, std::string name);
-		void swapBuffer();
-		void destroySDLWindow();
+		void swapBuffer() const;
+		void destroySDLWindow() const;
 
-		int getScreenWidth() { return _width; }
-		int getScreenHeight() { return _height; }
-		WindowMode getWindowMode() { return _windowMode; }
+		int getScreenWidth() const { return _width; }
+		int getScreenHeight() const { return _height; }
+		WindowMode getWindowMode() const { return _windowMode; }
 
 	private:
 		int _width, _height;

@@ -1,10 +1,5 @@
 #pragma once
-#include <functional>
-#include <list>
-#include <math.h>
-#include <sstream>
 
-#include <GameEngine/Button.h>
 #include <GameEngine/Checkbox.h>
 #include <GameEngine/SimpleButton.h>
 #include <GameEngine/Slider.h>
@@ -15,8 +10,6 @@
 #include <GameEngine/Options.h>
 #include <GameEngine/SpriteManager.h>
 #include <GameEngine/Text.h>
-#include <GameEngine/Vertex.h>
-#include <GameEngine/WindowMode.h>
 
 #include "GameState.h"
 #include "Player.h"
@@ -30,7 +23,7 @@ public:
 	void init(GameState* gameState, GameEngine::Options* options, GameEngine::SpriteManager* manager, GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager);
 	void loadState();
 
-	GameState getStageState() { return _stageState; }
+	GameState getStageState() const { return _stageState; }
 
 	std::vector<GameEngine::SimpleButton>* getSimpleButtonRefs() { return &_simpleButtons; }
 	std::vector<GameEngine::Checkbox>* getCheckboxRefs() { return &_checkboxes; }

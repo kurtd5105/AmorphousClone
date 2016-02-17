@@ -9,8 +9,8 @@ public:
 
 	int _damage = 0;
 
-	void think();
-	void onCollide();
+	void think() override;
+	void onCollide() override;
 
 private:
 	int _hp;

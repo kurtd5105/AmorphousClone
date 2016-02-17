@@ -1,16 +1,14 @@
 #include "InputManager.h"
 
 namespace GameEngine {
-	InputManager::InputManager() : _mouseX(0), _mouseY(0), _LMB(false), _keys(nullptr) {
-	}
+	InputManager::InputManager() : _keys(nullptr), _LMB(false), _mouseX(0), _mouseY(0) {}
 
 
-	InputManager::~InputManager() {
-	}
+	InputManager::~InputManager() {}
 
 	void InputManager::update() {
 		_keyPresses.resize(6);
-		_keys = SDL_GetKeyboardState(NULL);
+		_keys = SDL_GetKeyboardState(nullptr);
 		_keyPresses[0] = _keys[SDL_SCANCODE_W] > 0 ? true : false;
 		_keyPresses[1] = _keys[SDL_SCANCODE_A] > 0 ? true : false;
 		_keyPresses[2] = _keys[SDL_SCANCODE_S] > 0 ? true : false;

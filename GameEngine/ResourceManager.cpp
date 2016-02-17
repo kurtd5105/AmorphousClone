@@ -1,18 +1,14 @@
 #include "ResourceManager.h"
 #include "IOManager.h"
 #include <iostream>
-#include <functional>
 
 namespace GameEngine {
 	void test(std::string tests) {
 
 	}
-	ResourceManager::ResourceManager(IOManager* IOManager) : _IOManager(IOManager) {
-	}
+	ResourceManager::ResourceManager(IOManager* IOManager) : _IOManager(IOManager) {}
 
-
-	ResourceManager::~ResourceManager() {
-	}
+	ResourceManager::~ResourceManager() {}
 
 	Animation ResourceManager::getAnimation(std::string path) {
 		auto result = _animationMap.find(path);

@@ -16,11 +16,11 @@ public:
 	void moveToTarget(float speed);
 	virtual void think() {}
 	virtual void onCollide() {}
-	double getChance(){ return _chance; };
+	double getChance() const { return _chance; };
 
-	void enable() { _enabled = true; }
-	void disable() { _enabled = false; }
-	bool isEnabled() { return _enabled; };
+	void enable() override { _enabled = true; }
+	void disable() override { _enabled = false; }
+	bool isEnabled() override { return _enabled; };
 
 protected:
 	float _chance;

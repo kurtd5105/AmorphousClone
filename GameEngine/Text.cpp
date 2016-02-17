@@ -1,5 +1,6 @@
 #include "Text.h"
-#include <iostream>
+#include "Font.h"
+//#include <iostream>
 //Adapted from Benjamin Arnold's SpriteFont
 /*
 This is a modified version of the SpriteFont class from the
@@ -24,7 +25,7 @@ Modified By: Benjamin Arnold, kurtd5105
 
 
 namespace GameEngine {
-	Text::Text() : _index(0), _text(""), _position(0.0f, 0.0f), _scaling(0.0f, 0.0f), _depth(1.0f), _batcher(nullptr), _used(false) {
+	Text::Text() : _used(false), _index(0), _length(0), _text(""), _position(0.0f, 0.0f), _scaling(0.0f, 0.0f), _depth(1.0f), _batcher(nullptr) {
 		Color color;
 		color.r = 255;
 		color.g = 255;
@@ -59,23 +60,21 @@ namespace GameEngine {
 		_batcher->updateBatch();
 	}
 
-	void Text::clear() {
+	void Text::clear() const {
 		_batcher->remove(_index);
 		//_batcher->remove(this);
 	}
 
 	void Text::display() {
-		glm::vec2 tp = _position;
+		auto tp = _position;
 
-		Font* font = _batcher->getFont();
+		auto font = _batcher->getFont();
 
-		int fontHeight = font->getFontHeight();
-		int start = font->getFontStart();
-		int length = font->getFontLength();
+		auto fontHeight = font->getFontHeight();
+		auto start = font->getFontStart();
+		auto length = font->getFontLength();
 
-		int temp = 0;
-
-		CharGlyph* glyphs = font->getFontGlyphs();
+		auto glyphs = font->getFontGlyphs();
 		if(!_used) {
 			_index = _batcher->addString();
 		}
@@ -87,7 +86,7 @@ namespace GameEngine {
 				tp.x = _position.x;
 			} else {
 				// Check for correct glyph
-				int gi = c - start;
+				auto gi = c - start;
 				if(gi < 0 || gi >= length)
 					gi = length;
 				glm::vec4 destRect(tp, glyphs[gi].size * _scaling);

@@ -2,8 +2,6 @@
 #include <vector>
 #include <list>
 
-#include <GL/glew.h>
-#include <SDL/SDL.h>
 #include <glm/glm.hpp>
 
 #include <GameEngine/Button.h>
@@ -13,7 +11,6 @@
 #include <GameEngine/SelectionBox.h>
 
 #include <GameEngine/Camera.h>
-#include <GameEngine/CollisionManager.h>
 #include <GameEngine/InputManager.h>
 
 #include "GameState.h"
@@ -29,11 +26,11 @@ public:
 
 	void init(GameState* gameState, GameEngine::Camera* camera, StagingManager* manager, GameEngine::InputManager* inputManager);
 
-	void updateEnemy(float step);
+	void updateEnemy(float step) const;
 	void processInput(float step);
 	void checkButtons(glm::vec2& mouseCoords);
 	void getStage();
-	void collisionAgents();
+	void collisionAgents() const;
 
 	const std::vector<int> validWidths = std::vector<int>{800, 1024, 1280, 1360, 1366, 1440, 1600, 1980};
 	const std::vector<int> validHeights = std::vector<int>{600, 768, 720, 768, 768, 900, 900, 1080};

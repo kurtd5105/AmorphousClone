@@ -2,13 +2,8 @@
 
 #include <GameEngine/Errors.h>
 
-Agent::Agent() : _x(0.0f), _y(0.0f), 
-_width(0.0f), _height(0.0f), 
-_depth(1.0f), 
-_rotation(0.0f), _rotationOffset(0.0f),
-_SpriteManager(nullptr), _sprite(nullptr),
-_isInit(false), _visible(true), _enabled(true) {
-}
+Agent::Agent() : _x(0.0f), _y(0.0f), _width(0.0f), _height(0.0f), _depth(1.0f), _rotation(0.0f), _radius(0), _speed(0), _rotationOffset(0.0f),
+_isInit(false), _visible(true), _enabled(true), _SpriteManager(nullptr), _sprite(nullptr), _Random(nullptr) {}
 
 Agent::~Agent() {
 	if (_SpriteManager != nullptr && _sprite != nullptr) {
@@ -58,14 +53,13 @@ void Agent::moveTo(Agent* agent, float speed) {
 		glm::vec2 agentPos = agent->getPos();
 		if(getPos() != agentPos) {
 			_sprite->pointAt(agent->getCentered());
-			float angle = getRotation();
+			auto angle = getRotation();
 			//Normalize later
 
-			float xMove = 0;
-			float yMove = 0;
+			float xMove, yMove;
 
 			xMove = cos(angle) * _speed * speed;
-			float offset = agentPos.x - _x;
+			auto offset = agentPos.x - _x;
 			if(xMove > abs(offset)) {
 				xMove = offset;
 			}
@@ -86,9 +80,9 @@ void Agent::moveTo(Agent* agent, float speed) {
 void Agent::lockOn(Agent* agent) {
 	if(_enabled) {
 		//Refactor to get the angle relative between the current agent and the target then move to the center
-		float rotation = _sprite->getRotation();
+		auto rotation = _sprite->getRotation();
 		_sprite->pointAt(agent->getCentered());
-		float angle = getRotation();
+		//auto angle = getRotation();
 		//Find the bottom left vector then use the angle to translate to the middle of that edge and use that as the before position
 		glm::vec2 before = _sprite->getCentered();
 		glm::vec2 pos = agent->getCentered();
@@ -114,18 +108,18 @@ void Agent::setVisible() {
 	}
 }
 
-bool Agent::collideAgents(Agent* agent) {
+bool Agent::collideAgents(Agent* agent) const {
 
 	//Minimum distance for a collision to occur, can be diffrent of diffrent radiuses
-	const float minDist = getRadius() + agent->getRadius();
+	const auto minDist = getRadius() + agent->getRadius();
 
-	glm::vec2 centerA = getPos() + glm::vec2(getRadius());
-	glm::vec2 centerB = agent->getPos() + glm::vec2(agent->getRadius());
+	auto centerA = getPos() + glm::vec2(getRadius());
+	auto centerB = agent->getPos() + glm::vec2(agent->getRadius());
 
-	glm::vec2 diff = centerA - centerB;
+	//auto diff = centerA - centerB;
 
-	float distlength = glm::length(centerA - centerB);
-	float depth = minDist - distlength;
+	auto distlength = glm::length(centerA - centerB);
+	auto depth = minDist - distlength;
 
 	if (depth > 0) {
 		//printf("A collision occured\n");

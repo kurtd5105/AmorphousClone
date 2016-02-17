@@ -1,23 +1,15 @@
 #include "Camera.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace GameEngine {
-	Camera::Camera() : _position(0.0f, 0.0f),
-		_cameraMatrix(1.0f),
-		_orthoMatrix(1.0f),
-		_scale(1.0f),
-		_needsUpdate(true),
-		_width(0),
-		_height(0) {
-	}
+	Camera::Camera() : _needsUpdate(true), _scale(1.0f), _width(0), _height(0), _position(0.0f, 0.0f), _cameraMatrix(1.0f), _orthoMatrix(1.0f) {}
 
-
-	Camera::~Camera() {
-	}
+	Camera::~Camera() {}
 
 	void Camera::init(int width, int height) {
 		_width = width;
 		_height = height;
-		_orthoMatrix = glm::ortho(0.0f, (float)_width, 0.0f, (float)_height);
+		_orthoMatrix = glm::ortho(0.0f, float(_width), 0.0f, float(_height));
 	}
 
 	void Camera::update() {
@@ -32,7 +24,7 @@ namespace GameEngine {
 		}
 	}
 
-	glm::vec2 Camera::toWorldCoords(glm::vec2 pos) {
+	glm::vec2 Camera::toWorldCoords(glm::vec2 pos) const {
 		//Invert Y direction
 		pos.y = _height - pos.y;
 		return pos;

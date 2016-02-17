@@ -1,11 +1,7 @@
 #pragma once
 
-#include <chrono>
-#include <cstdint>
 #include <iostream>
 #include <thread>
-#include <GL/glew.h>
-#include <SDL/SDL.h>
 
 #include <GameEngine/Camera.h>
 #include <GameEngine/FontBatcher.h>
@@ -15,17 +11,14 @@
 #include <GameEngine/Options.h>
 #include <GameEngine/ResourceManager.h>
 #include <GameEngine/ShadingProgram.h>
-#include <GameEngine/Sprite.h>
 #include <GameEngine/SpriteBatcher.h>
 #include <GameEngine/SpriteManager.h>
-#include <GameEngine/Text.h>
 #include <GameEngine/ThreadState.h>
 #include <GameEngine/Window.h>
 
 #include "StagingManager.h"
 #include "GameState.h"
 #include "GameLogic.h"
-#include "SpawnManager.h"
 
 
 class MainGame {

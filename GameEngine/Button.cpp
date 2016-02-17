@@ -1,11 +1,9 @@
 #include "Button.h"
 
 namespace GameEngine {
-	Button::Button() : _isPushed(false), _sprite(nullptr), _SpriteManager(nullptr), _FontBatcher(nullptr), _InputManager(nullptr) {
-	}
+	Button::Button() : _SpriteManager(nullptr), _FontBatcher(nullptr), _InputManager(nullptr), _sprite(nullptr), _isPushed(false) {}
 
-	Button::~Button() {
-	}
+	Button::~Button() {}
 
 	void Button::onIdle() {
 		//Simple default method to set the animation to the idle animation

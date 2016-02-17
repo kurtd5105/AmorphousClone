@@ -2,11 +2,9 @@
 #include <list>
 #include <vector>
 #include <GL/glew.h>
-#include <SDL/SDL.h>
 
 #include "RenderBatch.h"
 #include "Sprite.h"
-#include "Vertex.h"
 
 
 namespace GameEngine {

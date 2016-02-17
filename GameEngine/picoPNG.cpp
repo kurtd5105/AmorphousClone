@@ -62,7 +62,7 @@ int decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width,
 		}
 		struct HuffmanTree {
 			int makeFromLengths(const std::vector<unsigned long>& bitlen, unsigned long maxbitlen) { //make tree given the lengths
-				unsigned long numcodes = (unsigned long)(bitlen.size()), treepos = 0, nodefilled = 0;
+				unsigned long numcodes = unsigned long(bitlen.size()); unsigned long treepos = 0; unsigned long nodefilled = 0;
 				std::vector<unsigned long> tree1d(numcodes), blcount(maxbitlen + 1, 0), nextcode(maxbitlen + 1, 0);
 				for(unsigned long bits = 0; bits < numcodes; bits++) blcount[bitlen[bits]]++; //count number of instances of each code length
 				for(unsigned long bits = 1; bits <= maxbitlen; bits++) nextcode[bits] = (nextcode[bits - 1] + blcount[bits - 1]) << 1;
@@ -82,7 +82,7 @@ int decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width,
 				return 0;
 			}
 			int decode(bool& decoded, unsigned long& result, size_t& treepos, unsigned long bit) const { //Decodes a symbol from the tree
-				unsigned long numcodes = (unsigned long)tree2d.size() / 2;
+				unsigned long numcodes = unsigned long(tree2d.size()) / 2;
 				if(treepos >= numcodes) return 11; //error: you appeared outside the codetree
 				result = tree2d[2 * treepos + bit];
 				decoded = (result < numcodes);
@@ -107,7 +107,7 @@ int decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width,
 				}
 				if(!error) out.resize(pos); //Only now we know the true size of out, resize it to that
 			}
-			void generateFixedTrees(HuffmanTree& tree, HuffmanTree& treeD) //get the tree of a deflated block with fixed tree
+			static void generateFixedTrees(HuffmanTree& tree, HuffmanTree& treeD) //get the tree of a deflated block with fixed tree
 			{
 				std::vector<unsigned long> bitlen(288, 8), bitlenD(32, 5);;
 				for(size_t i = 144; i <= 255; i++) bitlen[i] = 9;
@@ -181,7 +181,7 @@ int decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width,
 					else if(code <= 255) //literal symbol
 					{
 						if(pos >= out.size()) out.resize((pos + 1) * 2); //reserve more room
-						out[pos++] = (unsigned char)(code);
+						out[pos++] = unsigned char(code);
 					} else if(code >= 257 && code <= 285) //length code
 					{
 						size_t length = LENBASE[code - 257], numextrabits = LENEXTRA[code - 257];
@@ -210,7 +210,7 @@ int decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width,
 				bp = p * 8;
 			}
 		};
-		int decompress(std::vector<unsigned char>& out, const std::vector<unsigned char>& in) //returns error value
+		static int decompress(std::vector<unsigned char>& out, const std::vector<unsigned char>& in) //returns error value
 		{
 			Inflator inflator;
 			if(in.size() < 2) { return 53; } //error, size of zlib data too small
@@ -232,7 +232,7 @@ int decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width,
 		int error;
 		void decode(std::vector<unsigned char>& out, const unsigned char* in, size_t size, bool convert_to_rgba32) {
 			error = 0;
-			if(size == 0 || in == 0) { error = 48; return; } //the given data is empty
+			if(size == 0 || in == nullptr) { error = 48; return; } //the given data is empty
 			readPngHeader(&in[0], size); if(error) return;
 			size_t pos = 33; //first byte of the first chunk after the header
 			std::vector<unsigned char> idat; //the data from idat chunks
@@ -390,18 +390,18 @@ int decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width,
 			for(size_t i = nbits - 1; i < nbits; i--) result += ((readBitFromReversedStream(bitp, bits)) << i);
 			return result;
 		}
-		void setBitOfReversedStream(size_t& bitp, unsigned char* bits, unsigned long bit) { bits[bitp >> 3] |= (bit << (7 - (bitp & 0x7))); bitp++; }
-		unsigned long read32bitInt(const unsigned char* buffer) { return (buffer[0] << 24) | (buffer[1] << 16) | (buffer[2] << 8) | buffer[3]; }
-		int checkColorValidity(unsigned long colorType, unsigned long bd) //return type is a LodePNG error code
+		static void setBitOfReversedStream(size_t& bitp, unsigned char* bits, unsigned long bit) { bits[bitp >> 3] |= (bit << (7 - (bitp & 0x7))); bitp++; }
+		static unsigned long read32bitInt(const unsigned char* buffer) { return (buffer[0] << 24) | (buffer[1] << 16) | (buffer[2] << 8) | buffer[3]; }
+		static int checkColorValidity(unsigned long colorType, unsigned long bd) //return type is a LodePNG error code
 		{
 			if((colorType == 2 || colorType == 4 || colorType == 6)) { if(!(bd == 8 || bd == 16)) return 37; else return 0; } else if(colorType == 0) { if(!(bd == 1 || bd == 2 || bd == 4 || bd == 8 || bd == 16)) return 37; else return 0; } else if(colorType == 3) { if(!(bd == 1 || bd == 2 || bd == 4 || bd == 8)) return 37; else return 0; } else return 31; //unexisting color type
 		}
-		unsigned long getBpp(const Info& info) {
+		static unsigned long getBpp(const Info& info) {
 			if(info.colorType == 2) return (3 * info.bitDepth);
 			else if(info.colorType >= 4) return (info.colorType - 2) * info.bitDepth;
 			else return info.bitDepth;
 		}
-		int convert(std::vector<unsigned char>& out, const unsigned char* in, Info& infoIn, unsigned long w, unsigned long h) { //converts from any color type to 32-bit. return value = LodePNG error code
+		static int convert(std::vector<unsigned char>& out, const unsigned char* in, Info& infoIn, unsigned long w, unsigned long h) { //converts from any color type to 32-bit. return value = LodePNG error code
 			size_t numpixels = w * h, bp = 0;
 			out.resize(numpixels * 4);
 			unsigned char* out_ = out.empty() ? 0 : &out[0]; //faster if compiled without optimization
@@ -438,7 +438,7 @@ int decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width,
 										else if(infoIn.bitDepth < 8 && infoIn.colorType == 0) //greyscale
 											for(size_t i = 0; i < numpixels; i++) {
 												unsigned long value = (readBitsFromReversedStream(bp, in, infoIn.bitDepth) * 255) / ((1 << infoIn.bitDepth) - 1); //scale value from 0 to 255
-												out_[4 * i + 0] = out_[4 * i + 1] = out_[4 * i + 2] = (unsigned char)(value);
+												out_[4 * i + 0] = out_[4 * i + 1] = out_[4 * i + 2] = unsigned char(value);
 												out_[4 * i + 3] = (infoIn.key_defined && value && ((1U << infoIn.bitDepth) - 1U) == infoIn.key_r && ((1U << infoIn.bitDepth) - 1U)) ? 0 : 255;
 											} else if(infoIn.bitDepth < 8 && infoIn.colorType == 3) //palette
 												for(size_t i = 0; i < numpixels; i++) {
@@ -448,10 +448,10 @@ int decodePNG(std::vector<unsigned char>& out_image, unsigned long& image_width,
 												}
 											return 0;
 		}
-		unsigned char paethPredictor(short a, short b, short c) //Paeth predicter, used by PNG filter type 4
+		static unsigned char paethPredictor(short a, short b, short c) //Paeth predicter, used by PNG filter type 4
 		{
 			short p = a + b - c, pa = p > a ? (p - a) : (a - p), pb = p > b ? (p - b) : (b - p), pc = p > c ? (p - c) : (c - p);
-			return (unsigned char)((pa <= pb && pa <= pc) ? a : pb <= pc ? b : c);
+			return unsigned char((pa <= pb && pa <= pc) ? a : pb <= pc ? b : c);
 		}
 	};
 	PNG decoder; decoder.decode(out_image, in_png, in_size, convert_to_rgba32);

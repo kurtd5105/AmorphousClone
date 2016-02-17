@@ -1,8 +1,12 @@
 #include "GameLogic.h"
-#include <iostream>
+#include <GameEngine/CollisionManager.h>
 
-GameLogic::GameLogic() : W(0), A(1), S(2), D(3), Q(4), E(5), _clickHold(false), _currClicked(nullptr) {
-}
+//#include <iostream>
+
+GameLogic::GameLogic() : _InputManager(nullptr), _Camera(nullptr), _StagingManager(nullptr), _SpawnManager(nullptr), _gameState(nullptr),
+_keys(nullptr), _simpleButtonRefs(nullptr), _checkboxRefs(nullptr), _sliderRefs(nullptr), _selectionRefs(nullptr),
+_currClicked(nullptr), _player(nullptr), _enemies(nullptr),
+W(0), A(1), S(2), D(3), Q(4), E(5), _clickHold(false){}
 
 
 GameLogic::~GameLogic() {
@@ -42,14 +46,14 @@ void GameLogic::getStage() {
 	}
 }
 
-void GameLogic::updateEnemy(float step) {
+void GameLogic::updateEnemy(float step) const {
 	for(auto& enemy : *_enemies) {
 		//enemy.moveTo(_player);
 		enemy.moveToTarget(step);
 	}
 }
 
-void GameLogic::collisionAgents() {
+void GameLogic::collisionAgents() const {
 
 	//Player collision with enemies
 	for (auto& enemy : *_enemies) {	
@@ -71,8 +75,8 @@ void GameLogic::collisionAgents() {
 void GameLogic::processInput(float step) {
 	SDL_Event event;
 	//_InputManager.update();
-	glm::vec2 mouseCoords = _InputManager->getMouseCoords();
-	auto output = _Camera->toWorldCoords(mouseCoords);
+	auto mouseCoords = _InputManager->getMouseCoords();
+	//auto output = _Camera->toWorldCoords(mouseCoords);
 	//Poll every event and handle it
 	while(SDL_PollEvent(&event)) {
 		switch(event.type) {
@@ -106,8 +110,8 @@ void GameLogic::processInput(float step) {
 		//Check if A or D and W or S are pressed for diagonal movement
 		if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
 			//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
-			_player->translate(_player->PLAYER_SPEED * (float)(_keys->at(D) - _keys->at(A)) / sqrt(2.0f), 
-							   _player->PLAYER_SPEED * (float)(_keys->at(W) - _keys->at(S)) / sqrt(2.0f),
+			_player->translate(_player->PLAYER_SPEED * float(_keys->at(D) - _keys->at(A)) / sqrt(2.0f), 
+							   _player->PLAYER_SPEED * float(_keys->at(W) - _keys->at(S)) / sqrt(2.0f),
 							   step);
 		} else {
 			//Move the player by the additions of the key presses

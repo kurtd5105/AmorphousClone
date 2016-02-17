@@ -23,7 +23,7 @@ namespace GameEngine {
 		//Getters
 		//std::vector<Sprite>* getSprites() { return &_sprites; }
 		std::list<Sprite*>* getSprites() { return &_spriteList; }
-		ResourceManager* getResourceManager() { return _ResourceManager; }
+		ResourceManager* getResourceManager() const { return _ResourceManager; }
 		
 		void clearSprites();
 		
