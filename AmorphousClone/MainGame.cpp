@@ -1,8 +1,7 @@
 #include "MainGame.h"
 #include <iostream>
 
-MainGame::MainGame() : _gameState(MAIN_MENU), _IOThreadState(ThreadState::OFF) {
-}
+MainGame::MainGame() : _options(nullptr), _gameState(MAIN_MENU), _IOThreadState(ThreadState::OFF) {}
 
 
 MainGame::~MainGame() {
@@ -53,12 +52,12 @@ void MainGame::init() {
 }
 
 void MainGame::gameLoop() {
-	GameState currState = _gameState;
-	GameState desiredState = _gameState;
+	auto currState = _gameState;
+	auto desiredState = _gameState;
 
-	Uint32 currFPSTick = SDL_GetTicks();
-	Uint32 prevFPSTick = currFPSTick;
-	float prevFPS = _FPSManager.framespersecond;
+	auto currFPSTick = SDL_GetTicks();
+	auto prevFPSTick = currFPSTick;
+	//auto prevFPS = _FPSManager.framespersecond;
 
 	auto prevTick = std::chrono::system_clock::now().time_since_epoch().count();
 	auto currTick = prevTick;

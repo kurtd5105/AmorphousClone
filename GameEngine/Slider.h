@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Button.h"
-#include <math.h>
 
 namespace GameEngine {
 	class Slider : public Button {
@@ -13,12 +12,12 @@ namespace GameEngine {
 				  std::string linePath, Color color, std::function<void(void)> callback, SpriteManager* manager, FontBatcher* fontBatcher, InputManager* inputManager,
 				  std::pair<int, int> minMax = std::pair<int, int>(0, 100));
 
-		void onIdle() { _isPushed = false; _sheet.setAnim(_name + "IDLE"); }
-		void onHover() { _isPushed = false; _sheet.setAnim(_name + "HOVER"); }
-		void onPush();
+		void onIdle() override { _isPushed = false; _sheet.setAnim(_name + "IDLE"); }
+		void onHover() override { _isPushed = false; _sheet.setAnim(_name + "HOVER"); }
+		void onPush() override;
 
-		float getValue() { return _value; }
-		float getPercent() { return _percent; }
+		float getValue() const { return _value; }
+		float getPercent() const { return _percent; }
 		void setPercent(float percent);
 		void setValue(float value);
 	private:

@@ -3,12 +3,8 @@
 #include <functional>
 
 #include "FontBatcher.h"
-#include "Hitbox.h"
-#include "InputManager.h"
 #include "SimpleButton.h"
-#include "Sprite.h"
 #include "SpriteManager.h"
-#include "SpriteSheet.h"
 #include "Text.h"
 #include "Vertex.h"
 
@@ -32,8 +28,8 @@ namespace GameEngine {
 
 		SimpleButton* getLeft() { return &_left; }
 		SimpleButton* getRight() { return &_right; }
-		unsigned int getIndex() { return _index; }
-		std::vector<std::string> getStrings() { return _options; }
+		unsigned int getIndex() const { return _index; }
+		std::vector<std::string> getStrings() const { return _options; }
 
 	private:
 		float _leftX, _rightX, _textX, _y, _buttonWidth, _textWidth, _depth;

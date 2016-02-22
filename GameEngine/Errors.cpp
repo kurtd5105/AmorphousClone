@@ -1,6 +1,5 @@
 #include "Errors.h"
 #include <iostream>
-#include <SDL/SDL.h>
 
 namespace GameEngine {
 	void fatalSDLError(std::string errorSDL, std::string errorNote) {

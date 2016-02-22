@@ -1,7 +1,5 @@
 #pragma once
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <GL/glew.h>
 
 namespace GameEngine {
 	class Camera {
@@ -14,17 +12,17 @@ namespace GameEngine {
 
 		void init(int width, int height);
 		void update();
-		glm::vec2 toWorldCoords(glm::vec2 pos);
+		glm::vec2 toWorldCoords(glm::vec2 pos) const;
 
 		//Setters
 		void setPosition(const glm::vec2& newPos) { _position = newPos; _needsUpdate = true; }
 		void setScale(const float& newScale) { _scale = newScale; _needsUpdate = true; }
 
 		//Getters
-		glm::vec2 getPosition() { return _position; }
-		glm::mat4 getMatrix() { return _cameraMatrix; }
+		glm::vec2 getPosition() const { return _position; }
+		glm::mat4 getMatrix() const { return _cameraMatrix; }
 		float* getMatrixRef() { return &_cameraMatrix[0][0]; }
-		float getScale() { return _scale; }
+		float getScale() const { return _scale; }
 
 	private:
 		bool _needsUpdate;

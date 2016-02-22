@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-
 #include <GameEngine/SpriteManager.h>
 #include <GameEngine/Sprite.h>
 #include <GameEngine/Hitbox.h>
@@ -9,7 +7,6 @@
 
 class EnemySuper;
 class Goople;
-
 class Player;
 
 class Agent {
@@ -22,26 +19,26 @@ public:
 	void pointAt(glm::vec2 pos);
 	void moveTo(Agent* agent, float speed);
 	void lockOn(Agent* agent);
-	bool collideAgents(Agent *agent);
+	bool collideAgents(Agent *agent) const;
 
 	virtual void attack();
 	virtual void kill();
 
-	float getRotation() { return _sprite->getRotation(); }
-	float getRotationOffset() { return _rotationOffset; }
-	float getRadius() { return _radius; }
-	glm::vec2 getPos() { return glm::vec2(_x, _y); }
-	glm::vec2 getCentered() { return _sprite->getCentered(); }
+	float getRotation() const { return _sprite->getRotation(); }
+	float getRotationOffset() const { return _rotationOffset; }
+	float getRadius() const { return _radius; }
+	glm::vec2 getPos() const { return glm::vec2(_x, _y); }
+	glm::vec2 getCentered() const { return _sprite->getCentered(); }
 
-	bool isInit() { return _isInit; }
+	bool isInit() const { return _isInit; }
 
 	void setInvisible();
 	void setVisible();
-	bool isVisible() { return _visible; }
+	bool isVisible() const { return _visible; }
 
-	void disable() { _enabled = false; }
-	void enable() { _enabled = true; }
-	bool isEnabled() { return _enabled; }
+	virtual void disable() { _enabled = false; }
+	virtual void enable() { _enabled = true; }
+	virtual bool isEnabled() { return _enabled; }
 
 protected:
 	float _x, _y, _width, _height, _depth, _rotation, _radius, _speed, _rotationOffset;

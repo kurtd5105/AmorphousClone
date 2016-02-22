@@ -9,7 +9,6 @@
 #include <GameEngine/Random.h>
 
 #include "EnemySuper.h"
-#include "Goople.h"
 
 class SpawnManager
 {

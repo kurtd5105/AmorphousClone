@@ -3,10 +3,6 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-#include <SDL/SDL.h>
-#include <TTF/SDL_ttf.h>
-
-#include "Errors.h"
 
 namespace GameEngine {
 	struct CharGlyph {
@@ -26,16 +22,16 @@ namespace GameEngine {
 		void operator=(Font& font);
 		void init(std::string path, int point);
 
-		int getFontHeight() { return _fontHeight; }
-		int getFontStart() { return _start; }
-		int getFontLength() { return _length; }
+		int getFontHeight() const { return _fontHeight; }
+		int getFontStart() const { return _start; }
+		int getFontLength() const { return _length; }
 
-		CharGlyph* getFontGlyphs() { return _chars; }
-		GLuint getFontID() { return _id; }
+		CharGlyph* getFontGlyphs() const { return _chars; }
+		GLuint getFontID() const { return _id; }
 	private:
 		static std::vector<int>* createRows(glm::ivec4* rects, int rectsLength, int r, int padding, int& w);
-		glm::vec2 measure(const char* s);
-		int closestPow2(int i);
+		glm::vec2 measure(const char* s) const;
+		static int closestPow2(int i);
 
 		CharGlyph* _chars;
 

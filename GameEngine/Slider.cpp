@@ -1,9 +1,8 @@
 #include "Slider.h"
+#include <math.h>
 
 namespace GameEngine {
-	Slider::Slider() : _line(nullptr), _x(0.0f), _y(0.0f), _start(0.0f), _lineWidth(0.0f), _percent(0.0f), _maxX(0.0f), _width(0.0f) {
-	}
-
+	Slider::Slider() : _min(0), _max(0), _x(0.0f), _y(0.0f), _start(0.0f), _lineWidth(0.0f), _percent(0.0f), _value(0), _maxX(0.0f), _width(0.0f), _clickX(0), _line(nullptr){}
 
 	Slider::~Slider() {
 		//delete _text;
@@ -48,7 +47,7 @@ namespace GameEngine {
 		}
 		_percent = percent;
 		_value = (_max * (_percent / 100)) + (_min * (1 - (_percent / 100)));
-		_text.init(std::to_string((int)round(_value)), glm::vec2(_maxX + 10 + (_width / 2), _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
+		_text.init(std::to_string(int(round(_value))), glm::vec2(_maxX + 10 + (_width / 2), _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
 		setPosition();
 	}
 
@@ -60,15 +59,15 @@ namespace GameEngine {
 		}
 		_value = value;
 		_percent = (_value / (_max - _min)) * 100;
-		_text.init(std::to_string((int)round(_value)), glm::vec2(_maxX + 10 + (_width / 2), _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
+		_text.init(std::to_string(int(round(_value))), glm::vec2(_maxX + 10 + (_width / 2), _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
 		setPosition();
 	}
 
 	void Slider::setPosition() {
-		float offset = (_lineWidth * (_percent / 100));
+		auto offset = (_lineWidth * (_percent / 100));
 		if(_x + offset > _maxX) {
 			offset = _maxX - _x;
-		} else if(_x + offset < _start || (int)round(_value) == _min) {
+		} else if(_x + offset < _start || int(round(_value)) == _min) {
 			offset = _start - _x;
 		}
 		_sprite->translate(offset, 0);
@@ -78,7 +77,7 @@ namespace GameEngine {
 
 	void Slider::onPush() {
 		//Get the x position of the mouse
-		float x = _InputManager->getMouseCoords()[0];
+		auto x = _InputManager->getMouseCoords()[0];
 		
 		//When it is first pushed, set the button to its pushed animation
 		if(!_isPushed) {
@@ -109,6 +108,6 @@ namespace GameEngine {
 		_percent = ((_x - _start) / _lineWidth) * 100;
 		_value = (_max * (_percent / 100)) + (_min * (1 - (_percent / 100)));
 		//Change the text to display that percentage
-		_text.init(std::to_string((int)round(_value)), glm::vec2(_maxX + 10 + (_width / 2), _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
+		_text.init(std::to_string(int(round(_value))), glm::vec2(_maxX + 10 + (_width / 2), _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
 	}
 }

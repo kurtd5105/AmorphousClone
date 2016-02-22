@@ -11,7 +11,7 @@ namespace GameEngine {
 		void init(float x, float y, float width, float height, float depth, std::string texPath, std::string aniPath,
 				  std::string text, Color color, std::function<void(void)> callback, SpriteManager* manager, FontBatcher* fontBatcher);
 
-		std::function<void(void)> onClick();
-		bool isPushed() { return _isPushed; }
+		std::function<void(void)> onClick() override;
+		bool isPushed() const { return _isPushed; }
 	};
 }

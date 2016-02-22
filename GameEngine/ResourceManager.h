@@ -1,6 +1,5 @@
 #pragma once
 #include <map>
-#include <string>
 #include <thread>
 #include <vector>
 
@@ -28,8 +27,8 @@ namespace GameEngine {
 		void asyncAssetLoad(std::vector<std::string> textures, std::vector<std::string> animations, std::thread& currentThread, ThreadState* taskState);
 
 		//Debug getters for amount of textures
-		int getRawCount() { return _rawTextureMap.size(); }
-		int getTexCount() { return _textureMap.size(); }
+		int getRawCount() const { return _rawTextureMap.size(); }
+		int getTexCount() const { return _textureMap.size(); }
 
 	private:
 		std::map<std::string, Animation> _animationMap;

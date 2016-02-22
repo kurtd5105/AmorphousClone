@@ -1,4 +1,8 @@
 #include "Font.h"
+#include <SDL/SDL.h>
+#include <TTF/SDL_ttf.h>
+
+#include "Errors.h"
 //Adapted from Benjamin Arnold's SpriteFont
 /*
 This is a modified version of the SpriteFont class from the
@@ -22,7 +26,7 @@ Modified By: Benjamin Arnold, kurtd5105
 */
 namespace GameEngine {
 	//95 characters (32-126 ASCII char range)
-	Font::Font() : _id(0), _length(95), _start(32) {
+	Font::Font() : _chars(nullptr), _id(0), _fontHeight(0), _length(95), _start(32) {
 	}
 
 
@@ -44,18 +48,18 @@ namespace GameEngine {
 			TTF_Init();
 		}
 		//Create a TTF font using the path and with the specified font point
-		TTF_Font* f = TTF_OpenFont(path.c_str(), point);
+		auto f = TTF_OpenFont(path.c_str(), point);
 		if(f == nullptr) {
 			fatalGenericError("Failed to open TTF font" + path);
 		}
 		_fontHeight = TTF_FontHeight(f);
-		int padding = point/8;
+		auto padding = point/8;
 
 		// First neasure all the regions
 		glm::ivec4* charRects = new glm::ivec4[_length];
 		int advance;
-		for(int i = 0; i < _length; i++) {
-			TTF_GlyphMetrics(f, (char)(i + _start), &charRects[i].x, &charRects[i].z, &charRects[i].y, &charRects[i].w, &advance);
+		for(auto i = 0; i < _length; i++) {
+			TTF_GlyphMetrics(f, char(i + _start), &charRects[i].x, &charRects[i].z, &charRects[i].y, &charRects[i].w, &advance);
 			charRects[i].z -= charRects[i].x;
 			charRects[i].x = 0;
 			charRects[i].w -= charRects[i].y;
@@ -106,20 +110,20 @@ namespace GameEngine {
 
 		// Now draw all the chars
 		SDL_Color fg = {255, 255, 255, 255};
-		int ly = padding;
-		for(int ri = 0; ri < bestRows; ri++) {
-			int lx = padding;
+		auto ly = padding;
+		for(auto ri = 0; ri < bestRows; ri++) {
+			auto lx = padding;
 			for(unsigned int ci = 0; ci < bestPartition[ri].size(); ci++) {
-				int gi = bestPartition[ri][ci];
+				auto gi = bestPartition[ri][ci];
 
-				SDL_Surface* charSurface = TTF_RenderGlyph_Blended(f, (char)(_start + gi), fg);
+				auto charSurface = TTF_RenderGlyph_Blended(f, char(_start + gi), fg);
 
 				// Pre-multiplication occurs here
-				unsigned char* sp = (unsigned char*)charSurface->pixels;
-				int cp = charSurface->w * charSurface->h * 4;
-				for(int i = 0; i < cp; i += 4) {
-					float a = sp[i + 3] / 255.0f;
-					sp[i] = (unsigned char)((float)sp[i] * a);
+				auto sp = static_cast<unsigned char*>(charSurface->pixels);
+				auto cp = charSurface->w * charSurface->h * 4;
+				for(auto i = 0; i < cp; i += 4) {
+					auto a = sp[i + 3] / 255.0f;
+					sp[i] = unsigned char(float(sp[i]) * a);
 					sp[i + 1] = sp[i];
 					sp[i + 2] = sp[i];
 				}
@@ -156,18 +160,18 @@ namespace GameEngine {
 		// Create spriteBatch chars
 		_chars = new CharGlyph[_length + 1];
 		for(int i = 0; i < _length; i++) {
-			_chars[i].character = (char)(_start + i);
+			_chars[i].character = char(_start + i);
 			_chars[i].size = glm::vec2(charRects[i].z, charRects[i].w);
 			_chars[i].uvRect = glm::vec4(
-				(float)charRects[i].x / (float)bestWidth,
-				(float)charRects[i].y / (float)bestHeight,
-				(float)charRects[i].z / (float)bestWidth,
-				(float)charRects[i].w / (float)bestHeight
+				float(charRects[i].x) / float(bestWidth),
+				float(charRects[i].y) / float(bestHeight),
+				float(charRects[i].z) / float(bestWidth),
+				float(charRects[i].w) / float(bestHeight)
 				);
 		}
 		_chars[_length].character = ' ';
 		_chars[_length].size = _chars[0].size;
-		_chars[_length].uvRect = glm::vec4(0, 0, (float)rs / (float)bestWidth, (float)rs / (float)bestHeight);
+		_chars[_length].uvRect = glm::vec4(0, 0, float(rs) / float(bestWidth), float(rs) / float(bestHeight));
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 		delete[] charRects;
@@ -177,17 +181,17 @@ namespace GameEngine {
 
 	std::vector<int>* Font::createRows(glm::ivec4* rects, int rectsLength, int r, int padding, int& w) {
 		// Blank initialize
-		std::vector<int>* l = new std::vector<int>[r]();
-		int* cw = new int[r]();
-		for(int i = 0; i < r; i++) {
+		auto l = new std::vector<int>[r]();
+		auto cw = new int[r]();
+		for(auto i = 0; i < r; i++) {
 			cw[i] = padding;
 		}
 
 		// Loop through all glyphs
-		for(int i = 0; i < rectsLength; i++) {
+		for(auto i = 0; i < rectsLength; i++) {
 			// Find row for placement
-			int ri = 0;
-			for(int rii = 1; rii < r; rii++) {
+			auto ri = 0;
+			for(auto rii = 1; rii < r; rii++) {
 				if(cw[rii] < cw[ri]) {
 					ri = rii;
 				}
@@ -202,18 +206,18 @@ namespace GameEngine {
 
 		// Find the max width
 		w = 0;
-		for(int i = 0; i < r; i++) {
+		for(auto i = 0; i < r; i++) {
 			if(cw[i] > w) w = cw[i];
 		}
 
 		return l;
 	}
 
-	glm::vec2 Font::measure(const char* s) {
+	glm::vec2 Font::measure(const char* s) const {
 		glm::vec2 size(0, _fontHeight);
 		float cw = 0;
-		for(int si = 0; s[si] != 0; si++) {
-			char c = s[si];
+		for(auto si = 0; s[si] != 0; si++) {
+			auto c = s[si];
 			if(s[si] == '\n') {
 				size.y += _fontHeight;
 				if(size.x < cw)
@@ -234,7 +238,7 @@ namespace GameEngine {
 
 	int Font::closestPow2(int i) {
 		i--;
-		int pi = 1;
+		auto pi = 1;
 		while(i > 0) {
 			i >>= 1;
 			pi <<= 1;

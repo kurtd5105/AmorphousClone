@@ -2,7 +2,6 @@
 #include <list>
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-#include <SDL/SDL.h>
 
 #include "Font.h"
 #include "RenderBatch.h"

@@ -1,12 +1,10 @@
 #include "SelectionBox.h"
 
 namespace GameEngine {
-	SelectionBox::SelectionBox() {
-	}
+	SelectionBox::SelectionBox(): _leftX(0), _rightX(0), _textX(0), _y(0), _buttonWidth(0), _textWidth(0), _depth(0), _count(0), _index(0),
+		_SpriteManager(nullptr), _FontBatcher(nullptr){}
 
-
-	SelectionBox::~SelectionBox() {
-	}
+	SelectionBox::~SelectionBox() {}
 
 	void SelectionBox::init(float buttonX, float y, float buttonWidth, float buttonHeight, float textWidth, float depth, std::vector<std::string> options,
 							std::string nameLeft, std::string nameRight, std::string textLPath, std::string aniLPath, std::string textRPath, std::string aniRPath,

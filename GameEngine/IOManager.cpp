@@ -1,11 +1,14 @@
 #include "IOManager.h"
+#include "Errors.h"
+#include "picoPNG.h"
+
+#include <regex>
+#include <string>
 
 namespace GameEngine {
-	IOManager::IOManager() {
-	}
+	IOManager::IOManager() {}
 
-	IOManager::~IOManager() {
-	}
+	IOManager::~IOManager() {}
 
 	Animation IOManager::loadAnimation(std::string path) {
 		std::vector<unsigned char> in;
@@ -22,7 +25,7 @@ namespace GameEngine {
 		return newAnimation;
 	}
 
-	GLTexture IOManager::loadPNG(std::string path) {
+	GLTexture IOManager::loadPNG(std::string path) const {
 		GLTexture texture = {};
 		std::vector<unsigned char> in;
 		std::vector<unsigned char> out;
@@ -60,7 +63,7 @@ namespace GameEngine {
 		return texture;
 	}
 
-	GLRawTexture IOManager::loadPNGRaw(std::string path) {
+	GLRawTexture IOManager::loadPNGRaw(std::string path) const {
 		std::vector<unsigned char> in;
 		std::vector<unsigned char> out;
 		unsigned long width, height;
@@ -122,13 +125,13 @@ namespace GameEngine {
 		//Reduce file size by anything that won't be read at the start
 		fileSize -= file.tellg();
 
-		buffer.resize((unsigned int)fileSize);
-		file.read((char *)&(buffer[0]), fileSize);
+		buffer.resize(unsigned int(fileSize));
+		file.read(reinterpret_cast<char *>(&(buffer[0])), fileSize);
 		file.close();
 		return true;
 	}
 
-	void IOManager::loadOptions(Options* options) {
+	void IOManager::loadOptions(Options* options) const {
 		std::ifstream file("options.cfg");
 
 		options->width = 800;
@@ -182,7 +185,7 @@ namespace GameEngine {
 			//Check to see if music volume is a float from 0 to 1
 			if(regex_match(music, decimal)) {
 				//std::cout << "\t> Music match found." << std::endl;
-				float v = std::stof(music);
+				auto v = std::stof(music);
 				if(v >= 0.0f && v <= 1.0f) {
 					//std::cout << "\t\t Music is valid." << std::endl;
 					options->music = v;
@@ -192,7 +195,7 @@ namespace GameEngine {
 			//Check to see if sfx volume is a float from 0 to 1
 			if(regex_match(sfx, decimal)) {
 				//std::cout << "\t> SFX match found." << std::endl;
-				float v = std::stof(sfx);
+				auto v = std::stof(sfx);
 				if(v >= 0.0f && v <= 1.0f) {
 					//std::cout << "\t\t SFX is valid." << std::endl;
 					options->sfx = v;

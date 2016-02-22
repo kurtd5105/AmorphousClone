@@ -1,6 +1,6 @@
 #include "CollisionManager.h"
 #include <vector>
-#include <iostream>
+//#include <iostream>
 namespace GameEngine {
 	bool Collision::checkCollide(Hitbox a, Hitbox b) {
 		if(a.getType() == b.getType()) {

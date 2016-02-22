@@ -1,12 +1,12 @@
 #include "StagingManager.h"
-#include <iostream>
+#include <sstream>
 
-StagingManager::StagingManager() : _gameState(nullptr), _SpriteManager(nullptr), _stageState(EXIT) {
-}
+//#include <iostream>
+
+StagingManager::StagingManager() : _SpriteManager(nullptr), _InputManager(nullptr), _defaultFont(nullptr), _options(nullptr), _gameState(nullptr), _stageState(EXIT) {}
 
 
-StagingManager::~StagingManager() {
-}
+StagingManager::~StagingManager() {}
 
 void StagingManager::init(GameState* gameState, GameEngine::Options* options, GameEngine::SpriteManager* manager,
 						  GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager) {
@@ -70,7 +70,7 @@ void StagingManager::loadState() {
 
 		//Create slider for testing purposes
 		_sliders.emplace_back();
-		_sliders[0].init(250.0f, 50.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, 0.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
+		_sliders[0].init(250.0f, 50.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, 100.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
 					_SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(100, 1000));
 
 		//Set the stage state to the game state now that everything is setup
@@ -144,11 +144,11 @@ void StagingManager::loadState() {
 		_sliders[1].init(150.0f, 400.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, _options->sfx * 100, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png",
 						 color, callback, _SpriteManager, _defaultFont, _InputManager);
 		//Spawn Count
-		_sliders[2].init(620.0f, 500.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, (float)_options->spawnCount, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png",
+		_sliders[2].init(620.0f, 500.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, float(_options->spawnCount), "Textures/slider.png", "Animations/slider.ani", "Textures/line.png",
 						 color, callback, _SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(100, 1000));
 		//_sliders[2].setValue(_options->spawnCount);
 		//Spawn Rate
-		_sliders[3].init(620.0f, 400.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, (float)_options->spawnRate, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png",
+		_sliders[3].init(620.0f, 400.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, float(_options->spawnRate), "Textures/slider.png", "Animations/slider.ani", "Textures/line.png",
 						 color, callback, _SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(1, 15));
 		//_sliders[3].setValue(_options->spawnRate);
 
@@ -170,7 +170,7 @@ void StagingManager::loadState() {
 		std::ostringstream oss;
 		std::vector<std::string> resolutions;
 		unsigned int max = std::to_string(validWidths.back()).length() + std::to_string(validHeights.back()).length() + 1;
-		unsigned int curr = 0;
+		unsigned int curr;
 		std::string temp;
 		for(unsigned int i = 0; i < validWidths.size(); i++) {
 			oss.clear();
@@ -183,7 +183,7 @@ void StagingManager::loadState() {
 			curr = temp.length();
 			oss.clear();
 			oss.str("");
-			for(unsigned int i = 0; i < (unsigned int)((max - curr) * 1.5f); i++) {
+			for(unsigned int i = 0; i < unsigned int((max - curr) * 1.5f); i++) {
 				oss << " ";
 			}
 			oss << temp;
@@ -221,11 +221,11 @@ void StagingManager::loadState() {
 		callback = [&]() {
 			_options->music = _sliders[0].getValue() / 100.0f;
 			_options->sfx = _sliders[1].getValue() / 100.0f;
-			_options->spawnCount = (unsigned int)round(_sliders[2].getValue());
-			_options->spawnRate = (unsigned int)round(_sliders[3].getValue());
+			_options->spawnCount = unsigned int(round(_sliders[2].getValue()));
+			_options->spawnRate = unsigned int(round(_sliders[3].getValue()));
 			_options->width = validWidths[_selectionBoxes[0].getIndex()];
 			_options->height = validHeights[_selectionBoxes[0].getIndex()];
-			unsigned int temp = _selectionBoxes[1].getIndex();
+			auto temp = _selectionBoxes[1].getIndex();
 			if(temp == 0) {
 				_options->mode = GameEngine::WindowMode::BORDERLESS;
 			} else if(temp == 1) {
@@ -243,5 +243,7 @@ void StagingManager::loadState() {
 		_stageState = *_gameState;
 		break;
 	}
+	case EXIT: break;
+	default: break;
 	}
 }
