@@ -76,7 +76,7 @@ void GameLogic::processInput(float step) {
 	SDL_Event event;
 	//_InputManager.update();
 	auto mouseCoords = _InputManager->getMouseCoords();
-	//auto output = _Camera->toWorldCoords(mouseCoords);
+
 	//Poll every event and handle it
 	while(SDL_PollEvent(&event)) {
 		switch(event.type) {
@@ -133,6 +133,7 @@ void GameLogic::processInput(float step) {
 }
 
 void GameLogic::checkButtons(glm::vec2& mouseCoords) {
+	mouseCoords = _Camera->toWorldCoords(mouseCoords);
 	//Check to see if the mouse is clicked
 	if(_InputManager->getMousePress()) {
 		//If the mouse is clicked, check to see if it is being held or not and on what button

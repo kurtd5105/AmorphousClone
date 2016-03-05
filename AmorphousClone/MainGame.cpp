@@ -42,7 +42,7 @@ void MainGame::init() {
 
 	//_SpawnManager.init(WINDOW_WIDTH, WINDOW_HEIGHT, 20, &_SpriteManager);
 	_StagingManager.init(&_gameState, _options, &_SpriteManager, &_fontBatcher_sans16, &_InputManager);
-	_Camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
+	_Camera.init(_options->width, _options->height);
 	_Game.init(&_gameState, &_Camera, &_StagingManager, &_InputManager);
 	_SpriteBatcher.init();
 
