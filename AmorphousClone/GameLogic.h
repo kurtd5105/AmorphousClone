@@ -50,6 +50,5 @@ private:
 
 	int W, A, S, D, Q, E;
 	bool _clickHold;
-	Uint32 startTime;
 };
 

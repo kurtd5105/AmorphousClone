@@ -15,8 +15,6 @@ void GameLogic::init(GameState* gameState, GameEngine::Camera* camera, StagingMa
 	_StagingManager = manager;
 	_InputManager = inputManager;
 	_keys = _InputManager->getKeyPresses();
-
-	startTime = 0;
 }
 
 void GameLogic::getStage() {
@@ -100,10 +98,7 @@ void GameLogic::processInput(float step) {
 	case GameState::PLAYING:
 	{
 
-		if (SDL_GetTicks() > startTime + 200) {
-			startTime = SDL_GetTicks();
-			collisionAgents();
-		}
+		collisionAgents();
 
 		_SpawnManager->spawn();
 

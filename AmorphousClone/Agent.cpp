@@ -129,6 +129,9 @@ bool Agent::collideAgents(Agent* agent) {
 	float depth = minDist - distlength;
 
 	if (depth > 0) {
+		glm::vec2 depthVec = glm::normalize(diff) * distlength;
+		glm::vec2(_x, _y) += depthVec / 2.0f;
+		agent->setPos(agent->getPos() - (depthVec / 2.0f));
 		//printf("A collision occured\n");
 		return true;
 	}
