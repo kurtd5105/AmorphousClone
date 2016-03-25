@@ -2,7 +2,6 @@
 #include <vector>
 
 #include <SDL/SDL.h>
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 
 namespace GameEngine {
@@ -16,8 +15,8 @@ namespace GameEngine {
 
 		void update();
 
-		glm::vec2 getMouseCoords() { return glm::vec2((float)_mouseX, (float)_mouseY); }
-		bool getMousePress() { return _LMB; }
+		glm::vec2 getMouseCoords() const { return glm::vec2(float(_mouseX), float(_mouseY)); }
+		bool getMousePress() const { return _LMB; }
 
 		std::vector<bool>* getKeyPresses() { return &_keyPresses; }
 	private:

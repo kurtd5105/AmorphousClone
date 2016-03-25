@@ -102,10 +102,12 @@
     <ClInclude Include="Hitbox.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="IOManager.h" />
+    <ClInclude Include="Options.h" />
     <ClInclude Include="picoPNG.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="RenderBatch.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="SelectionBox.h" />
     <ClInclude Include="ShadingProgram.h" />
     <ClInclude Include="SimpleButton.h" />
     <ClInclude Include="Slider.h" />
@@ -118,6 +120,7 @@
     <ClInclude Include="ThreadState.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="WindowMode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -134,6 +137,7 @@
     <ClCompile Include="picoPNG.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="SelectionBox.cpp" />
     <ClCompile Include="ShadingProgram.cpp" />
     <ClCompile Include="SimpleButton.cpp" />
     <ClCompile Include="Slider.cpp" />

@@ -1,7 +1,7 @@
 #define _USE_MATH_DEFINES
 #include "Sprite.h"
 #include <math.h>
-#include <iostream>
+//#include <iostream>
 
 namespace GameEngine {
 	Sprite::Sprite() : _x(0.0f), _y(0.0f), _width(0.0f), _height(0.0f), _depth(0.0f), _rotation(0.0f), _visible(true) {}
@@ -128,7 +128,7 @@ namespace GameEngine {
 		}
 	}
 	
-	glm::vec2 Sprite::rotatePoint(float x, float y, float angle) {
+	glm::vec2 Sprite::rotatePoint(float x, float y, float angle) const {
 		glm::vec2 r;
 		//Apply rotation matrix
 		r.x = x * cos(angle) - y * sin(angle);

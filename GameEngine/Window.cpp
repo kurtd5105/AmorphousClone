@@ -1,24 +1,18 @@
 #include "Window.h"
-#include <iostream>
 #include "Errors.h"
+#include <iostream>
+#include <GL/glew.h>
+
 
 namespace GameEngine {
-	//using namespace GameEngine;
-	Window::Window() :
-		_width(0),
-		_height(0),
-		_window(nullptr),
-		_surface(nullptr) {
-	}
+	Window::Window() : _width(0), _height(0), _windowMode(WindowMode::WINDOWED), _window(nullptr), _surface(nullptr) {}
 
+	Window::~Window() {}
 
-	Window::~Window() {
-	}
-
-	void Window::createWindow(int width, int height, std::string name, WindowMode windowMode) {
-		_height = height;
-		_width = width;
-		_windowMode = windowMode;
+	void Window::createWindow(Options* options, std::string name) {
+		_height = options->height;
+		_width = options->width;
+		_windowMode = options->mode;
 
 		//Setup the appropriate flag for the SDL window mode
 		auto windowFlag = SDL_WINDOW_OPENGL;
@@ -70,11 +64,11 @@ namespace GameEngine {
 		SDL_GL_SetSwapInterval(1);
 	}
 
-	void Window::swapBuffer() {
+	void Window::swapBuffer() const {
 		SDL_GL_SwapWindow(_window);
 	}
 
-	void Window::destroySDLWindow() {
+	void Window::destroySDLWindow() const {
 		SDL_DestroyWindow(_window);
 	}
 }

@@ -1,11 +1,9 @@
 #include "EnemySuper.h"
 
-EnemySuper::EnemySuper() {
-}
+EnemySuper::EnemySuper(): _chance(0.0f), _Random(nullptr){}
 
 
-EnemySuper::~EnemySuper() {
-}
+EnemySuper::~EnemySuper() {}
 
 void EnemySuper::init(float x, float y, float width, float height, float depth, int side, 
 					  std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager, GameEngine::Random* Random) {
@@ -30,12 +28,11 @@ void EnemySuper::moveToTarget(float speed) {
 	if(_enabled) {
 		if(getPos() != _target) {
 			//Get the distance to the target and point at it
-			glm::vec2 distanceTo = getCentered() - _target;
+			auto distanceTo = getCentered() - _target;
 			_sprite->pointAt(_target);
-			float angle = getRotation();
+			auto angle = getRotation();
 
-			float xMove = 0;
-			float yMove = 0;
+			float xMove, yMove;
 
 			//Prevent the target from being overshot
 			xMove = cos(angle) * _speed * speed;

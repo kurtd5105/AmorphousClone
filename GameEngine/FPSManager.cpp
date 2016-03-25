@@ -1,4 +1,5 @@
 #include "FPSManager.h"
+#include <cstring>
 
 namespace GameEngine {
 	void FPSManager::fpsinit() {

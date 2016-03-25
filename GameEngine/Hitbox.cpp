@@ -1,14 +1,10 @@
 #define _USE_MATH_DEFINES
 #include "Hitbox.h"
-#include <math.h>
 
 namespace GameEngine {
-	Hitbox::Hitbox() {
-	}
+	Hitbox::Hitbox() : _type(HitboxType::RECT){}
 
-
-	Hitbox::~Hitbox() {
-	}
+	Hitbox::~Hitbox() {}
 
 	void Hitbox::init(float x, float y, float width, float height, float radius) {
 		_info.resize(5);

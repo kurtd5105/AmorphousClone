@@ -1,25 +1,23 @@
 #pragma once
-#include <GL/glew.h>
 #include <SDL/SDL.h>
 #include <string>
 
-namespace GameEngine {
-	enum WindowMode {
-		FULLSCREEN, BORDERLESS, WINDOWED
-	};
+#include "Options.h"
+#include "WindowMode.h"
 
+namespace GameEngine {
 	class Window {
 	public:
 		Window();
 		~Window();
 
-		void createWindow(int width, int height, std::string name, WindowMode windowMode = WindowMode::WINDOWED);
-		void swapBuffer();
-		void destroySDLWindow();
+		void createWindow(Options* options, std::string name);
+		void swapBuffer() const;
+		void destroySDLWindow() const;
 
-		int getScreenWidth() { return _width; }
-		int getScreenHeight() { return _height; }
-		WindowMode getWindowMode() { return _windowMode; }
+		int getScreenWidth() const { return _width; }
+		int getScreenHeight() const { return _height; }
+		WindowMode getWindowMode() const { return _windowMode; }
 
 	private:
 		int _width, _height;

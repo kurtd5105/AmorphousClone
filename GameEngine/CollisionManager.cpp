@@ -1,6 +1,6 @@
 #include "CollisionManager.h"
 #include <vector>
-#include <iostream>
+//#include <iostream>
 namespace GameEngine {
 	bool Collision::checkCollide(Hitbox a, Hitbox b) {
 		if(a.getType() == b.getType()) {
@@ -22,7 +22,7 @@ namespace GameEngine {
 			return false;
 		case HitboxType::RECT:
 			if(aInfo[0] <= x && aInfo[2] >= x) {
-				if(aInfo[1] <= abs(y - 600) && aInfo[3] >= (abs(y - 600))) {
+				if(aInfo[1] <= y && aInfo[3] >= y) {//if(aInfo[1] <= abs(y - 600) && aInfo[3] >= (abs(y - 600))) {
 					//std::cout << "Button click info: " << aInfo[0] << ", " << aInfo[1] << ", " << aInfo[2] << ", " << aInfo[3] << "; " << x << ", " << abs(y - 600) << std::endl;
 					return true;
 				}

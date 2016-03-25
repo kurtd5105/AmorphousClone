@@ -1,6 +1,6 @@
 #include "Animation.h"
 #include "Errors.h"
-#include <iostream>
+//#include <iostream>
 
 namespace GameEngine {
 	unsigned int Animation::getUVLocation(std::string name) { 
@@ -33,10 +33,10 @@ namespace GameEngine {
 				if(token == ':') {
 					mode++;
 					_animNames.emplace_back(prev, curr);
-					curr++;
+					++curr;
 					prev = curr;
 				} else {
-					curr++;
+					++curr;
 				}
 				break;
 			}
@@ -47,32 +47,32 @@ namespace GameEngine {
 					mode = 0;
 					_UVmMSets.push_back(UVmMAnimSet);
 					UVmMAnimSet.clear();
-					curr++;
+					++curr;
 					prev = curr;
 				//A comma means the end of a float for the UVmM
 				} else if(token == ',') {
 					UVmM.emplace_back(std::stof(std::string(prev, curr)));
-					curr++;
+					++curr;
 					prev = curr;
 				//A right brace means the end of a UVmM
 				} else if(token == '}') {
 					UVmM.emplace_back(std::stof(std::string(prev, curr)));
 					UVmMAnimSet.push_back(UVmM);
 					UVmM.clear();
-					curr++;
+					++curr;
 					prev = curr;
 				} else if(token == '{') {
-					curr++;
+					++curr;
 					prev = curr;
 				} else {
-					curr++;
+					++curr;
 				}
 				break;
 			}
 			//This is the end of an animation set
 			case 2:{
 				mode = 0;
-				curr++;
+				++curr;
 				prev = curr;
 				break;
 			}

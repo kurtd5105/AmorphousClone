@@ -15,7 +15,7 @@ namespace GameEngine {
 
 		void translate(float x, float y);
 
-		HitboxType getType() { return _type; }
+		HitboxType getType() const { return _type; }
 		std::vector<float>* getInfo() { return &_info; }
 
 	private:

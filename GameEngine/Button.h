@@ -10,13 +10,11 @@
 #include "Text.h"
 #include "Vertex.h"
 
-class SimpleButton;
-
 namespace GameEngine {
 	class Button {
 	public:
 		Button();
-		~Button();
+		virtual ~Button();
 
 		virtual std::function<void(void)> onClick() { return _callback; };
 		virtual void onIdle();

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SDL/SDL.h>
-#include <string.h>
 
 namespace GameEngine {
 	class FPSManager
@@ -16,7 +15,7 @@ namespace GameEngine {
 
 	private:
 		Uint32 frametimes[FRAME_VALUES];
-		Uint32 frametimelast;
-		Uint32 framecount;
+		Uint32 frametimelast = 0;
+		Uint32 framecount = 0;
 	};
 }

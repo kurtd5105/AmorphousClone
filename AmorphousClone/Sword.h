@@ -1,6 +1,6 @@
 #pragma once
-#include <GameEngine/Hitbox.h>
-#include <GameEngine/Sprite.h>
+//#include <GameEngine/Hitbox.h>
+//#include <GameEngine/Sprite.h>
 #include <GameEngine/SpriteManager.h>
 #include "Agent.h"
 
@@ -11,9 +11,9 @@ public:
 
 	void init(float x, float y, float angle, GameEngine::SpriteManager* manager);
 
-	void attack();//needs some sort of timer integrated
+	void attack() override;//needs some sort of timer integrated
 
-private:
+//private:
 	/*float _x, _y, _rotation;
 
 	GameEngine::SpriteManager* _SpriteManager;

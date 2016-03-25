@@ -11,12 +11,12 @@ namespace GameEngine {
 
 		void ShadingProgram::init(const std::string &vertexPath, const std::string &fragmentPath, std::vector<std::string> attributes, IOManager* manager);
 		void compileShaders(const std::string &vertexPath, const std::string &fragmentPath);
-		void linkShaders();
+		void linkShaders() const;
 		void addAttribute(const std::string attributeName);
-		void use();
-		void unuse();
+		void use() const;
+		void unuse() const;
 
-		GLint getUniformLocation(const std::string uniformName);
+		GLint getUniformLocation(const std::string uniformName) const;
 
 	private:
 		IOManager* _IOManager;
@@ -26,6 +26,6 @@ namespace GameEngine {
 		GLuint _fragmentID;
 		int _numAttributes;
 
-		GLint compileShader(const std::string shaderPath, GLuint *shaderID);
+		GLint compileShader(const std::string shaderPath, GLuint *shaderID) const;
 	};
 }

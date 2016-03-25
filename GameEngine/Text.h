@@ -2,9 +2,7 @@
 #include <string>
 #include <glm/glm.hpp>
 
-#include "Font.h"
 #include "FontBatcher.h"
-#include "Text.h"
 #include "Vertex.h"
 
 namespace GameEngine {
@@ -15,7 +13,7 @@ namespace GameEngine {
 
 		void init(std::string text, glm::vec2 position, glm::vec2 scaling, float depth, Color tint, FontBatcher* batcher);
 		void display();
-		void clear();
+		void clear() const;
 	private:
 		bool _used;
 		unsigned int _index, _length;

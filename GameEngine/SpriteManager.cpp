@@ -3,12 +3,9 @@
 #include <iostream>
 
 namespace GameEngine {
-	SpriteManager::SpriteManager() : _sortType(sortType::TEXTURE){
-	}
+	SpriteManager::SpriteManager() : _ResourceManager(nullptr), _sortType(sortType::TEXTURE){}
 
-
-	SpriteManager::~SpriteManager() {
-	}
+	SpriteManager::~SpriteManager() {}
 
 	void SpriteManager::init(sortType sort, ResourceManager* manager) {
 		_ResourceManager = manager;
@@ -65,7 +62,7 @@ namespace GameEngine {
 	}
 
 	void SpriteManager::clearSprites() {
-		for(auto it = _spriteList.begin(); it != _spriteList.end(); it++) {
+		for(auto it = _spriteList.begin(); it != _spriteList.end(); ++it) {
 			delete *it;
 		}
 		_spriteList.clear();

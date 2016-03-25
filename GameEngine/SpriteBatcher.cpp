@@ -1,12 +1,10 @@
 #include "SpriteBatcher.h"
+#include "Vertex.h"
 
 namespace GameEngine {
-	SpriteBatcher::SpriteBatcher() {
-	}
+	SpriteBatcher::SpriteBatcher(): _vboID(0), _vaoID(0), _indices(0){}
 
-
-	SpriteBatcher::~SpriteBatcher() {
-	}
+	SpriteBatcher::~SpriteBatcher() {}
 
 	void SpriteBatcher::createRenderBatches() {
 		//Create a vector of vertices and resize it to be the total size of all the vertices it will need to contain
@@ -76,9 +74,9 @@ namespace GameEngine {
 		glEnableVertexAttribArray(2);
 
 		//Information about the data and how to read it
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
-		glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, color));
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, position)));
+		glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, color)));
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, uv)));
 
 		glBindVertexArray(0);
 	}

@@ -2,7 +2,6 @@
 #include "Vertex.h"
 #include "ResourceManager.h"
 #include <vector>
-#include <string>
 #include <glm\glm.hpp>
 
 namespace GameEngine {
@@ -20,18 +19,19 @@ namespace GameEngine {
 		void rotate(float angle);
 		void pointAt(glm::vec2 pos);
 
-		GLuint getTextureID() { return _texture.id; }
-		float getDepth() { return _depth; }
-		float getRotation() { return _rotation; }
+		GLuint getTextureID() const { return _texture.id; }
+		float getDepth() const { return _depth; }
+		float getRotation() const { return _rotation; }
 		Vertex getVertexAt(int i) { return _vertices[i]; }
-		glm::vec2 getCentered() { return glm::vec2(_x, _y) + _center; }
+		glm::vec2 getCentered() const { return glm::vec2(_x, _y) + _center; }
+		glm::vec2 getPosition() const { return glm::vec2(_x, _y); }
 
 		void setInvisible() { _visible = false; }
 		void setVisible() { _visible = true; }
-		bool isVisible() { return _visible; }
+		bool isVisible() const { return _visible; }
 
 	private:
-		glm::vec2 Sprite::rotatePoint(float x, float y, float angle);
+		glm::vec2 Sprite::rotatePoint(float x, float y, float angle) const;
 
 		std::vector<float> _offset;
 		glm::vec2 _center;

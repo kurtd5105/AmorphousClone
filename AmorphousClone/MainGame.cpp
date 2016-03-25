@@ -1,11 +1,11 @@
 #include "MainGame.h"
 #include <iostream>
 
-MainGame::MainGame() : _gameState(MAIN_MENU), _IOThreadState(ThreadState::OFF) {
-}
+MainGame::MainGame() : _options(nullptr), _gameState(MAIN_MENU), _IOThreadState(ThreadState::OFF) {}
 
 
 MainGame::~MainGame() {
+	delete _options;
 }
 
 void MainGame::startGame() {
@@ -15,7 +15,9 @@ void MainGame::startGame() {
 }
 
 void MainGame::init() {
-	_Window.createWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Amorphous Clone", GameEngine::WindowMode::WINDOWED);
+	_options = new GameEngine::Options;
+	_IOManager.loadOptions(_options);
+	_Window.createWindow(_options, "Amorphous Clone");
 
 	//Load textures into memory, either they are loaded at the start of the game or not and we track
 	//the status of the rest of the textures
@@ -39,8 +41,8 @@ void MainGame::init() {
 	_fontBatcher_sans16.init("Fonts/OpenSans-Regular.ttf", 16, &_ResourceManager);
 
 	//_SpawnManager.init(WINDOW_WIDTH, WINDOW_HEIGHT, 20, &_SpriteManager);
-	_StagingManager.init(&_gameState, &_SpriteManager, &_fontBatcher_sans16, &_InputManager);
-	_Camera.init(WINDOW_WIDTH, WINDOW_HEIGHT);
+	_StagingManager.init(&_gameState, _options, &_SpriteManager, &_fontBatcher_sans16, &_InputManager);
+	_Camera.init(_options->width, _options->height);
 	_Game.init(&_gameState, &_Camera, &_StagingManager, &_InputManager);
 	_SpriteBatcher.init();
 
@@ -50,10 +52,12 @@ void MainGame::init() {
 }
 
 void MainGame::gameLoop() {
-	GameState currState = _gameState;
-	Uint32 currFPSTick = SDL_GetTicks();
-	Uint32 prevFPSTick = currFPSTick;
-	float prevFPS = _FPSManager.framespersecond;
+	auto currState = _gameState;
+	auto desiredState = _gameState;
+
+	auto currFPSTick = SDL_GetTicks();
+	auto prevFPSTick = currFPSTick;
+	//auto prevFPS = _FPSManager.framespersecond;
 
 	auto prevTick = std::chrono::system_clock::now().time_since_epoch().count();
 	auto currTick = prevTick;
@@ -88,6 +92,7 @@ void MainGame::gameLoop() {
 		}
 		else if (currState != _gameState && (_IOThreadState == ThreadState::ON || _IOThreadState == ThreadState::POST_LOAD)) {
 			std::cout << "Waiting on thread to complete or post load." << std::endl;
+			desiredState = _gameState;
 			_gameState = GameState::LOADING;
 			currState = _gameState;
 			accumulator = 0;
@@ -96,7 +101,7 @@ void MainGame::gameLoop() {
 			//Thread is complete and game state is loading, switch can now occur
 		}
 		else if (_gameState == GameState::LOADING && _IOThreadState == ThreadState::OFF) {
-			_gameState = GameState::PLAYING;
+			_gameState = desiredState;
 			currState = _gameState;
 			accumulator = 0;
 			_StagingManager.loadState();
@@ -188,13 +193,14 @@ void MainGame::close() {
 	std::cout << "Closing program." << std::endl;
 	if (_IOThread.joinable()) {
 		_IOThread.join();
-	}
-	else {
+	} else {
 		_IOThread.~thread();
 	}
 
 	_Window.destroySDLWindow();
 	SDL_Quit();
+
+	_IOManager.saveOptions(_options);
 	//int a;
 	//std::cout << "Enter a key to close. ";
 	//std::cin >> a;

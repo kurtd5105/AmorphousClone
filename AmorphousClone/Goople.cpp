@@ -27,16 +27,16 @@ void Goople::logicInit(int side, float width, float height) {
 	//std::cout << "\tSide: " << side << " Randomed: " << targetSide << std::endl;
 
 	if(targetSide == 0) {
-		_target.x = (float)_Random->randomInt(0, _Random->screenWidth);
+		_target.x = float(_Random->randomInt(0, _Random->screenWidth));
 		_target.y = _Random->screenHeight + (2 * height);
 	} else if(targetSide == 1) {
 		_target.x = -(2 * width);
-		_target.y = (float)_Random->randomInt(0, _Random->screenHeight);
+		_target.y = float(_Random->randomInt(0, _Random->screenHeight));
 	} else if(targetSide == 2) {
 		_target.x = _Random->screenWidth + (2 * width);
-		_target.y = (float)_Random->randomInt(0, _Random->screenHeight);
+		_target.y = float(_Random->randomInt(0, _Random->screenHeight));
 	} else if(targetSide == 3) {
-		_target.x = (float)_Random->randomInt(0, _Random->screenWidth);
+		_target.x = float(_Random->randomInt(0, _Random->screenWidth));
 		_target.y = -(2 * height);
 	}
 

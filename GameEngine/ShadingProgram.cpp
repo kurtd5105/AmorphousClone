@@ -1,11 +1,10 @@
 #include "ShadingProgram.h"
 #include "IOManager.h"
 #include "Errors.h"
-#include <fstream>
 #include <vector>
 
 namespace GameEngine {
-	ShadingProgram::ShadingProgram() : _programID(0), _vertexID(0), _fragmentID(0), _numAttributes(0) {
+	ShadingProgram::ShadingProgram() : _IOManager(nullptr), _programID(0), _vertexID(0), _fragmentID(0), _numAttributes(0) {
 	}
 
 
@@ -21,14 +20,14 @@ namespace GameEngine {
 		linkShaders();
 	}
 
-	GLint ShadingProgram::compileShader(const std::string shaderPath, GLuint *shaderID) {
+	GLint ShadingProgram::compileShader(const std::string shaderPath, GLuint *shaderID) const {
 		std::vector<unsigned char> fileBuffer;
 		if(!_IOManager->readFileToBuffer(shaderPath, fileBuffer)) {
 			fatalIOError(shaderPath);
 		}
-		std::string contents = std::string(fileBuffer.begin(), fileBuffer.end());
+		auto contents = std::string(fileBuffer.begin(), fileBuffer.end());
 
-		const char* contentsPtr = contents.c_str();
+		auto contentsPtr = contents.c_str();
 		glShaderSource(*shaderID, 1, &contentsPtr, nullptr);
 		glCompileShader(*shaderID);
 
@@ -65,12 +64,12 @@ namespace GameEngine {
 		}
 
 		//Compile each shader
-		GLint vertexResult = compileShader(vertexPath, &_vertexID);
+		auto vertexResult = compileShader(vertexPath, &_vertexID);
 		if(vertexResult == GL_FALSE) {
 			fatalGenericError("Vertex shader " + vertexPath + " failed to compile.");
 		}
 
-		GLint fragmentResult = compileShader(fragmentPath, &_fragmentID);
+		auto fragmentResult = compileShader(fragmentPath, &_fragmentID);
 		if(fragmentResult == GL_FALSE) {
 			fatalGenericError("Fragment shader " + fragmentPath + " failed to compile.");
 		}
@@ -83,16 +82,16 @@ namespace GameEngine {
 		glBindAttribLocation(_programID, _numAttributes++, attributeName.c_str());
 	}
 
-	GLint ShadingProgram::getUniformLocation(const std::string uniformName) {
+	GLint ShadingProgram::getUniformLocation(const std::string uniformName) const {
 		//Get and return the location of a uniform
-		GLint location = glGetUniformLocation(_programID, uniformName.c_str());
+		auto location = glGetUniformLocation(_programID, uniformName.c_str());
 		if(location == GL_INVALID_INDEX) {
 			fatalGenericError("Uniform " + uniformName + " not found.");
 		}
 		return location;
 	}
 
-	void ShadingProgram::linkShaders() {
+	void ShadingProgram::linkShaders() const {
 		//Attach both shaders to the program
 		glAttachShader(_programID, _vertexID);
 		glAttachShader(_programID, _fragmentID);
@@ -125,7 +124,7 @@ namespace GameEngine {
 		glDeleteShader(_fragmentID);
 	}
 
-	void ShadingProgram::use() {
+	void ShadingProgram::use() const {
 		//Start using the shading program and enable its attributes
 		glUseProgram(_programID);
 		for(int i = 0; i < _numAttributes; i++) {
@@ -133,10 +132,10 @@ namespace GameEngine {
 		}
 	}
 
-	void ShadingProgram::unuse() {
+	void ShadingProgram::unuse() const {
 		//Stop using the shading program and disable its attributes
 		glUseProgram(0);
-		for(int i = 0; i < _numAttributes; i++) {
+		for(auto i = 0; i < _numAttributes; i++) {
 			glDisableVertexAttribArray(i);
 		}
 	}
