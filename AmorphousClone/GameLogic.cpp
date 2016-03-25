@@ -60,6 +60,7 @@ void GameLogic::collisionAgents() const {
 		_player->collideAgents(&enemy);
 	}
 
+	glm::vec2 tempTarget;
 	//Enemy collisions
 	for (auto& enemy : *_enemies) {
 		if (enemy.isEnabled()) {
@@ -68,9 +69,9 @@ void GameLogic::collisionAgents() const {
 					if (enemy.collideAgents(&enemy2) && !enemy.getCollided() && !enemy2.getCollided()) {
 						enemy.setCollided(true);
 						enemy2.setCollided(true);
-						_tempTarget = enemy.getTarget();
+						tempTarget = enemy.getTarget();
 						enemy.setTarget(enemy2.getTarget());
-						enemy2.setTarget(_tempTarget);
+						enemy2.setTarget(tempTarget);
 					}
 				}
 			}

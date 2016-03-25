@@ -53,7 +53,6 @@ private:
 	GameEngine::Button* _currClicked;
 	Player* _player;
 	std::list<EnemySuper>* _enemies;
-	glm::vec2 _tempTarget;
 
 	int W, A, S, D, Q, E;
 	bool _clickHold;

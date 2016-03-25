@@ -19,6 +19,13 @@ public:
 	virtual void onCollide() {}
 	double getChance() const { return _chance; };
 
+	void setTarget(glm::vec2 target) { _target = target; };
+	glm::vec2 getTarget() const { return _target; };
+
+	void setCollided(bool collided) { _collided = collided; };
+	bool getCollided() const { return _collided; };
+
+
 	void enable() override { _enabled = true; }
 	void disable() override { _enabled = false; }
 	bool isEnabled() override { return _enabled; };

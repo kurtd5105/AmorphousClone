@@ -1,6 +1,6 @@
 #include "EnemySuper.h"
 
-EnemySuper::EnemySuper(): _chance(0.0f), _Random(nullptr){}
+EnemySuper::EnemySuper(): _chance(0.0f), _Random(nullptr), _collided(false){}
 
 
 EnemySuper::~EnemySuper() {}
