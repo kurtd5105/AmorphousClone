@@ -54,10 +54,19 @@ void GameLogic::collisionAgents() {
 		if (enemy.isEnabled()) {
 			for (auto& enemy2 : *_enemies) {
 				if (&enemy != &enemy2 && enemy2.isEnabled()) {
-					enemy.collideAgents(&enemy2);
+					if (enemy.collideAgents(&enemy2) && !enemy.getCollided() && !enemy2.getCollided()) {
+						enemy.setCollided(true);
+						enemy2.setCollided(true);
+						_tempTarget = enemy.getTarget();
+						enemy.setTarget(enemy2.getTarget());
+						enemy2.setTarget(_tempTarget);
+					}
 				}
 			}
 		}
+	}
+	for (auto& enemy : *_enemies) {
+		enemy.setCollided(false);
 	}
 }
 

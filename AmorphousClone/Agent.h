@@ -31,6 +31,7 @@ public:
 	float getRotationOffset() { return _rotationOffset; }
 	float getRadius() { return _radius; }
 	glm::vec2 getPos() { return glm::vec2(_x, _y); }
+	void setPos(glm::vec2 pos) { _x = pos.x; _y = pos.y; }
 	glm::vec2 getCentered() { return _sprite->getCentered(); }
 
 	bool isInit() { return _isInit; }
