@@ -18,7 +18,7 @@ public:
 
 	void init(int width, int height, unsigned int size, GameEngine::SpriteManager* manager);
 
-	void spawn();
+	bool spawn();
 
 	std::list<EnemySuper>* getEnemies() { return &_enemies; }
 

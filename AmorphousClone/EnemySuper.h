@@ -3,6 +3,8 @@
 #include "Agent.h"
 #include <GameEngine/Random.h>
 
+enum EnemyType { GLOOPLE };
+
 class EnemySuper : public Agent
 {
 public:
@@ -30,11 +32,14 @@ public:
 	void disable() override { _enabled = false; }
 	bool isEnabled() override { return _enabled; };
 
+	EnemyType getType() const { return _type; }
+
 protected:
 	float _chance;
 	glm::vec2 _target;
 	GameEngine::Random* _Random;
 	virtual void logicInit(int side) {}
 	bool _collided;
+	EnemyType _type;
 };
 

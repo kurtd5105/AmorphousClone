@@ -1,12 +1,8 @@
 #include "Player.h"
 
-Player::Player() {
+Player::Player(): _isAlive(true), _gloopleBumps(0) {}
 
-}
-
-Player::~Player() {
-
-}
+Player::~Player() {}
 
 void Player::init(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager) {
 	_x = x;
@@ -23,4 +19,13 @@ void Player::init(float x, float y, float width, float height, float depth, std:
 	_sword.init(_x, _y, _rotation, manager);
 	_subAgents.push_back(&_sword);
 	_isInit = true;
+}
+
+void Player::onCollide(EnemyType type) {
+	if(type == GLOOPLE) {
+		_gloopleBumps++;
+		if(_gloopleBumps >= 3) {
+			_isAlive = false;
+		}
+	}
 }

@@ -31,7 +31,7 @@ void SpawnManager::init(int width, int height, unsigned int size, GameEngine::Sp
 	_lastSpawn = _startTime;
 }
 
-void SpawnManager::spawn() {
+bool SpawnManager::spawn() {
 	if(_currEnemy != _enemies.end()) {
 		auto curr = SDL_GetTicks();
 
@@ -43,7 +43,9 @@ void SpawnManager::spawn() {
 			_currIndex++;
 			_lastSpawn = curr;
 		}
+		return true;
 	}
+	return false;
 }
 
 void SpawnManager::enemyInit() {

@@ -1,12 +1,19 @@
 #include "StagingManager.h"
 #include <sstream>
 
-//#include <iostream>
 
-StagingManager::StagingManager() : _SpriteManager(nullptr), _InputManager(nullptr), _defaultFont(nullptr), _options(nullptr), _gameState(nullptr), _stageState(EXIT) {}
+StagingManager::StagingManager() : _SpriteManager(nullptr), _InputManager(nullptr), _defaultFont(nullptr), _options(nullptr), _player(nullptr), _SpawnManager(nullptr),
+_gameState(nullptr), _stageState(EXIT) {}
 
 
-StagingManager::~StagingManager() {}
+StagingManager::~StagingManager() {
+	if(_player != nullptr) {
+		delete _player;
+	}
+	if(_SpawnManager != nullptr) {
+		delete _SpawnManager;
+	}
+}
 
 void StagingManager::init(GameState* gameState, GameEngine::Options* options, GameEngine::SpriteManager* manager,
 						  GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager) {
@@ -23,15 +30,27 @@ void StagingManager::loadState() {
 	if(*_gameState == _stageState) {
 		return;
 	}
+	if(_player != nullptr) {
+		delete _player;
+		_player = nullptr;
+	}
+	if(_SpawnManager != nullptr) {
+		delete _SpawnManager;
+		_SpawnManager = nullptr;
+	}
 	//Cleanup the stage
 	_SpriteManager->clearSprites();
 	_simpleButtons.clear();
 	_checkboxes.clear();
 	_sliders.clear();
 	_selectionBoxes.clear();
-	_player.~Player();
 	_text.clear();
 	_defaultFont->cleanUp();
+	
+	/*if(_player.isInit()) {
+		_player.disable();
+		_player.setInvisible();
+	}*/
 	
 	GameEngine::Color color;
 	std::function<void(void)> callback;
@@ -97,10 +116,12 @@ void StagingManager::loadState() {
 		_text[0].init(test, glm::vec2(0, 0), glm::vec2(1, 1), 1.0f, color, _defaultFont);
 
 		//Create the player
-		_player.init(375.0f, 275.0f, 50.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/player.png", _SpriteManager);
+		_player = new Player();
+		_player->init(375.0f, 275.0f, 50.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/player.png", _SpriteManager);
 
 		//Begin spawning enemies
-		_SpawnManager.init(_options->width, _options->height, 1000, _SpriteManager);
+		_SpawnManager = new SpawnManager();
+		_SpawnManager->init(_options->width, _options->height, 1000, _SpriteManager);
 
 		//Set the stage state to the game state now that everything is setup
 		_stageState = *_gameState;
@@ -242,6 +263,51 @@ void StagingManager::loadState() {
 		//Set the stage state to the game state now that everything is setup
 		_stageState = *_gameState;
 		break;
+	}
+	case LOST:
+	{
+		_simpleButtons.emplace_back();
+		callback = [&]() { *_gameState = GameState::MAIN_MENU; };
+		_simpleButtons[0].init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
+
+		//Make the color blue
+		color.r = 0;
+		color.g = 0;
+		color.b = 255;
+		color.a = 255;
+
+		_text.emplace_back();
+		std::string text = "You lost.";
+
+		int x = (_options->width / 2) - (_defaultFont->getFont()->measure(text.c_str()).x / 2);
+		int y = (_options->height / 2) - (_defaultFont->getFont()->measure(text.c_str()).y / 2);
+
+		_text[0].init(text, glm::vec2(x, y), glm::vec2(1, 1), 1.0f, color, _defaultFont);
+
+		_stageState = *_gameState;
+		break;
+	}
+	case WON:
+	{
+		_simpleButtons.emplace_back();
+		callback = [&]() { *_gameState = GameState::MAIN_MENU; };
+		_simpleButtons[0].init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
+
+		//Make the color blue
+		color.r = 0;
+		color.g = 0;
+		color.b = 255;
+		color.a = 255;
+
+		_text.emplace_back();
+		std::string text = "You won!";
+
+		int x = (_options->width / 2) - (_defaultFont->getFont()->measure(text.c_str()).x / 2);
+		int y = (_options->height / 2) - (_defaultFont->getFont()->measure(text.c_str()).y / 2);
+
+		_text[0].init(text, glm::vec2(x, y), glm::vec2(1, 1), 1.0f, color, _defaultFont);
+
+		_stageState = *_gameState;
 	}
 	case EXIT: break;
 	default: break;

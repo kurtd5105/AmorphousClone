@@ -19,7 +19,7 @@ public:
 	void pointAt(glm::vec2 pos);
 	void moveTo(Agent* agent, float speed);
 	void lockOn(Agent* agent);
-	bool collideAgents(Agent *agent) const;
+	bool collideAgents(Agent *agent);
 
 	virtual void attack();
 	virtual void kill();
