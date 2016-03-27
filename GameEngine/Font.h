@@ -28,9 +28,11 @@ namespace GameEngine {
 
 		CharGlyph* getFontGlyphs() const { return _chars; }
 		GLuint getFontID() const { return _id; }
+		
+		glm::vec2 measure(const char* s) const;
 	private:
 		static std::vector<int>* createRows(glm::ivec4* rects, int rectsLength, int r, int padding, int& w);
-		glm::vec2 measure(const char* s) const;
+		
 		static int closestPow2(int i);
 
 		CharGlyph* _chars;

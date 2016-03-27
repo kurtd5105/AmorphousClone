@@ -4,6 +4,7 @@
 
 Goople::Goople(int side, GameEngine::Random* Random, float width, float height) : _hp(1){
 	_Random = Random;
+	_type = GLOOPLE;
 	logicInit(side, width, height);
 }
 

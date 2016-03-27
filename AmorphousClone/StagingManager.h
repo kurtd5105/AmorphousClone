@@ -31,9 +31,9 @@ public:
 	std::vector<GameEngine::SelectionBox>* getSelectionRefs() { return &_selectionBoxes; }
 
 	std::vector<GameEngine::FontBatcher>* getFonts() { return &_fonts; }
-	SpawnManager* getSpawnManager() { return &_SpawnManager; }
+	SpawnManager* getSpawnManager() { return _SpawnManager; }
 
-	Player* getPlayer() { return &_player; }
+	Player* getPlayer() const { return _player; }
 
 	const std::vector<int> validWidths = std::vector<int>{800, 1024, 1280, 1360, 1366, 1440, 1600, 1980};
 	const std::vector<int> validHeights = std::vector<int>{600, 768, 720, 768, 768, 900, 900, 1080};
@@ -53,9 +53,9 @@ private:
 	std::vector<GameEngine::Text> _text;
 	std::vector<GameEngine::FontBatcher> _fonts;
 
-	Player _player;
+	Player* _player;
 
-	SpawnManager _SpawnManager;
+	SpawnManager* _SpawnManager;
 
 	GameState* _gameState;
 	GameState _stageState;
