@@ -190,13 +190,13 @@ void StagingManager::loadState() {
 		//Create a vector containing the possible screen resolutions in the format WIDTHxHEIGHT
 		std::ostringstream oss;
 		std::vector<std::string> resolutions;
-		unsigned int max = std::to_string(validWidths.back()).length() + std::to_string(validHeights.back()).length() + 1;
+		unsigned int max = std::to_string(GameEngine::Screen::validWidths.back()).length() + std::to_string(GameEngine::Screen::validHeights.back()).length() + 1;
 		unsigned int curr;
 		std::string temp;
-		for(unsigned int i = 0; i < validWidths.size(); i++) {
+		for(unsigned int i = 0; i < GameEngine::Screen::validWidths.size(); i++) {
 			oss.clear();
 			oss.str("");
-			oss << validWidths[i] << "x" << validHeights[i];
+			oss << GameEngine::Screen::validWidths[i] << "x" << GameEngine::Screen::validHeights[i];
 
 			//Try to center the string
 			oss.seekp(0);
@@ -213,8 +213,8 @@ void StagingManager::loadState() {
 
 		_selectionBoxes[0].init(130.0f, 300.0f, 25.0f, 25.0f, 85.0f, 1.0f, resolutions, "LEFT", "RIGHT", "Textures/arrows.png", "Animations/arrows.ani",
 								"Textures/arrows.png", "Animations/arrows.ani", color, callbackLeft, callbackRight, _SpriteManager, _defaultFont);
-		for(unsigned int i = 0; i < validWidths.size(); i++) {
-			if(validWidths[i] == _options->width) {
+		for(unsigned int i = 0; i < GameEngine::Screen::validWidths.size(); i++) {
+			if(GameEngine::Screen::validWidths[i] == _options->width) {
 				_selectionBoxes[0].setSelection(i);
 				break;
 			}
@@ -244,8 +244,8 @@ void StagingManager::loadState() {
 			_options->sfx = _sliders[1].getValue() / 100.0f;
 			_options->spawnCount = unsigned int(round(_sliders[2].getValue()));
 			_options->spawnRate = unsigned int(round(_sliders[3].getValue()));
-			_options->width = validWidths[_selectionBoxes[0].getIndex()];
-			_options->height = validHeights[_selectionBoxes[0].getIndex()];
+			_options->width = GameEngine::Screen::validWidths[_selectionBoxes[0].getIndex()];
+			_options->height = GameEngine::Screen::validHeights[_selectionBoxes[0].getIndex()];
 			auto temp = _selectionBoxes[1].getIndex();
 			if(temp == 0) {
 				_options->mode = GameEngine::WindowMode::BORDERLESS;

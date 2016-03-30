@@ -161,9 +161,9 @@ namespace GameEngine {
 				unsigned int i;
 
 				//Check to see if the provided width and height are a valid display resolution
-				for(i = 0; i < validWidths.size(); i++) {
-					if(validWidths[i] == w) {
-						if(validHeights[i] == h) {
+				for(i = 0; i < GameEngine::Screen::validWidths.size(); i++) {
+					if(GameEngine::Screen::validWidths[i] == w) {
+						if(GameEngine::Screen::validHeights[i] == h) {
 							//std::cout << "\t\tWH are valid." << std::endl;
 							options->width = w;
 							options->height = h;
