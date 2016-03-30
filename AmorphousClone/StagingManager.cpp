@@ -2,8 +2,8 @@
 #include <sstream>
 
 
-StagingManager::StagingManager() : _SpriteManager(nullptr), _InputManager(nullptr), _defaultFont(nullptr), _options(nullptr), _player(nullptr), _SpawnManager(nullptr),
-_gameState(nullptr), _stageState(EXIT) {}
+StagingManager::StagingManager() : _ResourceManager(nullptr), _SpriteManager(nullptr), _InputManager(nullptr), _defaultFont(nullptr), _options(nullptr),
+_player(nullptr), _SpawnManager(nullptr), _gameState(nullptr), _stageState(EXIT) {}
 
 
 StagingManager::~StagingManager() {
@@ -15,13 +15,17 @@ StagingManager::~StagingManager() {
 	}
 }
 
-void StagingManager::init(GameState* gameState, GameEngine::Options* options, GameEngine::SpriteManager* manager,
-						  GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager) {
+void StagingManager::init(GameState* gameState, GameEngine::Options* options, GameEngine::ResourceManager* resourceManager,
+						  GameEngine::SpriteManager* spriteManager, GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager) {
 	_gameState = gameState;
-	_SpriteManager = manager;
+	_ResourceManager = resourceManager;
+	_SpriteManager = spriteManager;
 	_InputManager = inputManager;
 	_defaultFont = defaultFont;
 	_options = options;
+	_titleFont.init("Fonts/arial.ttf", 64, _ResourceManager);
+	_fonts.push_back(&_titleFont);
+	_fonts.push_back(_defaultFont);
 	loadState();
 }
 
@@ -270,19 +274,19 @@ void StagingManager::loadState() {
 		callback = [&]() { *_gameState = GameState::MAIN_MENU; };
 		_simpleButtons[0].init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
 
-		//Make the color blue
-		color.r = 0;
+		//Make the color red
+		color.r = 255;
 		color.g = 0;
-		color.b = 255;
+		color.b = 0;
 		color.a = 255;
 
 		_text.emplace_back();
 		std::string text = "You lost.";
 
-		int x = (_options->width / 2) - (_defaultFont->getFont()->measure(text.c_str()).x / 2);
-		int y = (_options->height / 2) - (_defaultFont->getFont()->measure(text.c_str()).y / 2);
+		int x = int((_options->width / 2) - (_titleFont.getFont()->measure(text.c_str()).x / 2));
+		int y = int((_options->height / 2) - (_titleFont.getFont()->measure(text.c_str()).y / 2));
 
-		_text[0].init(text, glm::vec2(x, y), glm::vec2(1, 1), 1.0f, color, _defaultFont);
+		_text[0].init(text, glm::vec2(x, y), glm::vec2(1, 1), 1.0f, color, &_titleFont);
 
 		_stageState = *_gameState;
 		break;
@@ -302,10 +306,10 @@ void StagingManager::loadState() {
 		_text.emplace_back();
 		std::string text = "You won!";
 
-		int x = (_options->width / 2) - (_defaultFont->getFont()->measure(text.c_str()).x / 2);
-		int y = (_options->height / 2) - (_defaultFont->getFont()->measure(text.c_str()).y / 2);
+		int x = int((_options->width / 2) - (_titleFont.getFont()->measure(text.c_str()).x / 2));
+		int y = int((_options->height / 2) - (_titleFont.getFont()->measure(text.c_str()).y / 2));
 
-		_text[0].init(text, glm::vec2(x, y), glm::vec2(1, 1), 1.0f, color, _defaultFont);
+		_text[0].init(text, glm::vec2(x, y), glm::vec2(1, 1), 1.0f, color, &_titleFont);
 
 		_stageState = *_gameState;
 	}
