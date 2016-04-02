@@ -100,6 +100,8 @@ void StagingManager::loadState() {
 		break;
 	case GameState::PLAYING:
 	{
+		_SpriteManager->addSprite(0.0f, 0.0f, 1920.0f, 1080.0f, 100.0f, std::vector<float>{}, "Textures/gravel.png");
+
 		//Make the color red
 		color.r = 255;
 		color.g = 0;
