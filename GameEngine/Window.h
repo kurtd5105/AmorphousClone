@@ -1,11 +1,17 @@
 #pragma once
 #include <SDL/SDL.h>
 #include <string>
+#include <vector>
 
 #include "Options.h"
 #include "WindowMode.h"
 
 namespace GameEngine {
+	struct Screen {
+		static const std::vector<int> validWidths;
+		static const std::vector<int> validHeights;
+	};
+
 	class Window {
 	public:
 		Window();
@@ -18,6 +24,8 @@ namespace GameEngine {
 		int getScreenWidth() const { return _width; }
 		int getScreenHeight() const { return _height; }
 		WindowMode getWindowMode() const { return _windowMode; }
+
+		
 
 	private:
 		int _width, _height;

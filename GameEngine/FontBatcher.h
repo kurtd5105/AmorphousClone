@@ -23,6 +23,8 @@ namespace GameEngine {
 		unsigned int addString();//create a new vertex group
 
 		Font* getFont() { return &_font; }
+		unsigned int getVerticesCount() { unsigned int s = 0; for(auto& v : _vertexGroups) { s += v.size(); }; return s; }
+		GLuint getVBOID() const { return _vboID; }
 	private:
 		GLuint _vboID;
 		GLuint _vaoID;

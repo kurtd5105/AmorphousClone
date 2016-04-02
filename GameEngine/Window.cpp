@@ -5,6 +5,9 @@
 
 
 namespace GameEngine {
+	const std::vector<int> Screen::validWidths = {800, 1024, 1280, 1360, 1366, 1440, 1600, 1980};
+	const std::vector<int> Screen::validHeights = {600, 768, 720, 768, 768, 900, 900, 1080};
+
 	Window::Window() : _width(0), _height(0), _windowMode(WindowMode::WINDOWED), _window(nullptr), _surface(nullptr) {}
 
 	Window::~Window() {}

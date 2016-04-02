@@ -32,9 +32,6 @@ public:
 	void getStage();
 	void collisionAgents() const;
 
-	const std::vector<int> validWidths = std::vector<int>{800, 1024, 1280, 1360, 1366, 1440, 1600, 1980};
-	const std::vector<int> validHeights = std::vector<int>{600, 768, 720, 768, 768, 900, 900, 1080};
-
 private:
 	GameEngine::InputManager* _InputManager;
 	GameEngine::Camera* _Camera;
