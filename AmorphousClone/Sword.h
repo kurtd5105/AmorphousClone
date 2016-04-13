@@ -9,7 +9,7 @@ public:
 	Sword();
 	~Sword();
 
-	void init(float x, float y, float angle, GameEngine::SpriteManager* manager);
+	void init(float x, float y, float angle, glm::vec2 scalingFactors, GameEngine::SpriteManager* manager);
 
 	void attack() override;//needs some sort of timer integrated
 

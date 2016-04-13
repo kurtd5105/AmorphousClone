@@ -16,7 +16,7 @@ public:
 	SpawnManager();
 	~SpawnManager();
 
-	void init(int width, int height, unsigned int size, GameEngine::SpriteManager* manager);
+	void init(int width, int height, glm::vec2 scalingFactors, unsigned int size, GameEngine::SpriteManager* manager);
 
 	bool spawn();
 
@@ -31,6 +31,7 @@ private:
 	int _height, _width, spritewidth, spriteheight;
 	unsigned int _size, _currIndex;
 	std::string enemytexture;
+	glm::vec2 _scalingFactors;
 
 	std::list<EnemySuper> _enemies;
 	std::vector<int> _spawnTimes;

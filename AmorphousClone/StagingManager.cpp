@@ -106,7 +106,8 @@ void StagingManager::loadState() {
 		_stageState = *_gameState;
 		break;
 	case GameState::LOADING:
-		_SpriteManager->addSprite(275.0f, 275.0f, 250.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/loading.png");
+		_SpriteManager->addSprite(515.0f * _scalingFactors.x, 335.0f * _scalingFactors.y, 250.0f * _scalingFactors.x, 50.0f * _scalingFactors.y,
+								  1.0f, std::vector<float>{}, "Textures/loading.png");
 		break;
 	case GameState::PLAYING:
 	{
@@ -125,15 +126,16 @@ void StagingManager::loadState() {
 		}
 		test += "\"";
 		_text.emplace_back();
-		_text[0].init(test, glm::vec2(0, 0), glm::vec2(1, 1), 1.0f, color, _defaultFont);
+		_text[0].init(test, glm::vec2(0, 0), _scalingFactors, 1.0f, color, _defaultFont);
 
 		//Create the player
 		_player = new Player();
-		_player->init(375.0f, 275.0f, 50.0f, 50.0f, 1.0f, std::vector<float>{}, "Textures/player.png", _SpriteManager);
+		_player->init(615.0f * _scalingFactors.x, 335.0f * _scalingFactors.y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+					  1.0f, _scalingFactors, std::vector<float>{}, "Textures/player.png", _SpriteManager);
 
 		//Begin spawning enemies
 		_SpawnManager = new SpawnManager();
-		_SpawnManager->init(_options->width, _options->height, 1000, _SpriteManager);
+		_SpawnManager->init(_options->width, _options->height, _scalingFactors, _options->spawnCount, _SpriteManager);
 
 		//Set the stage state to the game state now that everything is setup
 		_stageState = *_gameState;
@@ -157,12 +159,12 @@ void StagingManager::loadState() {
 		_text.emplace_back();
 		_text.emplace_back();
 
-		_text[0].init("Music Volume:", glm::vec2(20, 500), glm::vec2(1, 1), 1.0f, color, _defaultFont);
-		_text[1].init("SFX Volume:", glm::vec2(20, 400), glm::vec2(1, 1), 1.0f, color, _defaultFont);
-		_text[2].init("Spawn Count:", glm::vec2(500, 500), glm::vec2(1, 1), 1.0f, color, _defaultFont);
-		_text[3].init("Spawn Rate:", glm::vec2(500, 400), glm::vec2(1, 1), 1.0f, color, _defaultFont);
-		_text[4].init("Resolution:", glm::vec2(20, 300), glm::vec2(1, 1), 1.0f, color, _defaultFont);
-		_text[5].init("Screen Mode:", glm::vec2(470, 300), glm::vec2(1, 1), 1.0f, color, _defaultFont);
+		_text[0].init("Music Volume:", glm::vec2(220 * _scalingFactors.x, 600 * _scalingFactors.y), _scalingFactors, 1.0f, color, _defaultFont);
+		_text[1].init("SFX Volume:", glm::vec2(220 * _scalingFactors.x, 450 * _scalingFactors.y), _scalingFactors, 1.0f, color, _defaultFont);
+		_text[2].init("Spawn Count:", glm::vec2(700 * _scalingFactors.x, 600 * _scalingFactors.y), _scalingFactors, 1.0f, color, _defaultFont);
+		_text[3].init("Spawn Rate:", glm::vec2(700 * _scalingFactors.x, 450 * _scalingFactors.y), _scalingFactors, 1.0f, color, _defaultFont);
+		_text[4].init("Resolution:", glm::vec2(220 * _scalingFactors.x, 300 * _scalingFactors.y), _scalingFactors, 1.0f, color, _defaultFont);
+		_text[5].init("Screen Mode:", glm::vec2(670 * _scalingFactors.x, 300 * _scalingFactors.y), _scalingFactors, 1.0f, color, _defaultFont);
 
 		//Create sliders for music and sfx volumes
 		_sliders.emplace_back();
@@ -171,18 +173,22 @@ void StagingManager::loadState() {
 		_sliders.emplace_back();
 
 		//Music Volume
-		_sliders[0].init(150.0f, 500.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, _options->music * 100, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png",
-						 color, callback, _SpriteManager, _defaultFont, _InputManager);
+		_sliders[0].init(350.0f * _scalingFactors.x, 600.0f * _scalingFactors.y, 10.0f * _scalingFactors.x, 20.0f * _scalingFactors.y,
+						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, _options->music * 100, "Textures/slider.png", "Animations/slider.ani",
+						 "Textures/line.png", color, callback, _SpriteManager, _defaultFont, _InputManager);
 		//SFX Volume
-		_sliders[1].init(150.0f, 400.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, _options->sfx * 100, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png",
-						 color, callback, _SpriteManager, _defaultFont, _InputManager);
+		_sliders[1].init(350.0f * _scalingFactors.x, 450.0f * _scalingFactors.y, 10.0f * _scalingFactors.x, 20.0f * _scalingFactors.y,
+						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, _options->sfx * 100, "Textures/slider.png", "Animations/slider.ani",
+						 "Textures/line.png", color, callback, _SpriteManager, _defaultFont, _InputManager);
 		//Spawn Count
-		_sliders[2].init(620.0f, 500.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, float(_options->spawnCount), "Textures/slider.png", "Animations/slider.ani", "Textures/line.png",
-						 color, callback, _SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(100, 1000));
+		_sliders[2].init(820.0f * _scalingFactors.x, 600.0f * _scalingFactors.y, 10.0f * _scalingFactors.x, 20.0f * _scalingFactors.y,
+						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, float(_options->spawnCount), "Textures/slider.png", "Animations/slider.ani",
+						 "Textures/line.png", color, callback, _SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(100, 1000));
 		//_sliders[2].setValue(_options->spawnCount);
 		//Spawn Rate
-		_sliders[3].init(620.0f, 400.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, float(_options->spawnRate), "Textures/slider.png", "Animations/slider.ani", "Textures/line.png",
-						 color, callback, _SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(1, 15));
+		_sliders[3].init(820.0f * _scalingFactors.x, 450.0f * _scalingFactors.y, 10.0f * _scalingFactors.x, 20.0f * _scalingFactors.y,
+						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, float(_options->spawnRate), "Textures/slider.png", "Animations/slider.ani",
+						 "Textures/line.png", color, callback, _SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(1, 15));
 		//_sliders[3].setValue(_options->spawnRate);
 
 
@@ -223,8 +229,9 @@ void StagingManager::loadState() {
 			resolutions.push_back(oss.str());
 		}
 
-		_selectionBoxes[0].init(130.0f, 300.0f, 25.0f, 25.0f, 85.0f, 1.0f, resolutions, "LEFT", "RIGHT", "Textures/arrows.png", "Animations/arrows.ani",
-								"Textures/arrows.png", "Animations/arrows.ani", color, callbackLeft, callbackRight, _SpriteManager, _defaultFont);
+		_selectionBoxes[0].init(330.0f * _scalingFactors.x, 300.0f * _scalingFactors.y, 25.0f * _scalingFactors.x, 25.0f * _scalingFactors.y, 85.0f * _scalingFactors.x,
+								1.0f, resolutions, "LEFT", "RIGHT", "Textures/arrows.png", "Animations/arrows.ani", "Textures/arrows.png", "Animations/arrows.ani",
+								color, callbackLeft, callbackRight, _SpriteManager, _defaultFont);
 		for(unsigned int i = 0; i < GameEngine::Screen::validWidths.size(); i++) {
 			if(GameEngine::Screen::validWidths[i] == _options->width) {
 				_selectionBoxes[0].setSelection(i);
@@ -241,8 +248,9 @@ void StagingManager::loadState() {
 
 		std::vector<std::string> modes = std::vector<std::string>{"Borderless Window", "         Windowed", "          Fullscreen"};
 
-		_selectionBoxes[1].init(580.0f, 300.0f, 25.0f, 25.0f, 150.0f, 1.0f, modes, "LEFT", "RIGHT", "Textures/arrows.png", "Animations/arrows.ani",
-								"Textures/arrows.png", "Animations/arrows.ani", color, callbackLeft, callbackRight, _SpriteManager, _defaultFont);
+		_selectionBoxes[1].init(780.0f * _scalingFactors.x, 300.0f * _scalingFactors.y, 25.0f * _scalingFactors.x, 25.0f * _scalingFactors.y, 150.0f * _scalingFactors.x,
+								1.0f, modes, "LEFT", "RIGHT", "Textures/arrows.png", "Animations/arrows.ani", "Textures/arrows.png", "Animations/arrows.ani",
+								color, callbackLeft, callbackRight, _SpriteManager, _defaultFont);
 		if(_options->mode == GameEngine::WindowMode::BORDERLESS) {
 			_selectionBoxes[1].setSelection(0);
 		} else if(_options->mode == GameEngine::WindowMode::WINDOWED) {
@@ -270,7 +278,8 @@ void StagingManager::loadState() {
 		};
 		//Create the back button
 		_simpleButtons.emplace_back();
-		_simpleButtons[0].init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
+		_simpleButtons[0].init(540.0f * _scalingFactors.x, 150.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f * _scalingFactors.y, 1.0f,
+							   "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
 
 		//Set the stage state to the game state now that everything is setup
 		_stageState = *_gameState;
@@ -280,7 +289,8 @@ void StagingManager::loadState() {
 	{
 		_simpleButtons.emplace_back();
 		callback = [&]() { *_gameState = GameState::MAIN_MENU; };
-		_simpleButtons[0].init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
+		_simpleButtons[0].init(540.0f * _scalingFactors.x, 150.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f * _scalingFactors.y, 1.0f,
+							   "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
 
 		//Make the color red
 		color.r = 255;
@@ -294,7 +304,7 @@ void StagingManager::loadState() {
 		int x = int((_options->width / 2) - (_titleFont.getFont()->measure(text.c_str()).x / 2));
 		int y = int((_options->height / 2) - (_titleFont.getFont()->measure(text.c_str()).y / 2));
 
-		_text[0].init(text, glm::vec2(x, y), glm::vec2(1, 1), 1.0f, color, &_titleFont);
+		_text[0].init(text, glm::vec2(x * _scalingFactors.x, y * _scalingFactors.y), _scalingFactors, 1.0f, color, &_titleFont);
 
 		_stageState = *_gameState;
 		break;
@@ -303,7 +313,8 @@ void StagingManager::loadState() {
 	{
 		_simpleButtons.emplace_back();
 		callback = [&]() { *_gameState = GameState::MAIN_MENU; };
-		_simpleButtons[0].init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
+		_simpleButtons[0].init(540.0f * _scalingFactors.x, 150.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f * _scalingFactors.y, 1.0f,
+							   "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
 
 		//Make the color blue
 		color.r = 0;
@@ -317,7 +328,7 @@ void StagingManager::loadState() {
 		int x = int((_options->width / 2) - (_titleFont.getFont()->measure(text.c_str()).x / 2));
 		int y = int((_options->height / 2) - (_titleFont.getFont()->measure(text.c_str()).y / 2));
 
-		_text[0].init(text, glm::vec2(x, y), glm::vec2(1, 1), 1.0f, color, &_titleFont);
+		_text[0].init(text, glm::vec2(x * _scalingFactors.x, y * _scalingFactors.y), _scalingFactors, 1.0f, color, &_titleFont);
 
 		_stageState = *_gameState;
 	}

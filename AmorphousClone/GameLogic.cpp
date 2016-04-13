@@ -62,9 +62,11 @@ void GameLogic::updateEnemy(float step) const {
 void GameLogic::collisionAgents() const {
 
 	//Player collision with enemies
-	for (auto& enemy : *_enemies) {	
-		if(_player->collideAgents(&enemy)) {
-			_player->onCollide(enemy.getType());
+	for (auto& enemy : *_enemies) {
+		if(enemy.isEnabled()) {
+			if(_player->collideAgents(&enemy)) {
+				_player->onCollide(enemy.getType());
+			}
 		}
 	}
 
