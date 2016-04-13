@@ -12,7 +12,7 @@ namespace GameEngine {
 
 	Window::~Window() {}
 
-	void Window::createWindow(Options* options, std::string name) {
+	glm::vec2 Window::createWindow(Options* options, std::string name) {
 		_height = options->height;
 		_width = options->width;
 		_windowMode = options->mode;
@@ -65,6 +65,14 @@ namespace GameEngine {
 
 		//Turn on VSync
 		SDL_GL_SetSwapInterval(1);
+
+		float ratio = (float(_width) / _height);
+		glm::vec2 ratioScale = glm::vec2(16.0f, 9.0f);
+		if(ratio < 1.7) {
+			ratioScale = glm::vec2(4.0f, 3.0f);
+		}
+
+		return glm::vec2((float(_width) / BASE_WIDTH), (float(_height) / BASE_HEIGHT));
 	}
 
 	void Window::swapBuffer() const {

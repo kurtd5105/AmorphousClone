@@ -15,7 +15,7 @@ StagingManager::~StagingManager() {
 	}
 }
 
-void StagingManager::init(GameState* gameState, GameEngine::Options* options, GameEngine::ResourceManager* resourceManager,
+void StagingManager::init(GameState* gameState, GameEngine::Options* options, glm::vec2 scalingFactors, GameEngine::ResourceManager* resourceManager,
 						  GameEngine::SpriteManager* spriteManager, GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager) {
 	_gameState = gameState;
 	_ResourceManager = resourceManager;
@@ -23,6 +23,7 @@ void StagingManager::init(GameState* gameState, GameEngine::Options* options, Ga
 	_InputManager = inputManager;
 	_defaultFont = defaultFont;
 	_options = options;
+	_scalingFactors = scalingFactors;
 	_titleFont.init("Fonts/arial.ttf", 64, _ResourceManager);
 	_fonts.push_back(&_titleFont);
 	_fonts.push_back(_defaultFont);
@@ -68,15 +69,18 @@ void StagingManager::loadState() {
 		_simpleButtons.emplace_back();
 		_simpleButtons.emplace_back();
 		_simpleButtons.emplace_back();
-		_simpleButtons[0].init(300.0f, 350.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "PLAY", callback, _SpriteManager);
+		_simpleButtons[0].init(540.0f * _scalingFactors.x, 435.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
+							   1.0f, "Textures/buttons.png", "Animations/buttons.ani", "PLAY", callback, _SpriteManager);
 
 		callback = [&]() { *_gameState = GameState::OPTIONS; };
 		//Create the options button
-		_simpleButtons[1].init(300.0f, 250.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "OPTIONS", callback, _SpriteManager);
+		_simpleButtons[1].init(540.0f * _scalingFactors.x, 335.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
+							   1.0f, "Textures/buttons.png", "Animations/buttons.ani", "OPTIONS", callback, _SpriteManager);
 
 		callback = [&]() { *_gameState = GameState::EXIT; };
 		//Create the quit button
-		_simpleButtons[2].init(300.0f, 150.0f, 200.0f, 50.0f, 1.0f, "Textures/buttons.png", "Animations/buttons.ani", "QUIT", callback, _SpriteManager);
+		_simpleButtons[2].init(540.0f * _scalingFactors.x, 235.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
+							   1.0f, "Textures/buttons.png", "Animations/buttons.ani", "QUIT", callback, _SpriteManager);
 
 		//Empty callback
 		callback = []() {};
@@ -89,12 +93,14 @@ void StagingManager::loadState() {
 
 		//Create checkbox for testing purposes
 		_checkboxes.emplace_back();
-		_checkboxes[0].init(50.0f, 50.0f, 20.0f, 20.0f, 1.0f, "Textures/checkbox.png", "Animations/checkbox.ani", "Test", color, callback, _SpriteManager, _defaultFont);
+		_checkboxes[0].init(50.0f * _scalingFactors.x, 50.0f * _scalingFactors.y, 20.0f * _scalingFactors.x, 20.0f * _scalingFactors.y,
+							1.0f, "Textures/checkbox.png", "Animations/checkbox.ani", "Test", color, callback, _SpriteManager, _defaultFont);
 
 		//Create slider for testing purposes
 		_sliders.emplace_back();
-		_sliders[0].init(250.0f, 50.0f, 10.0f, 20.0f, 100.0f, 7.0f, 1.0f, 100.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png", color, callback,
-					_SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(100, 1000));
+		_sliders[0].init(250.0f * _scalingFactors.x, 50.0f * _scalingFactors.y, 10.0f * _scalingFactors.x, 20.0f * _scalingFactors.y,
+						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, 100.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png",
+						 color, callback, _SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(100, 1000));
 
 		//Set the stage state to the game state now that everything is setup
 		_stageState = *_gameState;

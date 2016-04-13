@@ -21,7 +21,7 @@ public:
 	StagingManager();
 	~StagingManager();
 
-	void init(GameState* gameState, GameEngine::Options* options, GameEngine::ResourceManager* resourceManager,
+	void init(GameState* gameState, GameEngine::Options* options, glm::vec2 scalingFactors, GameEngine::ResourceManager* resourceManager,
 			  GameEngine::SpriteManager* spriteManager, GameEngine::FontBatcher* defaultFont, GameEngine::InputManager* inputManager);
 	void loadState();
 
@@ -60,5 +60,7 @@ private:
 
 	GameState* _gameState;
 	GameState _stageState;
+
+	glm::vec2 _scalingFactors;
 };
 

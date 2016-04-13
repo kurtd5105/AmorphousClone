@@ -74,4 +74,6 @@ private:
 
 	std::thread _IOThread;
 	ThreadState _IOThreadState;
+
+	glm::vec2 _scalingFactors;
 };
