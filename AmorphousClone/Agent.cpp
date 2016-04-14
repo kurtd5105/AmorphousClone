@@ -131,7 +131,7 @@ bool Agent::collideAgents(Agent* agent) {
 
 }
 
-void Agent::attack() {
+void Agent::attack(float step) {
 
 }
 

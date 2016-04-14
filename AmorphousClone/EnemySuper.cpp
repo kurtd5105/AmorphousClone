@@ -17,7 +17,7 @@ void EnemySuper::init(float x, float y, float width, float height, float depth, 
 	_SpriteManager = manager;
 	//Assumes enemy is a circle
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
-	_hitbox.init(x, y, width, height, _radius);
+	_hitbox.init(x, y, width, height, _radius, GameEngine::CIRC);
 	_chance = 0.90f;
 	_Random = Random;
 	_isInit = true;

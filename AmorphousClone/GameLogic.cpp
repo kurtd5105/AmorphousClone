@@ -162,6 +162,15 @@ void GameLogic::processInput(float step) {
 				//_player->rotate((_keys->at(Q) - _keys->at(E)) * 0.01f);
 				}*/
 			_player->pointAt(_Camera->toWorldCoords(mouseCoords));
+
+			if(_InputManager->getMousePress()) {
+				if(!_player->getSword()->isActive()) {
+					_player->getSword()->setActive();
+				}
+			}
+			if(_player->getSword()->isActive()) {
+				_player->getSword()->attack(step);
+			}
 		}
 
 		updateEnemy(step);

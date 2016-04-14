@@ -11,9 +11,16 @@ public:
 
 	void init(float x, float y, float angle, glm::vec2 scalingFactors, GameEngine::SpriteManager* manager);
 
-	void attack() override;//needs some sort of timer integrated
+	void attack(float step) override;//needs some sort of timer integrated
 
-//private:
+	bool isActive() const { return _isActive; }
+	void setActive() { _isActive = true; }
+
+private:
+	float _step;
+	const float ATTACK_HALF = M_PI / 30.0f;
+	const float ATTACK_HALF_TIME = 30.0f;
+	bool _isActive;
 	/*float _x, _y, _rotation;
 
 	GameEngine::SpriteManager* _SpriteManager;

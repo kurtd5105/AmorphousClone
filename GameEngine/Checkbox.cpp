@@ -19,7 +19,7 @@ namespace GameEngine {
 		_color = color;
 
 		_sprite = _SpriteManager->addSprite(x, y, width, height, depth, std::vector<float>{}, texPath);
-		_hitbox.init(x, y, width, height, 0);
+		_hitbox.init(x, y, width, height, 0, RECT);
 
 		_sheet.init(aniPath, _sprite, _SpriteManager->getResourceManager());
 		_sheet.setAnim("OFFIDLE");

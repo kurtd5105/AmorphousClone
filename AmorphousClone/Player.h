@@ -14,6 +14,7 @@ public:
 	void onCollide(EnemyType type);
 	
 	bool isAlive() const { return _isAlive; }
+	Sword* getSword() { return &_sword; }
 
 private:
 	Sword _sword;
