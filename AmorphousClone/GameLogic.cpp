@@ -64,15 +64,14 @@ void GameLogic::collisionAgents() const {
 	glm::vec2 tempTarget;
 
 	//Player collision with enemies
-	if(!_player->isInvincible()) {
-		for(auto& enemy : *_enemies) {
-			if(enemy.isEnabled()) {
-				if(_player->collideAgents(&enemy)) {
+	for(auto& enemy : *_enemies) {
+		if(enemy.isEnabled()) {
+			if(_player->collideAgents(&enemy)) {
+				if(!_player->isInvincible()) {
 					_player->onCollide(enemy.getType(), enemy.getRotation());
-					tempTarget = enemy.getTarget();
-					enemy.setTarget(glm::vec2(_player->getPos().x + 10000 * cos(enemy.getRotation() - M_PI),
-						_player->getPos().y + 10000 * sin(enemy.getRotation() - M_PI)));
 				}
+				enemy.setTarget(glm::vec2(_player->getPos().x + 10000 * cos(enemy.getRotation() - M_PI),
+					_player->getPos().y + 10000 * sin(enemy.getRotation() - M_PI)));
 			}
 		}
 	}
