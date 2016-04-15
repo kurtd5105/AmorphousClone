@@ -65,6 +65,15 @@ namespace GameEngine {
 		//_batcher->remove(this);
 	}
 
+	void Text::changeText(std::string text) {
+		clear();
+		_text = text;
+		_length = _text.length();
+		display();
+		_used = true;
+		_batcher->updateBatch();
+	}
+
 	void Text::display() {
 		auto tp = _position;
 

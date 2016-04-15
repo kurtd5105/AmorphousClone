@@ -41,6 +41,7 @@ void GameLogic::getStage() {
 		_SpawnManager = _StagingManager->getSpawnManager();
 		_player = _StagingManager->getPlayer();
 		_enemies = _SpawnManager->getEnemies();
+		_textRefs = _StagingManager->getText();
 		break;
 	case GameState::WON:
 		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
@@ -150,6 +151,8 @@ void GameLogic::processInput(float step) {
 				break;
 			}
 		}
+
+		(*_textRefs)[0].changeText("Enemies Remaining: " + std::to_string(_SpawnManager->getEnemiesRemaining()));
 
 		if(_player->isEnabled() && !_player->isKnockback()) {
 			//Check if A or D and W or S are pressed for diagonal movement

@@ -46,6 +46,7 @@ private:
 	std::vector<GameEngine::Checkbox>* _checkboxRefs;
 	std::vector<GameEngine::Slider>* _sliderRefs;
 	std::vector<GameEngine::SelectionBox>* _selectionRefs;
+	std::vector<GameEngine::Text>* _textRefs;
 
 	GameEngine::Button* _currClicked;
 	Player* _player;
