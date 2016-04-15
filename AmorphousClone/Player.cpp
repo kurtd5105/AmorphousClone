@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(): _isAlive(true), _gloopleBumps(0) {}
+Player::Player(): _alive(true), _knockback(false), _invincible(false), _step(0.0f), _prevStep(0.0f), _targetRotation(0.0f), _gloopleBumps(0) {}
 
 Player::~Player() {}
 
@@ -21,11 +21,46 @@ void Player::init(float x, float y, float width, float height, float depth, glm:
 	_isInit = true;
 }
 
-void Player::onCollide(EnemyType type) {
+void Player::onCollide(EnemyType type, float targetRotation) {
 	if(type == GLOOPLE) {
 		_gloopleBumps++;
 		if(_gloopleBumps >= 3) {
-			_isAlive = false;
+			_alive = false;
+		} else if (!_invincible && !_knockback){
+			_knockback = true;
+			_invincible = true;
+			_targetRotation = targetRotation;
 		}
+	}
+}
+
+void Player::knockback(float step) {
+	_prevStep = _step;
+	_step += step;
+	if(_step <= KNOCKBACK_TIME) {
+		if(_step > INVULNERABLE_TIME) {
+			_invincible = false;
+		}
+
+		float xMove = cos(_targetRotation) * KNOCKBACK_SPEED * step;
+		float yMove = sin(_targetRotation) * KNOCKBACK_SPEED * step;
+
+		_x += xMove;
+		_y += yMove;
+		_sprite->translate(xMove, yMove);
+		_sword.translate(xMove, yMove, 1.0f);
+	} else {
+		if(_prevStep <= KNOCKBACK_TIME) {
+			float xMove = cos(_targetRotation) * KNOCKBACK_SPEED * (KNOCKBACK_TIME - _prevStep);
+			float yMove = sin(_targetRotation) * KNOCKBACK_SPEED * (KNOCKBACK_TIME - _prevStep);
+
+			_x += xMove;
+			_y += yMove;
+			_sprite->translate(xMove, yMove);
+			_sword.translate(xMove, yMove, 1.0f);
+		}
+		_knockback = false;
+		_invincible = false;
+		_step = _prevStep = 0.0f;
 	}
 }

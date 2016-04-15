@@ -18,7 +18,7 @@ public:
 
 private:
 	float _step;
-	const float ATTACK_HALF = M_PI / 30.0f;
+	const float ATTACK_HALF = float(M_PI) / 30.0f;
 	const float ATTACK_HALF_TIME = 30.0f;
 	bool _isActive;
 	/*float _x, _y, _rotation;
