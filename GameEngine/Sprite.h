@@ -30,6 +30,9 @@ namespace GameEngine {
 		void setVisible() { _visible = true; }
 		bool isVisible() const { return _visible; }
 
+		void setAlpha(GLubyte alpha) { for(auto& v : _vertices) { v.color.a = alpha; } }
+		GLubyte getAlpha() const { return _vertices[0].color.a; }
+
 	private:
 		glm::vec2 Sprite::rotatePoint(float x, float y, float angle) const;
 
