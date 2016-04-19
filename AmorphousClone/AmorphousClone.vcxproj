@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="Awards.cpp" />
     <ClCompile Include="EnemySuper.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="Goople.cpp" />
@@ -91,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
+    <ClInclude Include="Awards.h" />
     <ClInclude Include="EnemySuper.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameState.h" />
