@@ -27,6 +27,8 @@ public:
 
 	GameState getStageState() const { return _stageState; }
 
+	GameEngine::Options* getOptions() const { return _options; }
+
 	std::vector<GameEngine::SimpleButton>* getSimpleButtonRefs() { return &_simpleButtons; }
 	std::vector<GameEngine::Checkbox>* getCheckboxRefs() { return &_checkboxes; }
 	std::vector<GameEngine::Slider>* getSliderRefs() { return &_sliders; }

@@ -21,7 +21,7 @@ public:
 	void lockOn(Agent* agent);
 	bool collideAgents(Agent *agent);
 
-	virtual void attack();
+	virtual void attack(float step);
 	virtual void kill();
 
 	float getRotation() const { return _sprite->getRotation(); }

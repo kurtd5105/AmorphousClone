@@ -1,5 +1,6 @@
 #include "GameLogic.h"
 #include <GameEngine/CollisionManager.h>
+#include <iostream>
 
 //#include <iostream>
 
@@ -60,17 +61,21 @@ void GameLogic::updateEnemy(float step) const {
 }
 
 void GameLogic::collisionAgents() const {
+	glm::vec2 tempTarget;
 
 	//Player collision with enemies
-	for (auto& enemy : *_enemies) {
+	for(auto& enemy : *_enemies) {
 		if(enemy.isEnabled()) {
 			if(_player->collideAgents(&enemy)) {
-				_player->onCollide(enemy.getType());
+				if(!_player->isInvincible()) {
+					_player->onCollide(enemy.getType(), enemy.getRotation());
+				}
+				enemy.setTarget(glm::vec2(_player->getPos().x + 10000 * cos(enemy.getRotation() - M_PI),
+					_player->getPos().y + 10000 * sin(enemy.getRotation() - M_PI)));
 			}
 		}
 	}
-
-	glm::vec2 tempTarget;
+	
 	//Enemy collisions
 	for (auto& enemy : *_enemies) {
 		if (enemy.isEnabled()) {
@@ -146,7 +151,7 @@ void GameLogic::processInput(float step) {
 			}
 		}
 
-		if(_player->isEnabled()) {
+		if(_player->isEnabled() && !_player->isKnockback()) {
 			//Check if A or D and W or S are pressed for diagonal movement
 			if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
 				//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
@@ -162,7 +167,19 @@ void GameLogic::processInput(float step) {
 				//_player->rotate((_keys->at(Q) - _keys->at(E)) * 0.01f);
 				}*/
 			_player->pointAt(_Camera->toWorldCoords(mouseCoords));
+
+			if(_InputManager->getMousePress()) {
+				if(!_player->getSword()->isActive()) {
+					_player->getSword()->setActive();
+				}
+			}
+			if(_player->getSword()->isActive()) {
+				_player->getSword()->attack(step);
+			}
+		} else if(_player->isKnockback()) {
+			_player->knockback(step);
 		}
+		//std::cout << "Knockback: " << (_player->isKnockback() ? "yes" : "no") << "; Invincible: " << (_player->isInvincible() ? "yes." : "no.") << std::endl;
 
 		updateEnemy(step);
 

@@ -31,7 +31,7 @@ namespace GameEngine {
 		//Note that the line has a higher depth and thus is behind the slider button
 		_line = _SpriteManager->addSprite(x + (width/2), y + (height/2) - (lineHeight/2), lineWidth, lineHeight, depth + 1.0f, std::vector<float>{}, linePath);
 		_sprite = _SpriteManager->addSprite(x, y, width, height, depth, std::vector<float>{}, texPath);
-		_hitbox.init(x, y, width, height, 0);
+		_hitbox.init(x, y, width, height, 0, RECT);
 
 		_sheet.init(aniPath, _sprite, _SpriteManager->getResourceManager());
 		_sheet.setAnim("IDLE");
