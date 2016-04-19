@@ -294,6 +294,17 @@ void StagingManager::loadState() {
 	}
 	case AWARDS:
 	{
+		for(unsigned int i = 0; i < 6; i++) {
+			for(unsigned int k = 0; k < 17; k++) {
+				_SpriteManager->addSprite((2.5f + k * 75.0f) * _scalingFactors.x, (615.0f - i * 85.0f) * _scalingFactors.y, 75.0f * _scalingFactors.x,
+										  75.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/awardbox.png");
+			}
+		}
+
+		for(unsigned int i = 0; i < 8; i++) {
+			_SpriteManager->addSprite((5.0f + i * 160.0f) * _scalingFactors.x, 0.0f, 150.0f * _scalingFactors.x, 150.0f * _scalingFactors.y, 1.0f,
+									  std::vector<float>{}, "Textures/awardbox.png");
+		}
 		callback = [&]() { *_gameState = GameState::MAIN_MENU; };
 		//Create the back button
 		_simpleButtons.emplace_back();
