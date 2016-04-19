@@ -22,6 +22,8 @@ public:
 
 	std::list<EnemySuper>* getEnemies() { return &_enemies; }
 
+	unsigned int getEnemiesRemaining() const { return _size - _currIndex; }
+
 private:
 	GameEngine::IOManager* _IOManager;
 	GameEngine::SpriteManager* _SpriteManager;

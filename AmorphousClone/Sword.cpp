@@ -27,7 +27,7 @@ void Sword::attack(float step) {
 	if(_step <= ATTACK_HALF_TIME) {
 		_rotationOffset = 3.927f + (ATTACK_HALF * _step);
 	} else if(_step <= ATTACK_HALF_TIME * 2.0f) {
-		_rotationOffset = 3.927f + (M_PI - (ATTACK_HALF * (_step - ATTACK_HALF_TIME)));
+		_rotationOffset = 3.927f + (float(M_PI) - (ATTACK_HALF * (_step - ATTACK_HALF_TIME)));
 	} else if(_step != 0.0f) {
 		_step = 0.0f;
 		_rotationOffset = 3.927f;

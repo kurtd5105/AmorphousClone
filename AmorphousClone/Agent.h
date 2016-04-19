@@ -41,6 +41,9 @@ public:
 	virtual void enable() { _enabled = true; }
 	virtual bool isEnabled() { return _enabled; }
 
+	void setAlpha(GLubyte alpha) { _sprite->setAlpha(alpha); for(auto& a : _subAgents) { a->setAlpha(alpha); } }
+	GLubyte getAlpha() const { return _sprite->getAlpha(); }
+
 protected:
 	float _x, _y, _width, _height, _depth, _rotation, _radius, _speed, _rotationOffset;
 	bool _isInit, _visible, _enabled;

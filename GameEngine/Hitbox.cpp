@@ -15,10 +15,10 @@ namespace GameEngine {
 		_info[4] = radius;
 
 		if(t == RECT_POINT) {
-			_vertices.push_back(std::pair<float, float>{0, 0});
-			_vertices.push_back(std::pair<float, float>{0, 0});
-			_vertices.push_back(std::pair<float, float>{0, 0});
-			_vertices.push_back(std::pair<float, float>{0, 0});
+			_vertices.push_back(std::pair<float, float>{0.0f, 0.0f});
+			_vertices.push_back(std::pair<float, float>{0.0f, 0.0f});
+			_vertices.push_back(std::pair<float, float>{0.0f, 0.0f});
+			_vertices.push_back(std::pair<float, float>{0.0f, 0.0f});
 			_l = _r = _t = _b = 0;
 		}
 	}

@@ -33,12 +33,13 @@ public:
 	std::vector<GameEngine::Checkbox>* getCheckboxRefs() { return &_checkboxes; }
 	std::vector<GameEngine::Slider>* getSliderRefs() { return &_sliders; }
 	std::vector<GameEngine::SelectionBox>* getSelectionRefs() { return &_selectionBoxes; }
-
+	std::vector<GameEngine::Text>* getText() { return &_text; };
 	std::vector<GameEngine::FontBatcher*>* getFonts() { return &_fonts; }
 	SpawnManager* getSpawnManager() const { return _SpawnManager; }
 
 	Player* getPlayer() const { return _player; }
 
+	
 private:
 	GameEngine::ResourceManager* _ResourceManager;
 	GameEngine::SpriteManager* _SpriteManager;
