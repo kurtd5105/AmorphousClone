@@ -63,23 +63,30 @@ void StagingManager::loadState() {
 	//Setup the new stage
 	switch(*_gameState) {
 	case GameState::MAIN_MENU:
+		_simpleButtons.emplace_back();
+		_simpleButtons.emplace_back();
+		_simpleButtons.emplace_back();
+		_simpleButtons.emplace_back();
+
 		//Set the callback to be capturing (uses _gameState passed by reference) (done with [&])
 		callback = [&]() { *_gameState = GameState::PLAYING; };
 		//Create the play button
-		_simpleButtons.emplace_back();
-		_simpleButtons.emplace_back();
-		_simpleButtons.emplace_back();
-		_simpleButtons[0].init(540.0f * _scalingFactors.x, 435.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
+		_simpleButtons[0].init(540.0f * _scalingFactors.x, 485.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
 							   1.0f, "Textures/buttons.png", "Animations/buttons.ani", "PLAY", callback, _SpriteManager);
 
 		callback = [&]() { *_gameState = GameState::OPTIONS; };
 		//Create the options button
-		_simpleButtons[1].init(540.0f * _scalingFactors.x, 335.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
+		_simpleButtons[1].init(540.0f * _scalingFactors.x, 385.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
 							   1.0f, "Textures/buttons.png", "Animations/buttons.ani", "OPTIONS", callback, _SpriteManager);
+
+		callback = [&]() { *_gameState = GameState::AWARDS; };
+		//Create the awards button
+		_simpleButtons[2].init(540.0f * _scalingFactors.x, 285.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
+							   1.0f, "Textures/buttons.png", "Animations/buttons.ani", "AWARDS", callback, _SpriteManager);
 
 		callback = [&]() { *_gameState = GameState::EXIT; };
 		//Create the quit button
-		_simpleButtons[2].init(540.0f * _scalingFactors.x, 235.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
+		_simpleButtons[3].init(540.0f * _scalingFactors.x, 185.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
 							   1.0f, "Textures/buttons.png", "Animations/buttons.ani", "QUIT", callback, _SpriteManager);
 
 		//Empty callback
@@ -282,6 +289,42 @@ void StagingManager::loadState() {
 							   "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
 
 		//Set the stage state to the game state now that everything is setup
+		_stageState = *_gameState;
+		break;
+	}
+	case AWARDS:
+	{
+		for(unsigned int i = 0; i < 6; i++) {
+			for(unsigned int k = 0; k < 17; k++) {
+				_SpriteManager->addSprite((2.5f + k * 75.0f) * _scalingFactors.x, (560.0f - i * 85.0f) * _scalingFactors.y, 75.0f * _scalingFactors.x,
+										  75.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/awardbox.png");
+			}
+		}
+
+		for(unsigned int i = 0; i < 8; i++) {
+			_SpriteManager->addSprite((340.0f + i * 75.0f) * _scalingFactors.x, 50.0f * _scalingFactors.y, 75.0f * _scalingFactors.x, 75.0f * _scalingFactors.y,
+									  1.0f, std::vector<float>{}, "Textures/awardbox.png");
+		}
+
+		//Make the color blue
+		color.r = 0;
+		color.g = 0;
+		color.b = 255;
+		color.a = 255;
+
+		_text.emplace_back();
+		std::string text = "Awards";
+
+		int x = int(640 - (_titleFont.getFont()->measure(text.c_str()).x / 2));
+		int y = int(720 - (_titleFont.getFont()->measure(text.c_str()).y));
+
+		_text[0].init(text, glm::vec2(x * _scalingFactors.x, y * _scalingFactors.y), _scalingFactors, 1.0f, color, &_titleFont);
+
+		callback = [&]() { *_gameState = GameState::MAIN_MENU; };
+		//Create the back button
+		_simpleButtons.emplace_back();
+		_simpleButtons[0].init(1180.0f * _scalingFactors.x, 695.0f * _scalingFactors.y, 100.0f * _scalingFactors.x, 25.0f * _scalingFactors.y, 1.0f,
+							   "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
 		_stageState = *_gameState;
 		break;
 	}

@@ -43,6 +43,9 @@ void GameLogic::getStage() {
 		_enemies = _SpawnManager->getEnemies();
 		_textRefs = _StagingManager->getText();
 		break;
+	case GameState::AWARDS:
+		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
+		break;
 	case GameState::WON:
 		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
 		break;
@@ -188,6 +191,9 @@ void GameLogic::processInput(float step) {
 
 		break;
 	}
+	case GameState::AWARDS:
+		checkButtons(mouseCoords);
+		break;
 	case GameState::LOST:
 		checkButtons(mouseCoords);
 		break;
