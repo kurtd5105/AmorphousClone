@@ -9,7 +9,7 @@ namespace GameEngine {
 		//delete _text;
 	}
 
-	void Checkbox::init(float x, float y, float width, float height, float depth, std::string texPath, std::string aniPath,
+	void Checkbox::init(float x, float y, float width, float height, float depth, glm::vec2 scaling, std::string texPath, std::string aniPath,
 						std::string text, Color color, std::function<void(void)> callback, SpriteManager* manager, FontBatcher* fontBatcher) {
 		_name = "OFF";
 		_callback = callback;
@@ -25,7 +25,7 @@ namespace GameEngine {
 		_sheet.setAnim("OFFIDLE");
 		
 		//_text = new Text();
-		_text.init(text, glm::vec2(x + width, y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
+		_text.init(text, glm::vec2(x + width, y), scaling, 1.0f, _color, _FontBatcher);
 	}
 
 	std::function<void(void)> Checkbox::onClick() {

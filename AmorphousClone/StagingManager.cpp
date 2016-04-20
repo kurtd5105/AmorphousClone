@@ -101,13 +101,13 @@ void StagingManager::loadState() {
 		//Create checkbox for testing purposes
 		_checkboxes.emplace_back();
 		_checkboxes[0].init(50.0f * _scalingFactors.x, 50.0f * _scalingFactors.y, 20.0f * _scalingFactors.x, 20.0f * _scalingFactors.y,
-							1.0f, "Textures/checkbox.png", "Animations/checkbox.ani", "Test", color, callback, _SpriteManager, _defaultFont);
+							1.0f, _scalingFactors, "Textures/checkbox.png", "Animations/checkbox.ani", "Test", color, callback, _SpriteManager, _defaultFont);
 
 		//Create slider for testing purposes
 		_sliders.emplace_back();
 		_sliders[0].init(250.0f * _scalingFactors.x, 50.0f * _scalingFactors.y, 10.0f * _scalingFactors.x, 20.0f * _scalingFactors.y,
-						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, 100.0f, "Textures/slider.png", "Animations/slider.ani", "Textures/line.png",
-						 color, callback, _SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(100, 1000));
+						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, _scalingFactors, 100.0f, "Textures/slider.png", "Animations/slider.ani",
+						 "Textures/line.png", color, callback, _SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(100, 1000));
 
 		//Set the stage state to the game state now that everything is setup
 		_stageState = *_gameState;
@@ -181,20 +181,20 @@ void StagingManager::loadState() {
 
 		//Music Volume
 		_sliders[0].init(350.0f * _scalingFactors.x, 600.0f * _scalingFactors.y, 10.0f * _scalingFactors.x, 20.0f * _scalingFactors.y,
-						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, _options->music * 100, "Textures/slider.png", "Animations/slider.ani",
+						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, _scalingFactors, _options->music * 100, "Textures/slider.png", "Animations/slider.ani",
 						 "Textures/line.png", color, callback, _SpriteManager, _defaultFont, _InputManager);
 		//SFX Volume
 		_sliders[1].init(350.0f * _scalingFactors.x, 450.0f * _scalingFactors.y, 10.0f * _scalingFactors.x, 20.0f * _scalingFactors.y,
-						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, _options->sfx * 100, "Textures/slider.png", "Animations/slider.ani",
+						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, _scalingFactors, _options->sfx * 100, "Textures/slider.png", "Animations/slider.ani",
 						 "Textures/line.png", color, callback, _SpriteManager, _defaultFont, _InputManager);
 		//Spawn Count
 		_sliders[2].init(820.0f * _scalingFactors.x, 600.0f * _scalingFactors.y, 10.0f * _scalingFactors.x, 20.0f * _scalingFactors.y,
-						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, float(_options->spawnCount), "Textures/slider.png", "Animations/slider.ani",
+						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, _scalingFactors, float(_options->spawnCount), "Textures/slider.png", "Animations/slider.ani",
 						 "Textures/line.png", color, callback, _SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(100, 1000));
 		//_sliders[2].setValue(_options->spawnCount);
 		//Spawn Rate
 		_sliders[3].init(820.0f * _scalingFactors.x, 450.0f * _scalingFactors.y, 10.0f * _scalingFactors.x, 20.0f * _scalingFactors.y,
-						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, float(_options->spawnRate), "Textures/slider.png", "Animations/slider.ani",
+						 100.0f * _scalingFactors.x, 7.0f * _scalingFactors.y, 1.0f, _scalingFactors, float(_options->spawnRate), "Textures/slider.png", "Animations/slider.ani",
 						 "Textures/line.png", color, callback, _SpriteManager, _defaultFont, _InputManager, std::pair<int, int>(1, 15));
 		//_sliders[3].setValue(_options->spawnRate);
 
@@ -229,7 +229,7 @@ void StagingManager::loadState() {
 			curr = temp.length();
 			oss.clear();
 			oss.str("");
-			for(unsigned int i = 0; i < unsigned int((max - curr) * 1.5f); i++) {
+			for(unsigned int k = 0; k < unsigned int((max - curr) * 1.5f); k++) {
 				oss << " ";
 			}
 			oss << temp;
@@ -237,8 +237,8 @@ void StagingManager::loadState() {
 		}
 
 		_selectionBoxes[0].init(330.0f * _scalingFactors.x, 300.0f * _scalingFactors.y, 25.0f * _scalingFactors.x, 25.0f * _scalingFactors.y, 85.0f * _scalingFactors.x,
-								1.0f, resolutions, "LEFT", "RIGHT", "Textures/arrows.png", "Animations/arrows.ani", "Textures/arrows.png", "Animations/arrows.ani",
-								color, callbackLeft, callbackRight, _SpriteManager, _defaultFont);
+								1.0f, _scalingFactors, resolutions, "LEFT", "RIGHT", "Textures/arrows.png", "Animations/arrows.ani", "Textures/arrows.png",
+								"Animations/arrows.ani", color, callbackLeft, callbackRight, _SpriteManager, _defaultFont);
 		for(unsigned int i = 0; i < GameEngine::Screen::validWidths.size(); i++) {
 			if(GameEngine::Screen::validWidths[i] == _options->width) {
 				_selectionBoxes[0].setSelection(i);
@@ -256,7 +256,7 @@ void StagingManager::loadState() {
 		std::vector<std::string> modes = std::vector<std::string>{"Borderless Window", "         Windowed", "          Fullscreen"};
 
 		_selectionBoxes[1].init(780.0f * _scalingFactors.x, 300.0f * _scalingFactors.y, 25.0f * _scalingFactors.x, 25.0f * _scalingFactors.y, 150.0f * _scalingFactors.x,
-								1.0f, modes, "LEFT", "RIGHT", "Textures/arrows.png", "Animations/arrows.ani", "Textures/arrows.png", "Animations/arrows.ani",
+								1.0f, _scalingFactors, modes, "LEFT", "RIGHT", "Textures/arrows.png", "Animations/arrows.ani", "Textures/arrows.png", "Animations/arrows.ani",
 								color, callbackLeft, callbackRight, _SpriteManager, _defaultFont);
 		if(_options->mode == GameEngine::WindowMode::BORDERLESS) {
 			_selectionBoxes[1].setSelection(0);
@@ -273,12 +273,12 @@ void StagingManager::loadState() {
 			_options->spawnRate = unsigned int(round(_sliders[3].getValue()));
 			_options->width = GameEngine::Screen::validWidths[_selectionBoxes[0].getIndex()];
 			_options->height = GameEngine::Screen::validHeights[_selectionBoxes[0].getIndex()];
-			auto temp = _selectionBoxes[1].getIndex();
-			if(temp == 0) {
+			auto t = _selectionBoxes[1].getIndex();
+			if(t == 0) {
 				_options->mode = GameEngine::WindowMode::BORDERLESS;
-			} else if(temp == 1) {
+			} else if(t == 1) {
 				_options->mode = GameEngine::WindowMode::WINDOWED;
-			} else if(temp == 2) {
+			} else if(t == 2) {
 				_options->mode = GameEngine::WindowMode::FULLSCREEN;
 			}
 			*_gameState = GameState::MAIN_MENU;
@@ -344,8 +344,8 @@ void StagingManager::loadState() {
 		_text.emplace_back();
 		std::string text = "You lost.";
 
-		int x = int((_options->width / 2) - (_titleFont.getFont()->measure(text.c_str()).x / 2));
-		int y = int((_options->height / 2) - (_titleFont.getFont()->measure(text.c_str()).y / 2));
+		int x = int(640 - (_titleFont.getFont()->measure(text.c_str()).x / 2));
+		int y = int(360 - (_titleFont.getFont()->measure(text.c_str()).y / 2));
 
 		_text[0].init(text, glm::vec2(x * _scalingFactors.x, y * _scalingFactors.y), _scalingFactors, 1.0f, color, &_titleFont);
 
@@ -368,8 +368,8 @@ void StagingManager::loadState() {
 		_text.emplace_back();
 		std::string text = "You won!";
 
-		int x = int((_options->width / 2) - (_titleFont.getFont()->measure(text.c_str()).x / 2));
-		int y = int((_options->height / 2) - (_titleFont.getFont()->measure(text.c_str()).y / 2));
+		int x = int(640 - (_titleFont.getFont()->measure(text.c_str()).x / 2));
+		int y = int(360 - (_titleFont.getFont()->measure(text.c_str()).y / 2));
 
 		_text[0].init(text, glm::vec2(x * _scalingFactors.x, y * _scalingFactors.y), _scalingFactors, 1.0f, color, &_titleFont);
 
