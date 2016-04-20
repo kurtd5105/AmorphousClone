@@ -8,9 +8,9 @@ namespace GameEngine {
 		Slider();
 		~Slider();
 
-		void init(float x, float y, float width, float height, float lineWidth, float lineHeight, float depth, float value, std::string texPath, std::string aniPath,
-				  std::string linePath, Color color, std::function<void(void)> callback, SpriteManager* manager, FontBatcher* fontBatcher, InputManager* inputManager,
-				  std::pair<int, int> minMax = std::pair<int, int>(0, 100));
+		void init(float x, float y, float width, float height, float lineWidth, float lineHeight, float depth, glm::vec2 scaling, float value, std::string texPath,
+				  std::string aniPath, std::string linePath, Color color, std::function<void(void)> callback, SpriteManager* manager, FontBatcher* fontBatcher,
+				  InputManager* inputManager,std::pair<int, int> minMax = std::pair<int, int>(0, 100));
 
 		void onIdle() override { _isPushed = false; _sheet.setAnim(_name + "IDLE"); }
 		void onHover() override { _isPushed = false; _sheet.setAnim(_name + "HOVER"); }
