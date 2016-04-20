@@ -296,15 +296,30 @@ void StagingManager::loadState() {
 	{
 		for(unsigned int i = 0; i < 6; i++) {
 			for(unsigned int k = 0; k < 17; k++) {
-				_SpriteManager->addSprite((2.5f + k * 75.0f) * _scalingFactors.x, (615.0f - i * 85.0f) * _scalingFactors.y, 75.0f * _scalingFactors.x,
+				_SpriteManager->addSprite((2.5f + k * 75.0f) * _scalingFactors.x, (560.0f - i * 85.0f) * _scalingFactors.y, 75.0f * _scalingFactors.x,
 										  75.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/awardbox.png");
 			}
 		}
 
 		for(unsigned int i = 0; i < 8; i++) {
-			_SpriteManager->addSprite((5.0f + i * 160.0f) * _scalingFactors.x, 0.0f, 150.0f * _scalingFactors.x, 150.0f * _scalingFactors.y, 1.0f,
-									  std::vector<float>{}, "Textures/awardbox.png");
+			_SpriteManager->addSprite((340.0f + i * 75.0f) * _scalingFactors.x, 50.0f * _scalingFactors.y, 75.0f * _scalingFactors.x, 75.0f * _scalingFactors.y,
+									  1.0f, std::vector<float>{}, "Textures/awardbox.png");
 		}
+
+		//Make the color blue
+		color.r = 0;
+		color.g = 0;
+		color.b = 255;
+		color.a = 255;
+
+		_text.emplace_back();
+		std::string text = "Awards";
+
+		int x = int(640 - (_titleFont.getFont()->measure(text.c_str()).x / 2));
+		int y = int(720 - (_titleFont.getFont()->measure(text.c_str()).y));
+
+		_text[0].init(text, glm::vec2(x * _scalingFactors.x, y * _scalingFactors.y), _scalingFactors, 1.0f, color, &_titleFont);
+
 		callback = [&]() { *_gameState = GameState::MAIN_MENU; };
 		//Create the back button
 		_simpleButtons.emplace_back();
