@@ -27,6 +27,12 @@ bld/
 [Oo]bj/
 dependencies/ORIGINALS/*
 
+# Fonts
+AmorphousClone/Fonts/arial.ttf
+
+# Built libraries
+*/GameEngine.lib
+
 # User-specific files
 *.suo
 *.user
