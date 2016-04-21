@@ -91,7 +91,7 @@ namespace GameEngine {
 		for(int i = 0; _text[i] != 0; i++) {
 			char c = _text[i];
 			if(_text[i] == '\n') {
-				tp.y += fontHeight * _scaling.y;
+				tp.y -= fontHeight * _scaling.y;
 				tp.x = _position.x;
 			} else {
 				// Check for correct glyph

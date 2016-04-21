@@ -24,8 +24,8 @@ void StagingManager::init(GameState* gameState, GameEngine::Options* options, gl
 	_defaultFont = defaultFont;
 	_options = options;
 	_scalingFactors = scalingFactors;
-	_titleFont.init("Fonts/arial.ttf", 64, _ResourceManager);
-	_descriptionFont.init("Fonts/arial.ttf", 32, _ResourceManager);
+	_titleFont.init("Fonts/OpenSans-Regular.ttf", 64, _ResourceManager);
+	_descriptionFont.init("Fonts/OpenSans-Regular.ttf", 32, _ResourceManager);
 	_fonts.push_back(&_titleFont);
 	_fonts.push_back(&_descriptionFont);
 	_fonts.push_back(_defaultFont);
