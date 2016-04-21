@@ -31,7 +31,8 @@ dependencies/ORIGINALS/*
 AmorphousClone/Fonts/arial.ttf
 
 # Built libraries
-*/GameEngine.lib
+*/*.lib
+
 
 # User-specific files
 *.suo
