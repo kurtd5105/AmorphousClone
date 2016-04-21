@@ -93,10 +93,7 @@ void StagingManager::loadState() {
 		callback = []() {};
 
 		//Make the color blue
-		color.r = 0;
-		color.g = 0;
-		color.b = 255;
-		color.a = 255;
+		color = GameEngine::COLOR::BLUE;
 
 		//Create checkbox for testing purposes
 		_checkboxes.emplace_back();
@@ -121,10 +118,7 @@ void StagingManager::loadState() {
 		_SpriteManager->addSprite(0.0f, 0.0f, 1920.0f, 1080.0f, 100.0f, std::vector<float>{}, "Textures/gravel.png");
 
 		//Make the color red
-		color.r = 255;
-		color.g = 0;
-		color.b = 0;
-		color.a = 255;
+		color = GameEngine::COLOR::RED;
 
 		//Create a test string of all the characters
 		std::string test = "\"";
@@ -154,10 +148,7 @@ void StagingManager::loadState() {
 		callback = []() {};
 
 		//Make the color blue
-		color.r = 0;
-		color.g = 0;
-		color.b = 255;
-		color.a = 255;
+		color = GameEngine::COLOR::BLUE;
 
 		_text.emplace_back();
 		_text.emplace_back();
@@ -307,10 +298,7 @@ void StagingManager::loadState() {
 		}
 
 		//Make the color blue
-		color.r = 0;
-		color.g = 0;
-		color.b = 255;
-		color.a = 255;
+		color = GameEngine::COLOR::BLUE;
 
 		_text.emplace_back();
 		std::string text = "Awards";
@@ -336,10 +324,7 @@ void StagingManager::loadState() {
 							   "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
 
 		//Make the color red
-		color.r = 255;
-		color.g = 0;
-		color.b = 0;
-		color.a = 255;
+		color = GameEngine::COLOR::RED;
 
 		_text.emplace_back();
 		std::string text = "You lost.";
@@ -360,10 +345,7 @@ void StagingManager::loadState() {
 							   "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
 
 		//Make the color blue
-		color.r = 0;
-		color.g = 0;
-		color.b = 255;
-		color.a = 255;
+		color = GameEngine::COLOR::BLUE;
 
 		_text.emplace_back();
 		std::string text = "You won!";

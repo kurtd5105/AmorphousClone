@@ -18,6 +18,11 @@ namespace GameEngine {
 		float u, v;
 	};
 
+	namespace COLOR {
+		const static Color RED = {255, 0, 0, 255};
+		const static Color BLUE = {0, 0, 255, 255};
+	}
+
 	class Vertex {
 	public:
 		Position position;
