@@ -25,9 +25,7 @@ namespace GameEngine {
 	}
 
 	Font ResourceManager::getFont(std::string path, int point) {
-		char temp[3];
-		_itoa_s(point, temp, 10);
-		std::string pathPoint = path + ":" + temp;
+		std::string pathPoint = path + ":" + std::to_string(point);
 		//std::cout << "Font: " << path << " ID string: " << pathPoint << std::endl;
 		auto result = _fontMap.find(pathPoint);
 

@@ -135,7 +135,9 @@ void StagingManager::loadState() {
 		}
 		test += "\"";
 		_text.emplace_back();
+		_text.emplace_back();
 		_text[0].init(test, glm::vec2(0, 0), _scalingFactors, 1.0f, color, _defaultFont);
+		_text[1].init(test, glm::vec2(1180, 0), _scalingFactors, 1.0f, color, _defaultFont);
 
 		//Create the player
 		_player = new Player();

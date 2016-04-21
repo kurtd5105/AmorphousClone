@@ -3,7 +3,7 @@
 #include <GameEngine/Errors.h>
 
 Agent::Agent() : _x(0.0f), _y(0.0f), _width(0.0f), _height(0.0f), _depth(1.0f), _rotation(0.0f), _radius(0), _speed(0), _rotationOffset(0.0f),
-_isInit(false), _visible(true), _enabled(true), _SpriteManager(nullptr), _sprite(nullptr), _Random(nullptr) {}
+_isInit(false), _alive(true), _visible(true), _enabled(true), _SpriteManager(nullptr), _sprite(nullptr), _Random(nullptr) {}
 
 Agent::~Agent() {
 	if (_SpriteManager != nullptr && _sprite != nullptr) {
@@ -108,7 +108,7 @@ void Agent::setVisible() {
 	}
 }
 
-bool Agent::collideAgents(Agent* agent) {
+bool Agent::collideAgents(Agent* agent) const {
 
 	//Minimum distance for a collision to occur, can be diffrent of diffrent radiuses
 	const auto minDist = getRadius() + agent->getRadius();
@@ -136,5 +136,10 @@ void Agent::attack(float step) {
 }
 
 void Agent::kill() {
-
+	disable();
+	setInvisible();
+	_alive = false;
+	for(unsigned int i = 0; i < _subAgents.size(); i++) {
+		_subAgents[i]->kill();
+	}
 }

@@ -19,7 +19,7 @@ public:
 	void pointAt(glm::vec2 pos);
 	void moveTo(Agent* agent, float speed);
 	void lockOn(Agent* agent);
-	bool collideAgents(Agent *agent);
+	bool collideAgents(Agent *agent) const;
 
 	virtual void attack(float step);
 	virtual void kill();
@@ -32,6 +32,7 @@ public:
 	glm::vec2 getCentered() const { return _sprite->getCentered(); }
 
 	bool isInit() const { return _isInit; }
+	bool isAlive() const { return _alive; }
 
 	void setInvisible();
 	void setVisible();
@@ -46,7 +47,7 @@ public:
 
 protected:
 	float _x, _y, _width, _height, _depth, _rotation, _radius, _speed, _rotationOffset;
-	bool _isInit, _visible, _enabled;
+	bool _isInit, _alive, _visible, _enabled;
 	glm::vec2 centerOffset;
 
 	std::vector<Agent*> _subAgents;

@@ -5,9 +5,9 @@
 //#include <iostream>
 
 GameLogic::GameLogic() : _InputManager(nullptr), _Camera(nullptr), _StagingManager(nullptr), _SpawnManager(nullptr), _gameState(nullptr),
-_keys(nullptr), _simpleButtonRefs(nullptr), _checkboxRefs(nullptr), _sliderRefs(nullptr), _selectionRefs(nullptr),
-_currClicked(nullptr), _player(nullptr), _enemies(nullptr),
-W(0), A(1), S(2), D(3), Q(4), E(5), _clickHold(false){}
+_keys(nullptr), _simpleButtonRefs(nullptr), _checkboxRefs(nullptr), _sliderRefs(nullptr), _selectionRefs(nullptr), _textRefs(nullptr),
+_currClicked(nullptr), _player(nullptr), _enemies(nullptr), W(0), A(1), S(2), D(3), Q(4), E(5), _gloopleKills(0), _biterKills(0), _meltieKills(0),
+_stickieKills(0), _score(0), _gloopleSwing(0), _biterSwing(0), _meltieSwing(0), _stickieSwing(0), _clickHold(false){}
 
 
 GameLogic::~GameLogic() {
@@ -67,7 +67,7 @@ void GameLogic::updateEnemy(float step) const {
 	}
 }
 
-void GameLogic::collisionAgents() const {
+void GameLogic::collisionAgents() {
 	glm::vec2 tempTarget;
 
 	//Player collision with enemies
@@ -81,6 +81,32 @@ void GameLogic::collisionAgents() const {
 					_player->getPos().y + 10000 * sin(enemy.getRotation() - M_PI)));
 			}
 		}
+	}
+
+	//Sword collision with enemies
+	Sword* sword = _player->getSword();
+	if(sword->isActive()) {
+		for(auto& enemy : *_enemies) {
+			if(enemy.isEnabled()) {
+				//!!!--------------------Replace with hitbox implementation--------------------!!!
+				//!!!--------------------Replace with hitbox implementation--------------------!!!
+				//!!!--------------------Replace with hitbox implementation--------------------!!!
+				if(sword->collideAgents(&enemy)) {
+					switch(enemy.getType()) {
+					case GLOOPLE:
+						_gloopleSwing++;
+					}
+					enemy.kill();
+				}
+			}
+		}
+	} else {
+		_score += (_gloopleSwing + _biterSwing * 8 + _meltieSwing * 10 + _stickieSwing * 3) * (_gloopleSwing + _biterSwing + _meltieSwing + _stickieSwing);
+		_gloopleKills += _gloopleSwing;
+		_biterKills += _biterSwing;
+		_meltieKills += _meltieSwing;
+		_stickieKills += _stickieSwing;
+		_gloopleSwing = _biterSwing = _meltieSwing = _stickieSwing = 0;
 	}
 	
 	//Enemy collisions
@@ -159,6 +185,7 @@ void GameLogic::processInput(float step) {
 		}
 
 		(*_textRefs)[0].changeText("Enemies Remaining: " + std::to_string(_SpawnManager->getEnemiesRemaining()));
+		(*_textRefs)[1].changeText("Score: " + std::to_string(_score));
 
 		if(_player->isEnabled() && !_player->isKnockback()) {
 			//Check if A or D and W or S are pressed for diagonal movement

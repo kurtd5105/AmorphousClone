@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(): _alive(true), _knockback(false), _invincible(false), _step(0.0f), _prevStep(0.0f), _targetRotation(0.0f), _gloopleBumps(0) {}
+Player::Player(): _knockback(false), _invincible(false), _step(0.0f), _prevStep(0.0f), _targetRotation(0.0f), _gloopleBumps(0) {}
 
 Player::~Player() {}
 
