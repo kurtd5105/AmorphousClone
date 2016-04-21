@@ -328,11 +328,11 @@ void StagingManager::loadState() {
 	{
 		for(unsigned int i = 0; i < 2; i++) {
 			for(unsigned int k = 0; k < 6 - i; k++) {
-				_SpriteManager->addSprite((10.0f + k * 170.0f + i * 85.0f) * _scalingFactors.x, (500.0f - i * 170.0f) * _scalingFactors.y, 150.0f * _scalingFactors.x,
-										  150.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/awardbox.png");
+				_SpriteManager->addSprite(((30.0f * (1 - i)) + (k * 180.0f) + (i * 120.0f)) * _scalingFactors.x, (475.0f - i * 170.0f) * _scalingFactors.y,
+										  150.0f * _scalingFactors.x, 150.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/awardbox.png");
 			}
 		}
-		_SpriteManager->addSprite(945.0f * _scalingFactors.x, 330.0f * _scalingFactors.y, 150.0f * _scalingFactors.x,
+		_SpriteManager->addSprite(1020.0f * _scalingFactors.x, 305.0f * _scalingFactors.y, 150.0f * _scalingFactors.x,
 								  150.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/awardbox.png");
 
 		//Make the color blue
@@ -348,7 +348,7 @@ void StagingManager::loadState() {
 		_text[0].init(text, glm::vec2(x * _scalingFactors.x, y * _scalingFactors.y), _scalingFactors, 1.0f, color, &_titleFont);
 
 		text = "By gaining Awards in Single Nest or Bounty Run Mode, you\nwill earn Reward Keys. Use these Keys in the Rewards Case to\nunlock new tools and abilities to give you the edge in combat.";
-		_text[1].init(text, glm::vec2(170.0f * _scalingFactors.x, 225.0f * _scalingFactors.y), _scalingFactors, 1.0f, GameEngine::COLOR::WHITE, &_descriptionFont);
+		_text[1].init(text, glm::vec2(195.0f * _scalingFactors.x, 225.0f * _scalingFactors.y), _scalingFactors, 1.0f, GameEngine::COLOR::WHITE, &_descriptionFont);
 
 		callback = [&]() { *_gameState = GameState::MAIN_MENU; };
 		//Create the back button
