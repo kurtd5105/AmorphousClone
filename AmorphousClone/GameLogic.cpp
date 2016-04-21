@@ -74,11 +74,18 @@ void GameLogic::collisionAgents() {
 	for(auto& enemy : *_enemies) {
 		if(enemy.isEnabled()) {
 			if(_player->collideAgents(&enemy)) {
-				if(!_player->isInvincible()) {
-					_player->onCollide(enemy.getType(), enemy.getRotation());
+				switch(enemy.getType()) {
+				case GLOOPLE:
+					if(!_player->isInvincible()) {
+						_player->onCollide(enemy.getType(), enemy.getRotation());
+					}
+					enemy.setTarget(glm::vec2(_player->getPos().x + 10000 * cos(enemy.getRotation() - M_PI),
+						_player->getPos().y + 10000 * sin(enemy.getRotation() - M_PI)));
+				case STICKIE:
+					break;
+				case STICKIE_GOO:
+					break;
 				}
-				enemy.setTarget(glm::vec2(_player->getPos().x + 10000 * cos(enemy.getRotation() - M_PI),
-					_player->getPos().y + 10000 * sin(enemy.getRotation() - M_PI)));
 			}
 		}
 	}
@@ -95,6 +102,12 @@ void GameLogic::collisionAgents() {
 					switch(enemy.getType()) {
 					case GLOOPLE:
 						_gloopleSwing++;
+						break;
+					case STICKIE:
+						_stickieSwing++;
+						break;
+					case STICKIE_GOO:
+						break;
 					}
 					enemy.kill();
 				}

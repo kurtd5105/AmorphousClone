@@ -1,37 +1,18 @@
-#include "Goople.h"
-//#include <iostream>
+#include "Stickie.h"
 #include <random>
 
-Goople::Goople(int side, GameEngine::Random* Random, float width, float height) : _hp(1){
+Stickie::Stickie(int side, GameEngine::Random* Random, float width, float height) : _hp(1) {
 	_Random = Random;
-	_type = GLOOPLE;
-	_speed = 2.0f;
+	_type = STICKIE;
+	_speed = 1.5f;
 	logicInit(side, width, height);
 }
 
 
-Goople::~Goople(){
+Stickie::~Stickie() {
 }
 
-void Goople::init(float x, float y, float width, float height, float depth, int side,
-					  std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager, GameEngine::Random* Random) {
-	_x = x;
-	_y = y;
-	_width = width;
-	_height = height;
-	_depth = depth;
-	_radius = width / 2;
-	_SpriteManager = manager;
-	//Assumes enemy is a circle
-	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
-	_hitbox.init(x, y, width, height, _radius, GameEngine::CIRC);
-	_chance = 0.90f;
-	_Random = Random;
-	_isInit = true;
-	//logicInit(side);
-}
-
-void Goople::logicInit(int side, float width, float height) {
+void Stickie::logicInit(int side, float width, float height) {
 	//0 top, 1 left, 2 right, 3 bottom
 	int targetSide = 0;
 	if(side == 0) {
@@ -59,14 +40,17 @@ void Goople::logicInit(int side, float width, float height) {
 		_target.x = float(_Random->randomInt(0, _Random->screenWidth));
 		_target.y = -(2 * height);
 	}
-
-	//std::cout << "\tx: " << _target.x << " y: " << _target.y << std::endl;
 }
 
-void Goople::think() {
+void Stickie::think() {}
 
-}
+void Stickie::onCollide() {}
 
-void Goople::onCollide() {
-
+void Stickie::kill() {
+	disable();
+	setInvisible();
+	_alive = false;
+	for(unsigned int i = 0; i < _subAgents.size(); i++) {
+		_subAgents[i]->kill();
+	}
 }

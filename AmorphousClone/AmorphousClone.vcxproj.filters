@@ -63,6 +63,9 @@
     <ClCompile Include="Awards.cpp">
       <Filter>Resource Files\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Stickie.cpp">
+      <Filter>Resource Files\Source Files\Agents\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h">
@@ -100,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="Awards.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Stickie.h">
+      <Filter>Header Files\Agents\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

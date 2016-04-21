@@ -1,5 +1,6 @@
 #include "SpawnManager.h"
 #include "Goople.h"
+#include "Stickie.h"
 //#include <iostream>
 
 //empty float vector
@@ -53,8 +54,10 @@ void SpawnManager::enemyInit() {
 	//Instationation of enemy data struct, consists of spawnrate int, size of sprite int and string for texture
 
 	//Gloople instantiation data
-	struct enemyinfo gloople = { "Gloople", 90, 50.0f, "Textures/example_enemy.png" };
+	struct enemyinfo gloople = { GLOOPLE, 90, 50.0f, "Textures/example_enemy.png" };
+	struct enemyinfo stickie = { STICKIE, 10, 50, "Textures/stickie.png" };
 	enemyalmanac.push_back(gloople);
+	enemyalmanac.push_back(stickie);
 }
 
 SpawnManager::enemyinfo SpawnManager::weightedRand() {
@@ -72,7 +75,7 @@ SpawnManager::enemyinfo SpawnManager::weightedRand() {
 		rand -= enemy._spawnrate;
 	}
 	//Should never reach, make a Gloople
-	return enemyalmanac.back();
+	return enemyalmanac.front();
 }
 
 void SpawnManager::createSpawn(struct enemyinfo enemy) {
@@ -83,43 +86,65 @@ void SpawnManager::createSpawn(struct enemyinfo enemy) {
 	int side = _Random.randomInt(0, 4);
 
 	std::string _texture = enemy._texture;
-	//Assumption height and width are equal
+	
+	//Assumption height and width are equal (circle shaped enemy)
 	auto _size = enemy._size;
 
-	//Which side of screen to spawn
-	switch (side) {
-		case 0://top
-			//std::cout << "Up" << std::endl;
-			//_enemies.emplace_back();
-			_enemies.push_back(Goople(0, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
-			_enemies.back().init(x, float(_height), 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-								 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
-			_enemies.back().setInvisible();
-			_enemies.back().disable();
-			break;
-		case 1://left
-			//std::cout << "Left" << std::endl;
-			_enemies.push_back(Goople(1, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
-			_enemies.back().init(-_size, y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-								 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
-			_enemies.back().setInvisible();
-			_enemies.back().disable();
-			break;
-		case 2://right
-			//std::cout << "Right" << std::endl;
-			_enemies.push_back(Goople(2, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
-			_enemies.back().init(float(_width), y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-								 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
-			_enemies.back().setInvisible();
-			_enemies.back().disable();
-			break;
-		case 3://bottom
-			//::cout << "Down" << std::endl;
-			_enemies.push_back(Goople(3, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
-			_enemies.back().init(x, -_size, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-								 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
-			_enemies.back().setInvisible();
-			_enemies.back().disable();
-			break;
+	if(enemy.type == GLOOPLE) {
+		_enemies.push_back(Goople(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
+	} else if(enemy.type == STICKIE) {
+		_enemies.push_back(Stickie(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
 	}
+	
+	if(side == 0) {
+		_enemies.back().init(x, float(_height), 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+							 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+	} else if(side == 1) {
+		_enemies.back().init(-_size, y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+							 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+	} else if(side == 2) {
+		_enemies.back().init(float(_width), y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+							 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+	} else {
+		_enemies.back().init(x, -_size, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+							 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+	}
+	_enemies.back().setInvisible();
+	_enemies.back().disable();
+
+	//Spawn the given enemy type
+	//switch(enemy.type) {
+	//case GLOOPLE:
+	//	_enemies.push_back(Goople(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
+	//	break;
+	//case STICKIE:
+	//	_enemies.push_back(Stickie(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
+	//	break;
+	//default:
+	//	return;
+	//}
+
+	//THIS PART DOESN'T WORK?????
+	////Init the enemy
+	//switch(side) {
+	//case 0://top
+	//	_enemies.back().init(x, float(_height), 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+	//						 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+	//	break;
+	//case 1://left
+	//	_enemies.back().init(-_size, y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+	//						 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+	//	break;
+	//case 2://right
+	//	_enemies.back().init(float(_width), y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+	//						 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+	//	break;
+	//case 3://bottom
+	//	_enemies.back().init(x, -_size, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+	//						 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+	//	break;
+	//}
+
+	//_enemies.back().setInvisible();
+	//_enemies.back().disable();
 }

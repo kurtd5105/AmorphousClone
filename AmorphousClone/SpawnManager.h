@@ -9,6 +9,7 @@
 #include <GameEngine/Random.h>
 
 #include "EnemySuper.h"
+#include "Stickie.h"
 
 class SpawnManager
 {
@@ -21,6 +22,8 @@ public:
 	bool spawn();
 
 	std::list<EnemySuper>* getEnemies() { return &_enemies; }
+	std::list<Goople>* getGooples() { return &_gooples; }
+	std::list<Stickie>* getStickies() { return &_stickies; }
 
 	unsigned int getEnemiesRemaining() const { return _size - _currIndex; }
 
@@ -36,6 +39,9 @@ private:
 	glm::vec2 _scalingFactors;
 
 	std::list<EnemySuper> _enemies;
+
+	std::list<Goople> _gooples;
+	std::list<Stickie> _stickies;
 	std::vector<int> _spawnTimes;
 
 	std::list<EnemySuper>::iterator _currEnemy;
@@ -45,7 +51,7 @@ private:
 	GameEngine::Random _Random;
 
 	struct enemyinfo {
-		std::string _name;
+		EnemyType type;
 		int _spawnrate;
 		float _size;
 		std::string _texture;
