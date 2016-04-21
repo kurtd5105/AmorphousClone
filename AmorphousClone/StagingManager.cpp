@@ -25,7 +25,9 @@ void StagingManager::init(GameState* gameState, GameEngine::Options* options, gl
 	_options = options;
 	_scalingFactors = scalingFactors;
 	_titleFont.init("Fonts/arial.ttf", 64, _ResourceManager);
+	_descriptionFont.init("Fonts/arial.ttf", 32, _ResourceManager);
 	_fonts.push_back(&_titleFont);
+	_fonts.push_back(&_descriptionFont);
 	_fonts.push_back(_defaultFont);
 	loadState();
 }
@@ -67,26 +69,32 @@ void StagingManager::loadState() {
 		_simpleButtons.emplace_back();
 		_simpleButtons.emplace_back();
 		_simpleButtons.emplace_back();
+		_simpleButtons.emplace_back();
 
 		//Set the callback to be capturing (uses _gameState passed by reference) (done with [&])
 		callback = [&]() { *_gameState = GameState::PLAYING; };
 		//Create the play button
-		_simpleButtons[0].init(540.0f * _scalingFactors.x, 485.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
+		_simpleButtons[0].init(540.0f * _scalingFactors.x, 535.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
 							   1.0f, "Textures/buttons.png", "Animations/buttons.ani", "PLAY", callback, _SpriteManager);
 
 		callback = [&]() { *_gameState = GameState::OPTIONS; };
 		//Create the options button
-		_simpleButtons[1].init(540.0f * _scalingFactors.x, 385.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
+		_simpleButtons[1].init(540.0f * _scalingFactors.x, 435.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
 							   1.0f, "Textures/buttons.png", "Animations/buttons.ani", "OPTIONS", callback, _SpriteManager);
 
 		callback = [&]() { *_gameState = GameState::AWARDS; };
 		//Create the awards button
-		_simpleButtons[2].init(540.0f * _scalingFactors.x, 285.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
+		_simpleButtons[2].init(540.0f * _scalingFactors.x, 335.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
 							   1.0f, "Textures/buttons.png", "Animations/buttons.ani", "AWARDS", callback, _SpriteManager);
+
+		callback = [&]() { *_gameState = GameState::REWARDS; };
+		//Create the awards button
+		_simpleButtons[3].init(540.0f * _scalingFactors.x, 235.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
+							   1.0f, "Textures/buttons.png", "Animations/buttons.ani", "REWARDS", callback, _SpriteManager);
 
 		callback = [&]() { *_gameState = GameState::EXIT; };
 		//Create the quit button
-		_simpleButtons[3].init(540.0f * _scalingFactors.x, 185.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
+		_simpleButtons[4].init(540.0f * _scalingFactors.x, 135.0f * _scalingFactors.y, 200.0f * _scalingFactors.x, 50.0f  * _scalingFactors.y,
 							   1.0f, "Textures/buttons.png", "Animations/buttons.ani", "QUIT", callback, _SpriteManager);
 
 		//Empty callback
@@ -307,6 +315,40 @@ void StagingManager::loadState() {
 		int y = int(720 - (_titleFont.getFont()->measure(text.c_str()).y));
 
 		_text[0].init(text, glm::vec2(x * _scalingFactors.x, y * _scalingFactors.y), _scalingFactors, 1.0f, color, &_titleFont);
+
+		callback = [&]() { *_gameState = GameState::MAIN_MENU; };
+		//Create the back button
+		_simpleButtons.emplace_back();
+		_simpleButtons[0].init(1180.0f * _scalingFactors.x, 695.0f * _scalingFactors.y, 100.0f * _scalingFactors.x, 25.0f * _scalingFactors.y, 1.0f,
+							   "Textures/buttons.png", "Animations/buttons.ani", "BACK", callback, _SpriteManager);
+		_stageState = *_gameState;
+		break;
+	}
+	case REWARDS:
+	{
+		for(unsigned int i = 0; i < 2; i++) {
+			for(unsigned int k = 0; k < 6 - i; k++) {
+				_SpriteManager->addSprite((10.0f + k * 170.0f + i * 85.0f) * _scalingFactors.x, (500.0f - i * 170.0f) * _scalingFactors.y, 150.0f * _scalingFactors.x,
+										  150.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/awardbox.png");
+			}
+		}
+		_SpriteManager->addSprite(945.0f * _scalingFactors.x, 330.0f * _scalingFactors.y, 150.0f * _scalingFactors.x,
+								  150.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/awardbox.png");
+
+		//Make the color blue
+		color = GameEngine::COLOR::BLUE;
+
+		_text.emplace_back();
+		_text.emplace_back();
+		std::string text = "Rewards";
+
+		int x = int(640 - (_titleFont.getFont()->measure(text.c_str()).x / 2));
+		int y = int(720 - (_titleFont.getFont()->measure(text.c_str()).y));
+
+		_text[0].init(text, glm::vec2(x * _scalingFactors.x, y * _scalingFactors.y), _scalingFactors, 1.0f, color, &_titleFont);
+
+		text = "By gaining Awards in Single Nest or Bounty Run Mode, you\nwill earn Reward Keys. Use these Keys in the Rewards Case to\nunlock new tools and abilities to give you the edge in combat.";
+		_text[1].init(text, glm::vec2(170.0f * _scalingFactors.x, 225.0f * _scalingFactors.y), _scalingFactors, 1.0f, GameEngine::COLOR::WHITE, &_descriptionFont);
 
 		callback = [&]() { *_gameState = GameState::MAIN_MENU; };
 		//Create the back button

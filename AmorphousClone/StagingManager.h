@@ -46,6 +46,7 @@ private:
 	GameEngine::InputManager* _InputManager;
 	GameEngine::FontBatcher* _defaultFont;
 	GameEngine::FontBatcher _titleFont;
+	GameEngine::FontBatcher _descriptionFont;
 	GameEngine::Options* _options;
 
 	//Refactor later so they are all in one vector

@@ -46,6 +46,9 @@ void GameLogic::getStage() {
 	case GameState::AWARDS:
 		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
 		break;
+	case GameState::REWARDS:
+		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
+		break;
 	case GameState::WON:
 		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
 		break;
@@ -192,6 +195,9 @@ void GameLogic::processInput(float step) {
 		break;
 	}
 	case GameState::AWARDS:
+		checkButtons(mouseCoords);
+		break;
+	case GameState::REWARDS:
 		checkButtons(mouseCoords);
 		break;
 	case GameState::LOST:
