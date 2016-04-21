@@ -331,11 +331,11 @@ void StagingManager::loadState() {
 		for(unsigned int i = 0; i < 2; i++) {
 			for(unsigned int k = 0; k < 6 - i; k++) {
 				_SpriteManager->addSprite(((30.0f * (1 - i)) + (k * 180.0f) + (i * 120.0f)) * _scalingFactors.x, (475.0f - i * 170.0f) * _scalingFactors.y,
-										  150.0f * _scalingFactors.x, 150.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/awardbox.png");
+										  150.0f * _scalingFactors.x, 150.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/lock.png");
 			}
 		}
 		_SpriteManager->addSprite(1020.0f * _scalingFactors.x, 305.0f * _scalingFactors.y, 150.0f * _scalingFactors.x,
-								  150.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/awardbox.png");
+								  150.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/lockfancy.png");
 
 		//Make the color blue
 		color = GameEngine::COLOR::BLUE;
