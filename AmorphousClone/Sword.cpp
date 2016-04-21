@@ -1,17 +1,17 @@
 #include "Sword.h"
 
-Sword::Sword() {
+Sword::Sword(): _step(0.0f), _isActive(false) {
 }
 
 
 Sword::~Sword() {
 }
 
-void Sword::init(float x, float y, float angle, GameEngine::SpriteManager* manager) {
+void Sword::init(float x, float y, float angle, glm::vec2 scalingFactors, GameEngine::SpriteManager* manager) {
 	_x = x - 45.0f;
 	_y = y + 15.0f;
-	_width = 70.0f;
-	_height = 20.0f;
+	_width = 140.0f * scalingFactors.y;
+	_height = 20.0f * scalingFactors.y;
 	_rotation = angle;
 	_speed = 0.5f;
 	_rotationOffset = 3.927f;//approximation of 5pi/4
@@ -22,6 +22,15 @@ void Sword::init(float x, float y, float angle, GameEngine::SpriteManager* manag
 	_isInit = true;
 }
 
-void Sword::attack() {
-	//
+void Sword::attack(float step) {
+	_step += step;
+	if(_step <= ATTACK_HALF_TIME) {
+		_rotationOffset = 3.927f + (ATTACK_HALF * _step);
+	} else if(_step <= ATTACK_HALF_TIME * 2.0f) {
+		_rotationOffset = 3.927f + (float(M_PI) - (ATTACK_HALF * (_step - ATTACK_HALF_TIME)));
+	} else if(_step != 0.0f) {
+		_step = 0.0f;
+		_rotationOffset = 3.927f;
+		_isActive = false;
+	}
 }

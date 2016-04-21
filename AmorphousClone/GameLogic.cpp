@@ -1,5 +1,6 @@
 #include "GameLogic.h"
 #include <GameEngine/CollisionManager.h>
+#include <iostream>
 
 //#include <iostream>
 
@@ -40,6 +41,16 @@ void GameLogic::getStage() {
 		_SpawnManager = _StagingManager->getSpawnManager();
 		_player = _StagingManager->getPlayer();
 		_enemies = _SpawnManager->getEnemies();
+		_textRefs = _StagingManager->getText();
+		break;
+	case GameState::AWARDS:
+		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
+		break;
+	case GameState::WON:
+		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
+		break;
+	case GameState::LOST:
+		_simpleButtonRefs = _StagingManager->getSimpleButtonRefs();
 		break;
 	default:
 		break;
@@ -54,13 +65,21 @@ void GameLogic::updateEnemy(float step) const {
 }
 
 void GameLogic::collisionAgents() const {
+	glm::vec2 tempTarget;
 
 	//Player collision with enemies
-	for (auto& enemy : *_enemies) {	
-		_player->collideAgents(&enemy);
+	for(auto& enemy : *_enemies) {
+		if(enemy.isEnabled()) {
+			if(_player->collideAgents(&enemy)) {
+				if(!_player->isInvincible()) {
+					_player->onCollide(enemy.getType(), enemy.getRotation());
+				}
+				enemy.setTarget(glm::vec2(_player->getPos().x + 10000 * cos(enemy.getRotation() - M_PI),
+					_player->getPos().y + 10000 * sin(enemy.getRotation() - M_PI)));
+			}
+		}
 	}
-
-	glm::vec2 tempTarget;
+	
 	//Enemy collisions
 	for (auto& enemy : *_enemies) {
 		if (enemy.isEnabled()) {
@@ -115,28 +134,72 @@ void GameLogic::processInput(float step) {
 
 		collisionAgents();
 
-		_SpawnManager->spawn();
+		//If the player is dead
+		if(!_player->isAlive()) {
+			*_gameState = LOST;
+			break;
+		}
 
-		//Check if A or D and W or S are pressed for diagonal movement
-		if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
-			//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
-			_player->translate(_player->PLAYER_SPEED * float(_keys->at(D) - _keys->at(A)) / sqrt(2.0f), 
-							   _player->PLAYER_SPEED * float(_keys->at(W) - _keys->at(S)) / sqrt(2.0f),
-							   step);
-		} else {
-			//Move the player by the additions of the key presses
-			_player->translate(_player->PLAYER_SPEED * (_keys->at(D) - _keys->at(A)), _player->PLAYER_SPEED * (_keys->at(W) - _keys->at(S)), step);
+		//If the spawn manager is done spawning
+		if(!_SpawnManager->spawn()) {
+			auto win = true;
+			for(auto& enemy : *_enemies) {
+				if(enemy.isEnabled()) {
+					win = false;
+					break;
+				}
+			}
+			if(win) {
+				*_gameState = WON;
+				break;
+			}
 		}
-		if(_keys->at(Q) != _keys->at(E)) {
-			_Camera->setScale(_Camera->getScale() + _Camera->SCALE_SPEED * (_keys->at(Q) - _keys->at(E)));
-			//_player->rotate((_keys->at(Q) - _keys->at(E)) * 0.01f);
+
+		(*_textRefs)[0].changeText("Enemies Remaining: " + std::to_string(_SpawnManager->getEnemiesRemaining()));
+
+		if(_player->isEnabled() && !_player->isKnockback()) {
+			//Check if A or D and W or S are pressed for diagonal movement
+			if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
+				//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
+				_player->translate(_player->PLAYER_SPEED * float(_keys->at(D) - _keys->at(A)) / sqrt(2.0f),
+								   _player->PLAYER_SPEED * float(_keys->at(W) - _keys->at(S)) / sqrt(2.0f),
+								   step);
+			} else {
+				//Move the player by the additions of the key presses
+				_player->translate(_player->PLAYER_SPEED * (_keys->at(D) - _keys->at(A)), _player->PLAYER_SPEED * (_keys->at(W) - _keys->at(S)), step);
+			}
+			/*if(_keys->at(Q) != _keys->at(E)) {
+				_Camera->setScale(_Camera->getScale() + _Camera->SCALE_SPEED * (_keys->at(Q) - _keys->at(E)));
+				//_player->rotate((_keys->at(Q) - _keys->at(E)) * 0.01f);
+				}*/
+			_player->pointAt(_Camera->toWorldCoords(mouseCoords));
+
+			if(_InputManager->getMousePress()) {
+				if(!_player->getSword()->isActive()) {
+					_player->getSword()->setActive();
+				}
+			}
+			if(_player->getSword()->isActive()) {
+				_player->getSword()->attack(step);
+			}
+		} else if(_player->isKnockback()) {
+			_player->knockback(step);
 		}
-		_player->pointAt(_Camera->toWorldCoords(mouseCoords));
+		//std::cout << "Knockback: " << (_player->isKnockback() ? "yes" : "no") << "; Invincible: " << (_player->isInvincible() ? "yes." : "no.") << std::endl;
 
 		updateEnemy(step);
 
 		break;
 	}
+	case GameState::AWARDS:
+		checkButtons(mouseCoords);
+		break;
+	case GameState::LOST:
+		checkButtons(mouseCoords);
+		break;
+	case GameState::WON:
+		checkButtons(mouseCoords);
+		break;
 	default:
 		break;
 	}

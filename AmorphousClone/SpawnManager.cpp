@@ -11,10 +11,11 @@ _size(0), _currIndex(0), _startTime(0), _lastSpawn(0) {}
 
 SpawnManager::~SpawnManager(){}
 
-void SpawnManager::init(int width, int height, unsigned int size, GameEngine::SpriteManager* manager) {
+void SpawnManager::init(int width, int height, glm::vec2 scalingFactors, unsigned int size, GameEngine::SpriteManager* manager) {
 	_size = size;
 	_width = width;
 	_height = height;
+	_scalingFactors = scalingFactors;
 	_Random.setScreenDimensions(_width, _height);
 	_SpriteManager = manager;
 
@@ -31,7 +32,7 @@ void SpawnManager::init(int width, int height, unsigned int size, GameEngine::Sp
 	_lastSpawn = _startTime;
 }
 
-void SpawnManager::spawn() {
+bool SpawnManager::spawn() {
 	if(_currEnemy != _enemies.end()) {
 		auto curr = SDL_GetTicks();
 
@@ -43,7 +44,9 @@ void SpawnManager::spawn() {
 			_currIndex++;
 			_lastSpawn = curr;
 		}
+		return true;
 	}
+	return false;
 }
 
 void SpawnManager::enemyInit() {
@@ -88,29 +91,33 @@ void SpawnManager::createSpawn(struct enemyinfo enemy) {
 		case 0://top
 			//std::cout << "Up" << std::endl;
 			//_enemies.emplace_back();
-			_enemies.push_back(Goople(0, &_Random, 50.0f, 50.0f));
-			_enemies.back().init(float(x), float(_height), 50.0f, 50.0f, 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+			_enemies.push_back(Goople(0, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
+			_enemies.back().init(x, float(_height), 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+								 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
 			_enemies.back().setInvisible();
 			_enemies.back().disable();
 			break;
 		case 1://left
 			//std::cout << "Left" << std::endl;
-			_enemies.push_back(Goople(1, &_Random, 50.0f, 50.0f));
-			_enemies.back().init(float(-_size), float(y), 50.0f, 50.0f, 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+			_enemies.push_back(Goople(1, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
+			_enemies.back().init(-_size, y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+								 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
 			_enemies.back().setInvisible();
 			_enemies.back().disable();
 			break;
 		case 2://right
 			//std::cout << "Right" << std::endl;
-			_enemies.push_back(Goople(2, &_Random, 50.0f, 50.0f));
-			_enemies.back().init(float(_width), float(y), 50.0f, 50.0f, 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+			_enemies.push_back(Goople(2, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
+			_enemies.back().init(float(_width), y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+								 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
 			_enemies.back().setInvisible();
 			_enemies.back().disable();
 			break;
 		case 3://bottom
 			//::cout << "Down" << std::endl;
-			_enemies.push_back(Goople(3, &_Random, 50.0f, 50.0f));
-			_enemies.back().init(float(x), float(-_size), 50.0f, 50.0f, 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+			_enemies.push_back(Goople(3, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
+			_enemies.back().init(x, -_size, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
+								 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
 			_enemies.back().setInvisible();
 			_enemies.back().disable();
 			break;

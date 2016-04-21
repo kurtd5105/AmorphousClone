@@ -6,7 +6,7 @@ namespace GameEngine {
 
 	SelectionBox::~SelectionBox() {}
 
-	void SelectionBox::init(float buttonX, float y, float buttonWidth, float buttonHeight, float textWidth, float depth, std::vector<std::string> options,
+	void SelectionBox::init(float buttonX, float y, float buttonWidth, float buttonHeight, float textWidth, float depth, glm::vec2 scaling, std::vector<std::string> options,
 							std::string nameLeft, std::string nameRight, std::string textLPath, std::string aniLPath, std::string textRPath, std::string aniRPath,
 							Color color, std::function<void(void)> callbackLeft, std::function<void(void)> callbackRight, SpriteManager* manager, FontBatcher* fontBatcher) {
 		_leftX = buttonX;
@@ -27,7 +27,7 @@ namespace GameEngine {
 		_right.init(_rightX, _y, _buttonWidth, buttonHeight, _depth, textRPath, aniRPath, nameRight, callbackRight, _SpriteManager);
 
 		_color = color;
-		_text.init(_options[_index], glm::vec2(_textX, _y), glm::vec2(1, 1), _depth, _color, _FontBatcher);
+		_text.init(_options[_index], glm::vec2(_textX, _y), scaling, _depth, _color, _FontBatcher);
 	}
 
 	void SelectionBox::setSelection(std::string selection) {
@@ -42,7 +42,8 @@ namespace GameEngine {
 
 	void SelectionBox::setSelection(unsigned int index) {
 		_index = index;
-		_text.init(_options[_index], glm::vec2(_textX, _y), glm::vec2(1, 1), _depth, _color, _FontBatcher);
+		//_text.init(_options[_index], glm::vec2(_textX, _y), glm::vec2(1, 1), _depth, _color, _FontBatcher);
+		_text.changeText(_options[_index]);
 	}
 
 	void SelectionBox::setOptions(std::vector<std::string> options) {
@@ -56,7 +57,8 @@ namespace GameEngine {
 		if(_index >= _count) {
 			_index = 0;
 		}
-		_text.init(_options[_index], glm::vec2(_textX, _y), glm::vec2(1, 1), _depth, _color, _FontBatcher);
+		//_text.init(_options[_index], glm::vec2(_textX, _y), glm::vec2(1, 1), _depth, _color, _FontBatcher);
+		_text.changeText(_options[_index]);
 	}
 
 	void SelectionBox::backward() {
@@ -65,6 +67,7 @@ namespace GameEngine {
 		} else {
 			_index--;
 		}
-		_text.init(_options[_index], glm::vec2(_textX, _y), glm::vec2(1, 1), _depth, _color, _FontBatcher);
+		//_text.init(_options[_index], glm::vec2(_textX, _y), glm::vec2(1, 1), _depth, _color, _FontBatcher);
+		_text.changeText(_options[_index]);
 	}
 }

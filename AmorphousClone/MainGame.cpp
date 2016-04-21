@@ -17,7 +17,7 @@ void MainGame::startGame() {
 void MainGame::init() {
 	_options = new GameEngine::Options;
 	_IOManager.loadOptions(_options);
-	_Window.createWindow(_options, "Amorphous Clone");
+	_scalingFactors = _Window.createWindow(_options, "Amorphous Clone");
 
 	//Load textures into memory, either they are loaded at the start of the game or not and we track
 	//the status of the rest of the textures
@@ -41,7 +41,7 @@ void MainGame::init() {
 	_fontBatcher_sans16.init("Fonts/OpenSans-Regular.ttf", 16, &_ResourceManager);
 
 	//_SpawnManager.init(WINDOW_WIDTH, WINDOW_HEIGHT, 20, &_SpriteManager);
-	_StagingManager.init(&_gameState, _options, &_SpriteManager, &_fontBatcher_sans16, &_InputManager);
+	_StagingManager.init(&_gameState, _options, _scalingFactors, &_ResourceManager, &_SpriteManager, &_fontBatcher_sans16, &_InputManager);
 	_Camera.init(_options->width, _options->height);
 	_Game.init(&_gameState, &_Camera, &_StagingManager, &_InputManager);
 	_SpriteBatcher.init();
@@ -151,7 +151,7 @@ void MainGame::gameLoop() {
 }
 
 void MainGame::renderGame() {
-	std::vector<GameEngine::FontBatcher>* fonts = _StagingManager.getFonts();
+	std::vector<GameEngine::FontBatcher*>* fonts = _StagingManager.getFonts();
 	_Camera.update();
 	//Clear the screen
 	glClearDepth(1.0);
@@ -176,10 +176,11 @@ void MainGame::renderGame() {
 	_SpriteBatcher.setupBatches(_SpriteManager.getSprites());
 	_SpriteBatcher.renderBatch();
 
-	_fontBatcher_sans16.renderBatch();
+	//_fontBatcher_sans16.renderBatch();
 
 	for(auto& font : *fonts) {
-		font.renderBatch();
+		//std::cout << font->getVBOID() << " : " << font->getVerticesCount() << std::endl;
+		font->renderBatch();
 	}
 
 	_ShadingProgram.unuse();

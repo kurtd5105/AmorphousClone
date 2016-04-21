@@ -32,7 +32,8 @@ public:
 	//Vectors containing all the required textures
 	const std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/buttons.png", "Textures/loading.png", "Textures/checkbox.png",
 		"Textures/slider.png", "Textures/line.png", "Textures/arrows.png"};
-	const std::vector<std::string> TEXTURE_LIST_ASYNC = std::vector<std::string>{"Textures/player.png", "Textures/tile1.png", "Textures/example_enemy.png", "Textures/sword.png"};
+	const std::vector<std::string> TEXTURE_LIST_ASYNC = std::vector<std::string>{"Textures/player.png", "Textures/tile1.png", "Textures/example_enemy.png",
+		"Textures/sword.png", "Textures/gravel.png"};
 	const std::vector<std::string> ANIMATION_LIST_SYNC = std::vector<std::string>{"Animations/buttons.ani", "Animations/checkbox.ani", "Animations/slider.ani",
 		"Animations/arrows.ani"};
 
@@ -74,4 +75,6 @@ private:
 
 	std::thread _IOThread;
 	ThreadState _IOThreadState;
+
+	glm::vec2 _scalingFactors;
 };

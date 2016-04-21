@@ -8,9 +8,9 @@ namespace GameEngine {
 		//delete _text;
 	}
 
-	void Slider::init(float x, float y, float width, float height, float lineWidth, float lineHeight, float depth, float value, std::string texPath, std::string aniPath,
-					  std::string linePath, Color color, std::function<void(void)> callback, SpriteManager* manager, FontBatcher* fontBatcher, InputManager* inputManager,
-					  std::pair<int, int> minMax) {
+	void Slider::init(float x, float y, float width, float height, float lineWidth, float lineHeight, float depth, glm::vec2 scaling, float value, std::string texPath,
+					  std::string aniPath, std::string linePath, Color color, std::function<void(void)> callback, SpriteManager* manager, FontBatcher* fontBatcher,
+					  InputManager* inputManager, std::pair<int, int> minMax) {
 		_name = "";
 		_callback = callback;
 		_SpriteManager = manager;
@@ -31,10 +31,12 @@ namespace GameEngine {
 		//Note that the line has a higher depth and thus is behind the slider button
 		_line = _SpriteManager->addSprite(x + (width/2), y + (height/2) - (lineHeight/2), lineWidth, lineHeight, depth + 1.0f, std::vector<float>{}, linePath);
 		_sprite = _SpriteManager->addSprite(x, y, width, height, depth, std::vector<float>{}, texPath);
-		_hitbox.init(x, y, width, height, 0);
+		_hitbox.init(x, y, width, height, 0, RECT);
 
 		_sheet.init(aniPath, _sprite, _SpriteManager->getResourceManager());
 		_sheet.setAnim("IDLE");
+
+		_text.init("0", glm::vec2(_maxX + 10 + (_width / 2), _y), scaling, 1.0f, _color, _FontBatcher);
 
 		setValue(value);
 	}
@@ -47,7 +49,8 @@ namespace GameEngine {
 		}
 		_percent = percent;
 		_value = (_max * (_percent / 100)) + (_min * (1 - (_percent / 100)));
-		_text.init(std::to_string(int(round(_value))), glm::vec2(_maxX + 10 + (_width / 2), _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
+		//_text.init(std::to_string(int(round(_value))), glm::vec2(_maxX + 10 + (_width / 2), _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
+		_text.changeText(std::to_string(int(round(_value))));
 		setPosition();
 	}
 
@@ -59,7 +62,8 @@ namespace GameEngine {
 		}
 		_value = value;
 		_percent = (_value / (_max - _min)) * 100;
-		_text.init(std::to_string(int(round(_value))), glm::vec2(_maxX + 10 + (_width / 2), _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
+		//_text.init(std::to_string(int(round(_value))), glm::vec2(_maxX + 10 + (_width / 2), _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
+		_text.changeText(std::to_string(int(round(_value))));
 		setPosition();
 	}
 
@@ -108,6 +112,7 @@ namespace GameEngine {
 		_percent = ((_x - _start) / _lineWidth) * 100;
 		_value = (_max * (_percent / 100)) + (_min * (1 - (_percent / 100)));
 		//Change the text to display that percentage
-		_text.init(std::to_string(int(round(_value))), glm::vec2(_maxX + 10 + (_width / 2), _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
+		//_text.init(std::to_string(int(round(_value))), glm::vec2(_maxX + 10 + (_width / 2), _y), glm::vec2(1, 1), 1.0f, _color, _FontBatcher);
+		_text.changeText(std::to_string(int(round(_value))));
 	}
 }

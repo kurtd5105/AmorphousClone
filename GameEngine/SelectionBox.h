@@ -14,7 +14,7 @@ namespace GameEngine {
 		SelectionBox();
 		~SelectionBox();
 
-		void init(float buttonX, float y, float buttonWidth, float buttonHeight, float textWidth, float depth, std::vector<std::string> options,
+		void init(float buttonX, float y, float buttonWidth, float buttonHeight, float textWidth, float depth, glm::vec2 scaling, std::vector<std::string> options,
 				  std::string nameLeft, std::string nameRight, std::string textLPath, std::string aniLPath, std::string textRPath, std::string aniRPath,
 				  Color color, std::function<void(void)> callbackLeft, std::function<void(void)> callbackRight, SpriteManager* manager, FontBatcher* fontBatcher);
 

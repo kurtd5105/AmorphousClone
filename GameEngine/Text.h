@@ -14,6 +14,7 @@ namespace GameEngine {
 		void init(std::string text, glm::vec2 position, glm::vec2 scaling, float depth, Color tint, FontBatcher* batcher);
 		void display();
 		void clear() const;
+		void changeText(std::string text);
 	private:
 		bool _used;
 		unsigned int _index, _length;

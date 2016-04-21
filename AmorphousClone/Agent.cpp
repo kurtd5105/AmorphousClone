@@ -8,8 +8,7 @@ _isInit(false), _visible(true), _enabled(true), _SpriteManager(nullptr), _sprite
 Agent::~Agent() {
 	if (_SpriteManager != nullptr && _sprite != nullptr) {
 		_SpriteManager->deleteSprite(_sprite);
-	}
-	else if (_sprite != nullptr && _SpriteManager == nullptr) {
+	} else if (_sprite != nullptr && _SpriteManager == nullptr) {
 		GameEngine::fatalGenericError("Sprite deletion but no manager to delete with.");
 	}
 }
@@ -109,7 +108,7 @@ void Agent::setVisible() {
 	}
 }
 
-bool Agent::collideAgents(Agent* agent) const {
+bool Agent::collideAgents(Agent* agent) {
 
 	//Minimum distance for a collision to occur, can be diffrent of diffrent radiuses
 	const auto minDist = getRadius() + agent->getRadius();
@@ -126,14 +125,13 @@ bool Agent::collideAgents(Agent* agent) const {
 		glm::vec2 depthVec = glm::normalize(centerA - centerB) * distlength;
 		glm::vec2(_x, _y) += depthVec / 2.0f;
 		agent->setPos(agent->getPos() - (depthVec / 2.0f));
-		//printf("A collision occured\n");
 		return true;
 	}
 	return false;
 
 }
 
-void Agent::attack() {
+void Agent::attack(float step) {
 
 }
 

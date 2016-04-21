@@ -5,11 +5,14 @@
 
 
 namespace GameEngine {
+	const std::vector<int> Screen::validWidths = {800, 1024, 1280, 1360, 1366, 1440, 1600, 1920};
+	const std::vector<int> Screen::validHeights = {600, 768, 720, 768, 768, 900, 900, 1080};
+
 	Window::Window() : _width(0), _height(0), _windowMode(WindowMode::WINDOWED), _window(nullptr), _surface(nullptr) {}
 
 	Window::~Window() {}
 
-	void Window::createWindow(Options* options, std::string name) {
+	glm::vec2 Window::createWindow(Options* options, std::string name) {
 		_height = options->height;
 		_width = options->width;
 		_windowMode = options->mode;
@@ -62,6 +65,14 @@ namespace GameEngine {
 
 		//Turn on VSync
 		SDL_GL_SetSwapInterval(1);
+
+		float ratio = (float(_width) / _height);
+		glm::vec2 ratioScale = glm::vec2(16.0f, 9.0f);
+		if(ratio < 1.7) {
+			ratioScale = glm::vec2(4.0f, 3.0f);
+		}
+
+		return glm::vec2((float(_width) / BASE_WIDTH), (float(_height) / BASE_HEIGHT));
 	}
 
 	void Window::swapBuffer() const {

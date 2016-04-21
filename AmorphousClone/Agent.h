@@ -19,9 +19,9 @@ public:
 	void pointAt(glm::vec2 pos);
 	void moveTo(Agent* agent, float speed);
 	void lockOn(Agent* agent);
-	bool collideAgents(Agent *agent) const;
+	bool collideAgents(Agent *agent);
 
-	virtual void attack();
+	virtual void attack(float step);
 	virtual void kill();
 
 	float getRotation() const { return _sprite->getRotation(); }
@@ -40,6 +40,9 @@ public:
 	virtual void disable() { _enabled = false; }
 	virtual void enable() { _enabled = true; }
 	virtual bool isEnabled() { return _enabled; }
+
+	void setAlpha(GLubyte alpha) { _sprite->setAlpha(alpha); for(auto& a : _subAgents) { a->setAlpha(alpha); } }
+	GLubyte getAlpha() const { return _sprite->getAlpha(); }
 
 protected:
 	float _x, _y, _width, _height, _depth, _rotation, _radius, _speed, _rotationOffset;

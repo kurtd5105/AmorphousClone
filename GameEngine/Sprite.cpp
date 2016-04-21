@@ -43,10 +43,10 @@ namespace GameEngine {
 		_offset = std::vector<float>{0.0f, 0.0f};
 
 		//Trying to fix release mode. [4] = [3] = [2], [5] = [5] = [0]
-		vertex.setVertex(x, y, 255, 255, 255, 255, UVmM[0], UVmM[2]);
-		_vertices.push_back(vertex);
-		vertex.setVertex(x + width, y + height, 255, 255, 255, 255, UVmM[1], UVmM[3]);
-		_vertices.push_back(vertex);
+		//vertex.setVertex(x, y, 255, 255, 255, 255, UVmM[0], UVmM[2]);
+		//_vertices.push_back(vertex);
+		//vertex.setVertex(x + width, y + height, 255, 255, 255, 255, UVmM[1], UVmM[3]);
+		//_vertices.push_back(vertex);
 	}
 
 	Sprite::~Sprite() {
@@ -59,8 +59,8 @@ namespace GameEngine {
 		_vertices[3].setUV(UVmM[1], UVmM[2]);
 
 		//Trying to fix release mode.
-		_vertices[4].setUV(UVmM[0], UVmM[2]);
-		_vertices[5].setUV(UVmM[1], UVmM[3]);
+		//_vertices[4].setUV(UVmM[0], UVmM[2]);
+		//_vertices[5].setUV(UVmM[1], UVmM[3]);
 	}
 
 	void Sprite::translate(float x, float y) {
