@@ -27,6 +27,13 @@ bld/
 [Oo]bj/
 dependencies/ORIGINALS/*
 
+# Fonts
+AmorphousClone/Fonts/arial.ttf
+
+# Built libraries
+*/*.lib
+
+
 # User-specific files
 *.suo
 *.user
