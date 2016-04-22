@@ -63,7 +63,7 @@ void GameLogic::getStage() {
 	}
 }
 
-void GameLogic::updateEnemy(float step) const {
+void GameLogic::updateEnemy(float step) {
 	for(auto& enemy : *_enemies) {
 		//enemy.moveTo(_player);
 		enemy.moveToTarget(step);
@@ -71,10 +71,13 @@ void GameLogic::updateEnemy(float step) const {
 	for(auto& g : _goos) {
 		if(g != nullptr) {
 			g->fade(step);
-			if(!g->isAlive()) {
-				delete g;
-			}
+		} else {
+			//std::cout << "Bad goo pointer." << std::endl;
 		}
+	}
+	while(_goos.size() > 0 && !_goos.front()->isAlive()) {
+		delete _goos.front();
+		_goos.pop_front();
 	}
 }
 
@@ -92,6 +95,7 @@ void GameLogic::collisionAgents() {
 					}
 					enemy.setTarget(glm::vec2(_player->getPos().x + 10000 * cos(enemy.getRotation() - M_PI),
 						_player->getPos().y + 10000 * sin(enemy.getRotation() - M_PI)));
+					break;
 				case STICKIE:
 					enemy.kill();
 					if(enemy.hasGoo()) {

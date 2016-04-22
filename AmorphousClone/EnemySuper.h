@@ -2,6 +2,7 @@
 
 #include "Agent.h"
 #include <GameEngine/Random.h>
+#include "StickieGoo.h"
 
 
 enum EnemyType { GLOOPLE, STICKIE, STICKIE_GOO };
@@ -37,6 +38,8 @@ public:
 
 	StickieGoo* getGoo() const { return _goo; }
 	bool hasGoo() const { return _hasGoo; }
+
+	void kill() override;
 
 protected:
 	virtual void logicInit(int side) {}

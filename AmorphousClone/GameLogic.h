@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <list>
-
+#include <deque>
 #include <glm/glm.hpp>
 
 #include <GameEngine/Button.h>
@@ -19,6 +19,7 @@
 #include "StagingManager.h"
 #include "SpawnManager.h"
 
+
 class GameLogic {
 public:
 	GameLogic();
@@ -26,7 +27,7 @@ public:
 
 	void init(GameState* gameState, GameEngine::Camera* camera, StagingManager* manager, GameEngine::InputManager* inputManager);
 
-	void updateEnemy(float step) const;
+	void updateEnemy(float step);
 	void processInput(float step);
 	void checkButtons(glm::vec2& mouseCoords);
 	void getStage();
@@ -47,7 +48,7 @@ private:
 	std::vector<GameEngine::Slider>* _sliderRefs;
 	std::vector<GameEngine::SelectionBox>* _selectionRefs;
 	std::vector<GameEngine::Text>* _textRefs;
-	std::vector<StickieGoo*> _goos;
+	std::deque<StickieGoo*> _goos;
 
 	GameEngine::Button* _currClicked;
 	Player* _player;

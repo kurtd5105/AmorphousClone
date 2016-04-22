@@ -1,7 +1,6 @@
 #pragma once
 #include <GameEngine/Random.h>
 #include "EnemySuper.h"
-#include "StickieGoo.h"
 
 class Stickie : public EnemySuper {
 public:
@@ -12,7 +11,6 @@ public:
 
 	void think() override;
 	void onCollide() override;
-	void kill() override;
 
 private:
 	void logicInit(int side, float width, float height);

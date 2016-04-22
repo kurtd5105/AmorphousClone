@@ -1,5 +1,6 @@
 #include "Stickie.h"
 #include <random>
+#include <iostream>
 
 Stickie::Stickie(int side, GameEngine::Random* Random, float width, float height) : _hp(1) {
 	_Random = Random;
@@ -47,16 +48,3 @@ void Stickie::logicInit(int side, float width, float height) {
 void Stickie::think() {}
 
 void Stickie::onCollide() {}
-
-void Stickie::kill() {
-	disable();
-	setInvisible();
-	_alive = false;
-	for(unsigned int i = 0; i < _subAgents.size(); i++) {
-		_subAgents[i]->kill();
-	}
-
-	if(_hasGoo) {
-		_goo = new StickieGoo(_x, _y, _width, _height, 50.0f, std::vector<float>{}, "Textures/StickieGoo.png", _SpriteManager);
-	}
-}
