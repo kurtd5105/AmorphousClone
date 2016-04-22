@@ -45,6 +45,9 @@ bool SpawnManager::spawn() {
 			_currIndex++;
 			_lastSpawn = curr;
 		}
+		if(_currIndex > _size) {
+			_currIndex = _size;
+		}
 		return true;
 	}
 	return false;
