@@ -88,7 +88,6 @@ void GameLogic::updateEnemy(float step) {
 		delete _goos.front();
 		_goos.pop_front();
 	}
-	std::cout << "Goo count: " << _goos.size() << std::endl;
 }
 
 void GameLogic::collisionAgents() {
@@ -105,6 +104,7 @@ void GameLogic::collisionAgents() {
 					}
 					enemy.setTarget(glm::vec2(_player->getPos().x + 10000 * cos(enemy.getRotation() - M_PI),
 						_player->getPos().y + 10000 * sin(enemy.getRotation() - M_PI)));
+					enemy.moveToTarget(1.0f);
 					break;
 				case STICKIE:
 					enemy.kill();
@@ -164,6 +164,14 @@ void GameLogic::collisionAgents() {
 								tempTarget = enemy.getTarget();
 								enemy.setTarget(enemy2.getTarget());
 								enemy2.setTarget(tempTarget);
+
+								auto centerA = enemy.getCentered();
+								auto centerB = enemy2.getCentered();
+
+								auto distlength = glm::length(centerA - centerB);
+								glm::vec2 depthVec = glm::normalize(centerA - centerB) * distlength;
+								//glm::vec2(_x, _y) += depthVec / 2.0f;
+								enemy2.setPos(enemy2.getPos() - (depthVec / 2.0f));
 							}
 						}
 						
