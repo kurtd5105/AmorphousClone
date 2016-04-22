@@ -58,7 +58,7 @@ void SpawnManager::enemyInit() {
 
 	//Gloople instantiation data
 	struct enemyinfo gloople = { GLOOPLE, 90, 50.0f, "Textures/example_enemy.png" };
-	struct enemyinfo stickie = { STICKIE, 1000, 50, "Textures/stickie.png" };
+	struct enemyinfo stickie = { STICKIE, 50, 50, "Textures/stickie.png" };
 	enemyalmanac.push_back(gloople);
 	enemyalmanac.push_back(stickie);
 }

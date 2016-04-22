@@ -122,9 +122,9 @@ bool Agent::collideAgents(Agent* agent) const {
 	auto depth = minDist - distlength;
 
 	if (depth > 0) {
-		glm::vec2 depthVec = glm::normalize(centerA - centerB) * distlength;
-		glm::vec2(_x, _y) += depthVec / 2.0f;
-		agent->setPos(agent->getPos() - (depthVec / 2.0f));
+		//glm::vec2 depthVec = glm::normalize(centerA - centerB) * distlength;
+		//glm::vec2(_x, _y) += depthVec / 2.0f;
+		//agent->setPos(agent->getPos() - (depthVec / 2.0f));
 		return true;
 	}
 	return false;

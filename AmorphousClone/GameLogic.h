@@ -40,6 +40,7 @@ private:
 	SpawnManager* _SpawnManager;
 
 	GameState* _gameState;
+	GameState _curr;
 
 	std::vector<bool>* _keys;
 

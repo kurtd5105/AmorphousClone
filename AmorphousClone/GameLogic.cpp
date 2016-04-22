@@ -19,6 +19,7 @@ GameLogic::~GameLogic() {
 
 void GameLogic::init(GameState* gameState, GameEngine::Camera* camera, StagingManager* manager, GameEngine::InputManager* inputManager) {
 	_gameState = gameState;
+	_curr = *gameState;
 	_Camera = camera;
 	_StagingManager = manager;
 	_InputManager = inputManager;
@@ -26,6 +27,14 @@ void GameLogic::init(GameState* gameState, GameEngine::Camera* camera, StagingMa
 }
 
 void GameLogic::getStage() {
+	if(_curr != *_gameState) {
+		for(auto& g : _goos) {
+			delete g;
+		}
+		_goos.clear();
+		_curr = *_gameState;
+	}
+	
 	//Get the stage in its current state from the stage, the stage must be updated first
 	switch(_StagingManager->getStageState()) {
 	case GameState::MAIN_MENU:
@@ -79,6 +88,7 @@ void GameLogic::updateEnemy(float step) {
 		delete _goos.front();
 		_goos.pop_front();
 	}
+	std::cout << "Goo count: " << _goos.size() << std::endl;
 }
 
 void GameLogic::collisionAgents() {
