@@ -90,12 +90,14 @@ void SpawnManager::createSpawn(struct enemyinfo enemy) {
 	//Assumption height and width are equal (circle shaped enemy)
 	auto _size = enemy._size;
 
+	//Create the correct enemy type
 	if(enemy.type == GLOOPLE) {
 		_enemies.push_back(Goople(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
 	} else if(enemy.type == STICKIE) {
 		_enemies.push_back(Stickie(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
 	}
 	
+	//Spawn on the correct side
 	if(side == 0) {
 		_enemies.back().init(x, float(_height), 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
 							 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
@@ -111,40 +113,4 @@ void SpawnManager::createSpawn(struct enemyinfo enemy) {
 	}
 	_enemies.back().setInvisible();
 	_enemies.back().disable();
-
-	//Spawn the given enemy type
-	//switch(enemy.type) {
-	//case GLOOPLE:
-	//	_enemies.push_back(Goople(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
-	//	break;
-	//case STICKIE:
-	//	_enemies.push_back(Stickie(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
-	//	break;
-	//default:
-	//	return;
-	//}
-
-	//THIS PART DOESN'T WORK?????
-	////Init the enemy
-	//switch(side) {
-	//case 0://top
-	//	_enemies.back().init(x, float(_height), 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-	//						 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
-	//	break;
-	//case 1://left
-	//	_enemies.back().init(-_size, y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-	//						 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
-	//	break;
-	//case 2://right
-	//	_enemies.back().init(float(_width), y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-	//						 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
-	//	break;
-	//case 3://bottom
-	//	_enemies.back().init(x, -_size, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-	//						 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
-	//	break;
-	//}
-
-	//_enemies.back().setInvisible();
-	//_enemies.back().disable();
 }

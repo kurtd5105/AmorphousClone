@@ -47,6 +47,7 @@ private:
 	std::vector<GameEngine::Slider>* _sliderRefs;
 	std::vector<GameEngine::SelectionBox>* _selectionRefs;
 	std::vector<GameEngine::Text>* _textRefs;
+	std::vector<StickieGoo*> _goos;
 
 	GameEngine::Button* _currClicked;
 	Player* _player;

@@ -2,7 +2,7 @@
 
 #include <GameEngine/Errors.h>
 
-Agent::Agent() : _x(0.0f), _y(0.0f), _width(0.0f), _height(0.0f), _depth(1.0f), _rotation(0.0f), _radius(0), _speed(0), _rotationOffset(0.0f),
+Agent::Agent() : _x(0.0f), _y(0.0f), _width(0.0f), _height(0.0f), _depth(1.0f), _rotation(0.0f), _radius(0.0f), _speed(0.0f), _rotationOffset(0.0f),
 _isInit(false), _alive(true), _visible(true), _enabled(true), _SpriteManager(nullptr), _sprite(nullptr), _Random(nullptr) {}
 
 Agent::~Agent() {

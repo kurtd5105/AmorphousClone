@@ -3,6 +3,7 @@
 #include "Agent.h"
 #include <GameEngine/Random.h>
 
+
 enum EnemyType { GLOOPLE, STICKIE, STICKIE_GOO };
 
 class EnemySuper : public Agent
@@ -34,12 +35,19 @@ public:
 
 	EnemyType getType() const { return _type; }
 
+	StickieGoo* getGoo() const { return _goo; }
+	bool hasGoo() const { return _hasGoo; }
+
 protected:
+	virtual void logicInit(int side) {}
+	
 	float _chance;
+	bool _collided, _hasGoo;
+
 	glm::vec2 _target;
 	GameEngine::Random* _Random;
-	virtual void logicInit(int side) {}
-	bool _collided;
+	StickieGoo* _goo;
+	
 	EnemyType _type;
 };
 

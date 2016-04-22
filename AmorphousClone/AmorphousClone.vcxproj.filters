@@ -66,6 +66,9 @@
     <ClCompile Include="Stickie.cpp">
       <Filter>Resource Files\Source Files\Agents\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="StickieGoo.cpp">
+      <Filter>Resource Files\Source Files\Agents\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h">
@@ -105,6 +108,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Stickie.h">
+      <Filter>Header Files\Agents\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="StickieGoo.h">
       <Filter>Header Files\Agents\Enemies</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,6 +7,8 @@
 
 class EnemySuper;
 class Goople;
+class Stickie;
+class StickieGoo;
 class Player;
 
 class Agent {

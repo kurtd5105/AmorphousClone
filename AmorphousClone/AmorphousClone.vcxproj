@@ -89,6 +89,7 @@
     <ClCompile Include="SpawnManager.cpp" />
     <ClCompile Include="StagingManager.cpp" />
     <ClCompile Include="Stickie.cpp" />
+    <ClCompile Include="StickieGoo.cpp" />
     <ClCompile Include="Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +104,7 @@
     <ClInclude Include="SpawnManager.h" />
     <ClInclude Include="StagingManager.h" />
     <ClInclude Include="Stickie.h" />
+    <ClInclude Include="StickieGoo.h" />
     <ClInclude Include="Sword.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

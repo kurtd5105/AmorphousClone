@@ -12,6 +12,9 @@ _stickieKills(0), _score(0), _gloopleSwing(0), _biterSwing(0), _meltieSwing(0), 
 
 GameLogic::~GameLogic() {
 	_enemies = nullptr;
+	for(auto& g : _goos) {
+		delete g;
+	}
 }
 
 void GameLogic::init(GameState* gameState, GameEngine::Camera* camera, StagingManager* manager, GameEngine::InputManager* inputManager) {
@@ -65,6 +68,14 @@ void GameLogic::updateEnemy(float step) const {
 		//enemy.moveTo(_player);
 		enemy.moveToTarget(step);
 	}
+	for(auto& g : _goos) {
+		if(g != nullptr) {
+			g->fade(step);
+			if(!g->isAlive()) {
+				delete g;
+			}
+		}
+	}
 }
 
 void GameLogic::collisionAgents() {
@@ -82,6 +93,10 @@ void GameLogic::collisionAgents() {
 					enemy.setTarget(glm::vec2(_player->getPos().x + 10000 * cos(enemy.getRotation() - M_PI),
 						_player->getPos().y + 10000 * sin(enemy.getRotation() - M_PI)));
 				case STICKIE:
+					enemy.kill();
+					if(enemy.hasGoo()) {
+						_goos.push_back(enemy.getGoo());
+					}
 					break;
 				case STICKIE_GOO:
 					break;
@@ -128,11 +143,16 @@ void GameLogic::collisionAgents() {
 			for (auto& enemy2 : *_enemies) {
 				if (&enemy != &enemy2 && enemy2.isEnabled()) {
 					if (enemy.collideAgents(&enemy2) && !enemy.getCollided() && !enemy2.getCollided()) {
-						enemy.setCollided(true);
-						enemy2.setCollided(true);
-						tempTarget = enemy.getTarget();
-						enemy.setTarget(enemy2.getTarget());
-						enemy2.setTarget(tempTarget);
+						if(enemy.getType() == GLOOPLE) {
+							if(enemy2.getType() == GLOOPLE) {
+								enemy.setCollided(true);
+								enemy2.setCollided(true);
+								tempTarget = enemy.getTarget();
+								enemy.setTarget(enemy2.getTarget());
+								enemy2.setTarget(tempTarget);
+							}
+						}
+						
 					}
 				}
 			}
