@@ -20,7 +20,7 @@ void SpawnManager::init(int width, int height, glm::vec2 scalingFactors, unsigne
 	_Random.setScreenDimensions(_width, _height);
 	_SpriteManager = manager;
 
-	enemyInit();
+	gradientControl();
 
 	//Create spawn times for each enemy and create them
 	for(unsigned int i = 0; i <= _size; i++) {
@@ -53,14 +53,27 @@ bool SpawnManager::spawn() {
 	return false;
 }
 
-void SpawnManager::enemyInit() {
-	//Instationation of enemy data struct, consists of spawnrate int, size of sprite int and string for texture
+void SpawnManager::gradientControl() {
+	int timeElapsed = (SDL_GetTicks() - _startTime) / 1000;
 
 	//Gloople instantiation data
 	struct enemyinfo gloople = { GLOOPLE, 90, 50.0f, "Textures/example_enemy.png" };
-	struct enemyinfo stickie = { STICKIE, 10, 50, "Textures/stickie.png" };
 	enemyalmanac.push_back(gloople);
-	enemyalmanac.push_back(stickie);
+
+	//Time based eneny spawns
+	switch (timeElapsed) {
+	case 30:
+		struct enemyinfo stickie = { STICKIE, 10, 50, "Textures/stickie.png" };
+		enemyalmanac.push_back(stickie);
+		break;
+	}
+
+	//Enemies killed based enemy spawns
+	switch (enemiesKilled) {
+	case 20:
+		//Biters can spawn now
+		break;
+	}
 }
 
 SpawnManager::enemyinfo SpawnManager::weightedRand() {

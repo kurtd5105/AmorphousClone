@@ -31,9 +31,9 @@ private:
 	GameEngine::IOManager* _IOManager;
 	GameEngine::SpriteManager* _SpriteManager;
 
-	void enemyInit();
+	void gradientControl();
 	
-	int _height, _width, spritewidth, spriteheight;
+	int _height, _width, spritewidth, spriteheight, enemiesKilled;
 	unsigned int _size, _currIndex;
 	std::string enemytexture;
 	glm::vec2 _scalingFactors;
