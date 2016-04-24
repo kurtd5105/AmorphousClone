@@ -6,7 +6,7 @@
 //empty float vector
 #define VEC_F_E std::vector<float>{}
 
-SpawnManager::SpawnManager() : _IOManager(nullptr), _SpriteManager(nullptr), _height(0), _width(0), spritewidth(0), spriteheight(0),
+SpawnManager::SpawnManager() : _IOManager(nullptr), _SpriteManager(nullptr), _height(0), _width(0), _spritewidth(0), _spriteheight(0),
 _size(0), _currIndex(0), _startTime(0), _lastSpawn(0) {}
 
 
@@ -58,18 +58,18 @@ void SpawnManager::gradientControl() {
 
 	//Gloople instantiation data
 	struct enemyinfo gloople = { GLOOPLE, 90, 50.0f, "Textures/example_enemy.png" };
-	enemyalmanac.push_back(gloople);
+	_enemyAlmanac.push_back(gloople);
 
 	//Time based eneny spawns
 	switch (timeElapsed) {
 	case 30:
 		struct enemyinfo stickie = { STICKIE, 10, 50, "Textures/stickie.png" };
-		enemyalmanac.push_back(stickie);
+		_enemyAlmanac.push_back(stickie);
 		break;
 	}
 
 	//Enemies killed based enemy spawns
-	switch (enemiesKilled) {
+	switch (_enemiesKilled) {
 	case 20:
 		//Biters can spawn now
 		break;
@@ -79,19 +79,19 @@ void SpawnManager::gradientControl() {
 SpawnManager::enemyinfo SpawnManager::weightedRand() {
 	int weights = 0;
 
-	for (auto& enemy : enemyalmanac) {
+	for (auto& enemy : _enemyAlmanac) {
 		weights += enemy._spawnrate;
 	}
 	int rand = _Random.randomInt(0, weights);
 
-	for (auto& enemy : enemyalmanac) {
+	for (auto& enemy : _enemyAlmanac) {
 		if (rand < enemy._spawnrate)
 			//std::cout << "making a: " << enemy._name << std::endl;
 			return enemy;
 		rand -= enemy._spawnrate;
 	}
 	//Should never reach, make a Gloople
-	return enemyalmanac.front();
+	return _enemyAlmanac.front();
 }
 
 void SpawnManager::createSpawn(struct enemyinfo enemy) {

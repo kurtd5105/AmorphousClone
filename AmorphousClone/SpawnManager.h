@@ -26,14 +26,13 @@ public:
 	std::list<Stickie>* getStickies() { return &_stickies; }
 
 	unsigned int getEnemiesRemaining() const { return _size - _currIndex; }
+	unsigned int getEnemiesKilled() const { return _enemiesKilled;  }
 
 private:
 	GameEngine::IOManager* _IOManager;
 	GameEngine::SpriteManager* _SpriteManager;
-
-	void gradientControl();
 	
-	int _height, _width, spritewidth, spriteheight, enemiesKilled;
+	int _height, _width, _spritewidth, _spriteheight, _enemiesKilled;
 	unsigned int _size, _currIndex;
 	std::string enemytexture;
 	glm::vec2 _scalingFactors;
@@ -57,7 +56,9 @@ private:
 		std::string _texture;
 	};
 
-	std::vector<enemyinfo> enemyalmanac;
+	std::vector<enemyinfo> _enemyAlmanac;
+
+	void gradientControl();
 
 	SpawnManager::enemyinfo weightedRand();
 	void createSpawn(struct enemyinfo);
