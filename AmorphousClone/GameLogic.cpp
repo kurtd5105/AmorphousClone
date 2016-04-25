@@ -167,11 +167,8 @@ void GameLogic::collisionAgents() {
 				if (&enemy != &enemy2 && enemy2.isEnabled()) {
 					if (enemy.collideAgents(&enemy2) && !enemy.getCollided() && !enemy2.getCollided()) {
 
-						//countEnemy(enemy, &goopleCount, &stickieCount);
-						//countEnemy(enemy2, &goopleCount, &stickieCount);
-						if(enemy.getType() == GOOPLE && enemy2.getType() == GOOPLE) {
-							goopleCount = 2;
-						}
+						countEnemy(&enemy, goopleCount, stickieCount);
+						countEnemy(&enemy2, goopleCount, stickieCount);
 
 						if(goopleCount == 2) {
 							enemy.setCollided(true);
@@ -191,11 +188,11 @@ void GameLogic::collisionAgents() {
 	}
 }
 
-void GameLogic::countEnemy(EnemySuper enemy, int* goopleCount, int* stickieCount) {
-	if(enemy.getType() == GOOPLE) {
-		*goopleCount = *goopleCount + 1;
-	} else if(enemy.getType() == STICKIE) {
-		*stickieCount = *stickieCount + 1;
+void GameLogic::countEnemy(EnemySuper* enemy, int& goopleCount, int& stickieCount) {
+	if(enemy->getType() == GOOPLE) {
+		goopleCount++;
+	} else if(enemy->getType() == STICKIE) {
+		stickieCount++;
 	}
 }
 
