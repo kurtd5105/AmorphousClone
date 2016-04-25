@@ -62,4 +62,5 @@ private:
 
 	SpawnManager::enemyinfo weightedRand();
 	void createSpawn(struct enemyinfo);
+	EnemySuper SpawnManager::enemyFactory(struct enemyinfo enemy, int side);
 };

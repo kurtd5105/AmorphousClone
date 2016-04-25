@@ -60,15 +60,14 @@ void SpawnManager::gradientControl() {
 	struct enemyinfo gloople = { GOOPLE, 90, 50.0f, "Textures/example_enemy.png" };
 	_enemyAlmanac.push_back(gloople);
 
+	struct enemyinfo stickie = { STICKIE, 100, 50, "Textures/stickie.png" };
+	_enemyAlmanac.push_back(stickie);
+
 	//Time based eneny spawns
 	switch (timeElapsed) {
 	case 30:
-		//struct enemyinfo stickie = { STICKIE, 10, 50, "Textures/stickie.png" };
-		//_enemyAlmanac.push_back(stickie);
 		break;
 	}
-	struct enemyinfo stickie = {STICKIE, 100, 50, "Textures/stickie.png"};
-	_enemyAlmanac.push_back(stickie);
 
 	//Enemies killed based enemy spawns
 	switch (_enemiesKilled) {
@@ -109,11 +108,7 @@ void SpawnManager::createSpawn(struct enemyinfo enemy) {
 	auto _size = enemy._size;
 
 	//Create the correct enemy type
-	if(enemy.type == GOOPLE) {
-		_enemies.push_back(Goople(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
-	} else if(enemy.type == STICKIE) {
-		_enemies.push_back(Stickie(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
-	}
+	_enemies.push_back(enemyFactory(enemy, side));
 	
 	//Spawn on the correct side
 	if(side == 0) {
@@ -131,4 +126,13 @@ void SpawnManager::createSpawn(struct enemyinfo enemy) {
 	}
 	_enemies.back().setInvisible();
 	_enemies.back().disable();
+}
+
+EnemySuper SpawnManager::enemyFactory(struct enemyinfo enemy, int side) {
+	if (enemy.type == GOOPLE) {
+		return Goople(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y);
+	}
+	else if (enemy.type == STICKIE) {
+		return Stickie(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y);
+	}
 }
