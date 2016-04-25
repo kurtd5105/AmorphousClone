@@ -76,7 +76,9 @@ void GameLogic::updateEnemy(float step) {
 	for(auto& enemy : *_enemies) {
 		//enemy.moveTo(_player);
 		enemy.moveToTarget(step);
+		enemy.processTimers(step);
 	}
+
 	for(auto& g : _goos) {
 		if(g != nullptr) {
 			g->fade(step);
@@ -98,21 +100,24 @@ void GameLogic::collisionAgents() {
 		if(enemy.isEnabled()) {
 			if(_player->collideAgents(&enemy)) {
 				switch(enemy.getType()) {
-				case GLOOPLE:
+				case GOOPLE:
 					if(!_player->isInvincible()) {
 						_player->onCollide(enemy.getType(), enemy.getRotation());
 					}
 					enemy.setTarget(glm::vec2(_player->getPos().x + 10000 * cos(enemy.getRotation() - M_PI),
 						_player->getPos().y + 10000 * sin(enemy.getRotation() - M_PI)));
-					enemy.moveToTarget(1.0f);
 					break;
 				case STICKIE:
 					enemy.kill();
 					if(enemy.hasGoo()) {
 						_goos.push_back(enemy.getGoo());
 					}
+					if(!_player->isInvincible()) {
+						_player->onCollide(enemy.getType(), enemy.getRotation());
+					}
 					break;
 				case STICKIE_GOO:
+					_player->onCollide(enemy.getType(), enemy.getRotation());
 					break;
 				}
 			}
@@ -129,7 +134,7 @@ void GameLogic::collisionAgents() {
 				//!!!--------------------Replace with hitbox implementation--------------------!!!
 				if(sword->collideAgents(&enemy)) {
 					switch(enemy.getType()) {
-					case GLOOPLE:
+					case GOOPLE:
 						_gloopleSwing++;
 						break;
 					case STICKIE:
@@ -152,27 +157,28 @@ void GameLogic::collisionAgents() {
 	}
 	
 	//Enemy collisions
+	int goopleCount, stickieCount;
 	for (auto& enemy : *_enemies) {
 		if (enemy.isEnabled()) {
+
 			for (auto& enemy2 : *_enemies) {
+				goopleCount = stickieCount = 0;
+
 				if (&enemy != &enemy2 && enemy2.isEnabled()) {
 					if (enemy.collideAgents(&enemy2) && !enemy.getCollided() && !enemy2.getCollided()) {
-						if(enemy.getType() == GLOOPLE) {
-							if(enemy2.getType() == GLOOPLE) {
-								enemy.setCollided(true);
-								enemy2.setCollided(true);
-								tempTarget = enemy.getTarget();
-								enemy.setTarget(enemy2.getTarget());
-								enemy2.setTarget(tempTarget);
 
-								auto centerA = enemy.getCentered();
-								auto centerB = enemy2.getCentered();
+						//countEnemy(enemy, &goopleCount, &stickieCount);
+						//countEnemy(enemy2, &goopleCount, &stickieCount);
+						if(enemy.getType() == GOOPLE && enemy2.getType() == GOOPLE) {
+							goopleCount = 2;
+						}
 
-								auto distlength = glm::length(centerA - centerB);
-								glm::vec2 depthVec = glm::normalize(centerA - centerB) * distlength;
-								//glm::vec2(_x, _y) += depthVec / 2.0f;
-								enemy2.setPos(enemy2.getPos() - (depthVec / 2.0f));
-							}
+						if(goopleCount == 2) {
+							enemy.setCollided(true);
+							enemy2.setCollided(true);
+							tempTarget = enemy.getTarget();
+							enemy.setTarget(enemy2.getTarget());
+							enemy2.setTarget(tempTarget);
 						}
 						
 					}
@@ -182,6 +188,14 @@ void GameLogic::collisionAgents() {
 	}
 	for (auto& enemy : *_enemies) {
 		enemy.setCollided(false);
+	}
+}
+
+void GameLogic::countEnemy(EnemySuper enemy, int* goopleCount, int* stickieCount) {
+	if(enemy.getType() == GOOPLE) {
+		*goopleCount = *goopleCount + 1;
+	} else if(enemy.getType() == STICKIE) {
+		*stickieCount = *stickieCount + 1;
 	}
 }
 
@@ -242,7 +256,7 @@ void GameLogic::processInput(float step) {
 		(*_textRefs)[0].changeText("Enemies Remaining: " + std::to_string(_SpawnManager->getEnemiesRemaining()));
 		(*_textRefs)[1].changeText("Score: " + std::to_string(_score));
 
-		if(_player->isEnabled() && !_player->isKnockback()) {
+		if(_player->isEnabled() && !_player->isKnockback() && !_player->getSword()->isActive()) {
 			//Check if A or D and W or S are pressed for diagonal movement
 			if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
 				//If there is diagonal movement then normalize it so the distance moved is still player speed * 1
@@ -264,12 +278,13 @@ void GameLogic::processInput(float step) {
 					_player->getSword()->setActive();
 				}
 			}
-			if(_player->getSword()->isActive()) {
-				_player->getSword()->attack(step);
-			}
 		} else if(_player->isKnockback()) {
 			_player->knockback(step);
+		} else if(_player->getSword()->isActive()) {
+			_player->getSword()->attack(step);
+			_player->rotate(_player->getRotation());
 		}
+		_player->processTimers(step);
 		//std::cout << "Knockback: " << (_player->isKnockback() ? "yes" : "no") << "; Invincible: " << (_player->isInvincible() ? "yes." : "no.") << std::endl;
 
 		updateEnemy(step);

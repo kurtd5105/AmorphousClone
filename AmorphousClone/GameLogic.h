@@ -34,6 +34,7 @@ public:
 	void collisionAgents();
 
 private:
+	static void countEnemy(EnemySuper enemy, int* goopleCount, int* stickieCount);
 	GameEngine::InputManager* _InputManager;
 	GameEngine::Camera* _Camera;
 	StagingManager* _StagingManager;

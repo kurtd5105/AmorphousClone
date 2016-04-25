@@ -57,16 +57,18 @@ void SpawnManager::gradientControl() {
 	int timeElapsed = (SDL_GetTicks() - _startTime) / 1000;
 
 	//Gloople instantiation data
-	struct enemyinfo gloople = { GLOOPLE, 90, 50.0f, "Textures/example_enemy.png" };
+	struct enemyinfo gloople = { GOOPLE, 90, 50.0f, "Textures/example_enemy.png" };
 	_enemyAlmanac.push_back(gloople);
 
 	//Time based eneny spawns
 	switch (timeElapsed) {
 	case 30:
-		struct enemyinfo stickie = { STICKIE, 10, 50, "Textures/stickie.png" };
-		_enemyAlmanac.push_back(stickie);
+		//struct enemyinfo stickie = { STICKIE, 10, 50, "Textures/stickie.png" };
+		//_enemyAlmanac.push_back(stickie);
 		break;
 	}
+	struct enemyinfo stickie = {STICKIE, 100, 50, "Textures/stickie.png"};
+	_enemyAlmanac.push_back(stickie);
 
 	//Enemies killed based enemy spawns
 	switch (_enemiesKilled) {
@@ -107,7 +109,7 @@ void SpawnManager::createSpawn(struct enemyinfo enemy) {
 	auto _size = enemy._size;
 
 	//Create the correct enemy type
-	if(enemy.type == GLOOPLE) {
+	if(enemy.type == GOOPLE) {
 		_enemies.push_back(Goople(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
 	} else if(enemy.type == STICKIE) {
 		_enemies.push_back(Stickie(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y));
