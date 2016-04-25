@@ -33,8 +33,8 @@ private:
 	GameEngine::IOManager* _IOManager;
 	GameEngine::SpriteManager* _SpriteManager;
 	
-	int _height, _width, _spritewidth, _spriteheight, _enemiesKilled, _currentSize;
-	unsigned int _size, _currIndex;
+	int _height, _width, _spritewidth, _spriteheight, _enemiesKilled;
+	unsigned int _size, _currIndex, _currentSize;
 	std::string enemytexture;
 	glm::vec2 _scalingFactors;
 
