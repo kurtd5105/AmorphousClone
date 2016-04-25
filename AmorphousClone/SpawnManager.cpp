@@ -55,7 +55,6 @@ bool SpawnManager::spawn() {
 			_lastSpawn = curr;
 		}
 		if(_currIndex >= _currentSize) {
-			std::cout << "New spawn: " << _currIndex << " and " << _currentSize << std::endl;
 			groupSpawn();
 		}
 		return true;
