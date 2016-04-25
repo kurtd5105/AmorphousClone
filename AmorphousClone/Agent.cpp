@@ -58,12 +58,12 @@ void Agent::moveTo(Agent* agent, float speed) {
 
 			float xMove, yMove;
 
-			xMove = cos(angle) * _speed * speed * _isSlowed ? SLOW_MULT : 1.0f;
+			xMove = cos(angle) * _speed * speed;
 			auto offset = agentPos.x - _x;
 			if(xMove > abs(offset)) {
 				xMove = offset;
 			}
-			yMove = sin(angle) * _speed * speed * _isSlowed ? SLOW_MULT : 1.0f;
+			yMove = sin(angle) * _speed * speed;
 			offset = agentPos.y - _y;
 			if(yMove > abs(offset)) {
 				yMove = offset;
