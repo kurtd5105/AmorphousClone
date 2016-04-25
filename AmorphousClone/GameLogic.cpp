@@ -235,22 +235,15 @@ void GameLogic::processInput(float step) {
 			break;
 		}
 
-		//If the spawn manager is done spawning
-		if(!_SpawnManager->spawn()) {
-			auto win = true;
-			for(auto& enemy : *_enemies) {
-				if(enemy.isEnabled()) {
-					win = false;
-					break;
-				}
-			}
-			if(win) {
-				*_gameState = WON;
-				break;
-			}
+		//Enough enemies killed game is over
+		if (_SpawnManager->getEnemiesKilled() >= _SpawnManager->getSize()) {
+			*_gameState = WON;
+		}
+		else {
+			_SpawnManager->spawn();
 		}
 
-		(*_textRefs)[0].changeText("Enemies Remaining: " + std::to_string(_SpawnManager->getEnemiesRemaining()));
+		(*_textRefs)[0].changeText("Enemies Remaining: " + std::to_string(_SpawnManager->getEnemiesKilled()));
 		(*_textRefs)[1].changeText("Score: " + std::to_string(_score));
 
 		if(_player->isEnabled() && !_player->isKnockback() && !_player->getSword()->isActive()) {

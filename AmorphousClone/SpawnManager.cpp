@@ -20,17 +20,26 @@ void SpawnManager::init(int width, int height, glm::vec2 scalingFactors, unsigne
 	_Random.setScreenDimensions(_width, _height);
 	_SpriteManager = manager;
 
+	groupSpawn();
+
+	_currEnemy = _enemies.begin();
+	_lastSpawn = _startTime;
+	_startTime = SDL_GetTicks();
+	_currentSize = 0;
+
+}
+
+void SpawnManager::groupSpawn() {
 	gradientControl();
 
 	//Create spawn times for each enemy and create them
-	for(unsigned int i = 0; i <= _size; i++) {
+	for (unsigned int i = 0; i <= 10; i++) {
 		_spawnTimes.push_back(_Random.randomInt(500, 2000));
 		//Decide on enemy to spawn
 		createSpawn(weightedRand());
 	}
-	_currEnemy = _enemies.begin();
-	_startTime = SDL_GetTicks();
-	_lastSpawn = _startTime;
+	//Cluster of enemies to be spawned
+	_currentSize += 10;
 }
 
 bool SpawnManager::spawn() {
@@ -45,8 +54,9 @@ bool SpawnManager::spawn() {
 			_currIndex++;
 			_lastSpawn = curr;
 		}
-		if(_currIndex > _size) {
-			_currIndex = _size;
+		if(_currIndex >= _currentSize) {
+			std::cout << "New spawn: " << _currIndex << " and " << _currentSize << std::endl;
+			groupSpawn();
 		}
 		return true;
 	}
@@ -60,20 +70,15 @@ void SpawnManager::gradientControl() {
 	struct enemyinfo gloople = { GOOPLE, 90, 50.0f, "Textures/example_enemy.png" };
 	_enemyAlmanac.push_back(gloople);
 
-	struct enemyinfo stickie = { STICKIE, 100, 50, "Textures/stickie.png" };
-	_enemyAlmanac.push_back(stickie);
-
 	//Time based eneny spawns
-	switch (timeElapsed) {
-	case 30:
-		break;
+	if (timeElapsed >= 5) {
+		struct enemyinfo stickie = { STICKIE, 50, 50, "Textures/stickie.png" };
+		_enemyAlmanac.push_back(stickie);
 	}
 
 	//Enemies killed based enemy spawns
-	switch (_enemiesKilled) {
-	case 20:
+	if (_enemiesKilled >= 20) {
 		//Biters can spawn now
-		break;
 	}
 }
 
@@ -134,5 +139,9 @@ EnemySuper SpawnManager::enemyFactory(struct enemyinfo enemy, int side) {
 	}
 	else if (enemy.type == STICKIE) {
 		return Stickie(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y);
+	}
+	else {
+		//Return a Goople
+		return Goople(side, &_Random, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y);
 	}
 }
