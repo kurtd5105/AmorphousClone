@@ -24,15 +24,17 @@ Agent::~Agent() {
 
 void Agent::translate(float x, float y, float speed) {
 	if(_enabled) {
-		_x += x * speed;
-		_y += y * speed;
-		_sprite->translate(x * speed, y * speed);
+		float dx = x * speed * (_isSlowed ? SLOW_MULT : 1.0f);
+		float dy = y * speed * (_isSlowed ? SLOW_MULT : 1.0f);
+		_x += dx;
+		_y += dy;
+		_sprite->translate(dx, dy);
 
 		for(unsigned int i = 0; i < _subAgents.size(); i++) {
 			_subAgents[i]->translate(x, y, speed);
 		}
 		for(unsigned int i = 0; i < _subSprites.size(); i++) {
-			_subSprites[i]->translate(x * speed, y * speed);
+			_subSprites[i]->translate(dx, dy);
 		}
 	}
 }
@@ -76,12 +78,12 @@ void Agent::moveTo(Agent* agent, float speed) {
 
 			float xMove, yMove;
 
-			xMove = cos(angle) * _speed * speed;
+			xMove = cos(angle) * _speed * speed * (_isSlowed ? SLOW_MULT : 1.0f);
 			auto offset = agentPos.x - _x;
 			if(xMove > abs(offset)) {
 				xMove = offset;
 			}
-			yMove = sin(angle) * _speed * speed;
+			yMove = sin(angle) * _speed * speed * (_isSlowed ? SLOW_MULT : 1.0f);
 			offset = agentPos.y - _y;
 			if(yMove > abs(offset)) {
 				yMove = offset;
@@ -180,5 +182,5 @@ void Agent::kill() {
 	for(unsigned int i = 0; i < _subAgents.size(); i++) {
 		_subAgents[i]->kill();
 	}
-	_slowedEffect->setAlpha(0);
+	_slowedEffect->setInvisible();
 }

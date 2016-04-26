@@ -16,6 +16,8 @@ public:
 	bool isActive() const { return _isActive; }
 	void setActive() { _isActive = true; }
 
+	void slow() override { _isSlowed = true; _slowTimer = 0; };
+
 private:
 	float _step;
 	const float ATTACK_HALF = float(M_PI) / 30.0f;

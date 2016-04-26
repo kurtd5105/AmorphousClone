@@ -45,7 +45,7 @@ public:
 
 	void processTimers(float step);
 
-	void slow() { _slowedEffect->setVisible(); _isSlowed = true; _slowTimer = 0; }
+	virtual void slow() { _slowedEffect->setVisible(); _isSlowed = true; _slowTimer = 0; for(auto& a : _subAgents) { a->slow(); } }
 
 	void setAlpha(GLubyte alpha) { _sprite->setAlpha(alpha); for(auto& a : _subAgents) { a->setAlpha(alpha); } }
 	GLubyte getAlpha() const { return _sprite->getAlpha(); }

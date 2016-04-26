@@ -39,14 +39,14 @@ void EnemySuper::moveToTarget(float speed) {
 			float xMove, yMove;
 
 			//Prevent the target from being overshot
-			xMove = cos(angle) * _speed * speed;
+			xMove = cos(angle) * _speed * speed * (_isSlowed ? SLOW_MULT : 1.0f);
 			if(xMove >= abs(distanceTo.x)) {
 				xMove = distanceTo.x;
 				_x = _target.x;
 			} else {
 				_x += xMove;
 			}
-			yMove = sin(angle) * _speed * speed;
+			yMove = sin(angle) * _speed * speed * (_isSlowed ? SLOW_MULT : 1.0f);
 			if(yMove >= abs(distanceTo.y)) {
 				yMove = distanceTo.y;
 				_y = _target.y;

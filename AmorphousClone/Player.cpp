@@ -56,7 +56,7 @@ void Player::knockback(float step) {
 		_y += yMove;
 		_sprite->translate(xMove, yMove);
 		_slowedEffect->translate(xMove, yMove);
-		_sword.translate(xMove, yMove, 1.0f);
+		_sword.translate(xMove, yMove, 1.0f / SLOW_MULT);
 	} else {
 		if(_prevStep <= KNOCKBACK_TIME) {
 			float xMove = cos(_targetRotation) * KNOCKBACK_SPEED * (KNOCKBACK_TIME - _prevStep);
@@ -66,7 +66,7 @@ void Player::knockback(float step) {
 			_y += yMove;
 			_sprite->translate(xMove, yMove);
 			_slowedEffect->translate(xMove, yMove);
-			_sword.translate(xMove, yMove, 1.0f);
+			_sword.translate(xMove, yMove, 1.0f / SLOW_MULT);
 		}
 		_knockback = false;
 		_invincible = false;
