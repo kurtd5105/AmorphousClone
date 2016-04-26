@@ -57,7 +57,7 @@ private:
 	std::list<EnemySuper>* _enemies;
 
 	int W, A, S, D, Q, E;
-	int _gloopleKills, _biterKills, _meltieKills, _stickieKills, _score;
+	int _gloopleKills, _biterKills, _meltieKills, _stickieKills, _totalKills, _score;
 	int _gloopleSwing, _biterSwing, _meltieSwing, _stickieSwing;
 	bool _clickHold;
 };

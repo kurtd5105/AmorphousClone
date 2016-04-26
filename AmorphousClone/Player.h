@@ -10,7 +10,8 @@ public:
 
 	const float PLAYER_SPEED = 4.0f;
 
-	void init(float x, float y, float width, float height, float depth, glm::vec2 scalingFactors, std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager);
+	void init(float x, float y, float width, float height, float depth, glm::vec2 scalingFactors, std::vector<float> UVmM,
+			  std::string path, std::string slowFx, GameEngine::SpriteManager* manager);
 	void onCollide(EnemyType type, float targetRotation);
 	
 	bool isKnockback() const { return _knockback; }

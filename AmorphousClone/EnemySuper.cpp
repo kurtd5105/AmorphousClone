@@ -1,12 +1,12 @@
 #include "EnemySuper.h"
 
-EnemySuper::EnemySuper(): _chance(0.0f), _Random(nullptr), _collided(false), _goo(nullptr), _hasGoo(false) {}
+EnemySuper::EnemySuper(): _chance(0.0f), _collided(false), _hasGoo(false), _Random(nullptr), _goo(nullptr) {}
 
 
 EnemySuper::~EnemySuper() {}
 
 void EnemySuper::init(float x, float y, float width, float height, float depth, int side, 
-					  std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager, GameEngine::Random* Random) {
+					  std::vector<float> UVmM, std::string path, std::string slowFx, GameEngine::SpriteManager* manager, GameEngine::Random* Random) {
 	_x = x;
 	_y = y;
 	_width = width;
@@ -17,6 +17,9 @@ void EnemySuper::init(float x, float y, float width, float height, float depth, 
 	_SpriteManager = manager;
 	//Assumes enemy is a circle
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
+	_slowedEffect = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, slowFx);
+	_slowedEffect->setInvisible();
+	_subSprites.push_back(_slowedEffect);
 	_hitbox.init(x, y, width, height, _radius, GameEngine::CIRC);
 	_chance = 0.90f;
 	_Random = Random;

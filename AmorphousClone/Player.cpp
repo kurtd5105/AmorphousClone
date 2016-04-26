@@ -4,7 +4,8 @@ Player::Player(): _knockback(false), _invincible(false), _step(0.0f), _prevStep(
 
 Player::~Player() {}
 
-void Player::init(float x, float y, float width, float height, float depth, glm::vec2 scalingFactors, std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager) {
+void Player::init(float x, float y, float width, float height, float depth, glm::vec2 scalingFactors, std::vector<float> UVmM,
+				  std::string path, std::string slowFx, GameEngine::SpriteManager* manager) {
 	_x = x;
 	_y = y;
 	_width = width;
@@ -15,6 +16,9 @@ void Player::init(float x, float y, float width, float height, float depth, glm:
 	_SpriteManager = manager;
 	//Assumes player is a circle
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
+	_slowedEffect = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, slowFx);
+	_slowedEffect->setInvisible();
+	_subSprites.push_back(_slowedEffect);
 	_hitbox.init(x, y, width, height, _radius, GameEngine::CIRC);
 	_sword.init(_x, _y, _rotation, scalingFactors, manager);
 	_subAgents.push_back(&_sword);
@@ -25,9 +29,9 @@ void Player::onCollide(EnemyType type, float targetRotation) {
 	if(type == GOOPLE) {
 		_gloopleBumps++;
 	} else if(type == STICKIE) {
-		_isSlowed = true;
+		slow();
 	} else if(type == STICKIE_GOO) {
-		_isSlowed = true;
+		slow();
 		return;
 	}
 
@@ -54,6 +58,7 @@ void Player::knockback(float step) {
 		_x += xMove;
 		_y += yMove;
 		_sprite->translate(xMove, yMove);
+		_slowedEffect->translate(xMove, yMove);
 		_sword.translate(xMove, yMove, 1.0f);
 	} else {
 		if(_prevStep <= KNOCKBACK_TIME) {
@@ -63,6 +68,7 @@ void Player::knockback(float step) {
 			_x += xMove;
 			_y += yMove;
 			_sprite->translate(xMove, yMove);
+			_slowedEffect->translate(xMove, yMove);
 			_sword.translate(xMove, yMove, 1.0f);
 		}
 		_knockback = false;

@@ -117,7 +117,7 @@ void GameLogic::collisionAgents() {
 					}
 					break;
 				case STICKIE_GOO:
-					_player->onCollide(enemy.getType(), enemy.getRotation());
+					_player->slow();
 					break;
 				}
 			}
@@ -148,11 +148,13 @@ void GameLogic::collisionAgents() {
 			}
 		}
 	} else {
-		_score += (_gloopleSwing + _biterSwing * 8 + _meltieSwing * 10 + _stickieSwing * 3) * (_gloopleSwing + _biterSwing + _meltieSwing + _stickieSwing);
+		int killed = _gloopleSwing + _biterSwing + _meltieSwing + _stickieSwing;
+		_score += (_gloopleSwing + _biterSwing * 8 + _meltieSwing * 10 + _stickieSwing * 3) * (killed);
 		_gloopleKills += _gloopleSwing;
 		_biterKills += _biterSwing;
 		_meltieKills += _meltieSwing;
 		_stickieKills += _stickieSwing;
+		_totalKills += killed;
 		_gloopleSwing = _biterSwing = _meltieSwing = _stickieSwing = 0;
 	}
 	

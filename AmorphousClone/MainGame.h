@@ -33,7 +33,7 @@ public:
 	const std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/buttons.png", "Textures/loading.png", "Textures/checkbox.png",
 		"Textures/slider.png", "Textures/line.png", "Textures/arrows.png", "Textures/lock.png", "Textures/lockfancy.png"};
 	const std::vector<std::string> TEXTURE_LIST_ASYNC = std::vector<std::string>{"Textures/player.png", "Textures/tile1.png", "Textures/example_enemy.png",
-		"Textures/sword.png", "Textures/gravel.png", "Textures/stickie.png", "Textures/playerSticky.png", "Textures/StickieGoo.png"};
+		"Textures/sword.png", "Textures/gravel.png", "Textures/stickie.png", "Textures/slowed.png", "Textures/StickieGoo.png"};
 	const std::vector<std::string> ANIMATION_LIST_SYNC = std::vector<std::string>{"Animations/buttons.ani", "Animations/checkbox.ani", "Animations/slider.ani",
 		"Animations/arrows.ani"};
 

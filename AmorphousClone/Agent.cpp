@@ -1,15 +1,24 @@
 #include "Agent.h"
 
 #include <GameEngine/Errors.h>
+#include <iostream>
 
 Agent::Agent() : _x(0.0f), _y(0.0f), _width(0.0f), _height(0.0f), _depth(1.0f), _rotation(0.0f), _radius(0.0f), _speed(0.0f), _rotationOffset(0.0f),
-_isInit(false), _alive(true), _visible(true), _enabled(true), _SpriteManager(nullptr), _sprite(nullptr), _Random(nullptr) {}
+_isInit(false), _alive(true), _visible(true), _enabled(true), _isSlowed(false), _SpriteManager(nullptr), _sprite(nullptr), _slowedEffect(nullptr), _Random(nullptr) {}
 
 Agent::~Agent() {
-	if (_SpriteManager != nullptr && _sprite != nullptr) {
-		_SpriteManager->deleteSprite(_sprite);
-	} else if (_sprite != nullptr && _SpriteManager == nullptr) {
+	if(_SpriteManager != nullptr) {
+		if(_sprite != nullptr) {
+			_SpriteManager->deleteSprite(_sprite);
+		}
+		if(_slowedEffect != nullptr) {
+			_SpriteManager->deleteSprite(_slowedEffect);
+		}
+	} else if(_sprite != nullptr && _slowedEffect != nullptr) {
 		GameEngine::fatalGenericError("Sprite deletion but no manager to delete with.");
+	} else {
+		//Optional output for debugging
+		//std::cout << "No SpriteManager to delete sprites, but sprites are already deleted." << std::endl;
 	}
 }
 
@@ -22,6 +31,9 @@ void Agent::translate(float x, float y, float speed) {
 		for(unsigned int i = 0; i < _subAgents.size(); i++) {
 			_subAgents[i]->translate(x, y, speed);
 		}
+		for(unsigned int i = 0; i < _subSprites.size(); i++) {
+			_subSprites[i]->translate(x * speed, y * speed);
+		}
 	}
 }
 
@@ -32,6 +44,9 @@ void Agent::rotate(float angle) {
 
 		for(unsigned int i = 0; i < _subAgents.size(); i++) {
 			_subAgents[i]->rotate(angle + _subAgents[i]->getRotationOffset());
+		}
+		for(unsigned int i = 0; i < _subSprites.size(); i++) {
+			_subSprites[i]->rotate(angle);
 		}
 	}
 }
@@ -44,6 +59,9 @@ void Agent::pointAt(glm::vec2 pos) {
 		for(unsigned int i = 0; i < _subAgents.size(); i++) {
 			_subAgents[i]->rotate(_rotation + _subAgents[i]->getRotationOffset());
 			_subAgents[i]->lockOn(this);
+		}
+		for(unsigned int i = 0; i < _subSprites.size(); i++) {
+			_subSprites[i]->pointAt(pos);
 		}
 	}
 }
@@ -99,12 +117,18 @@ void Agent::setInvisible() {
 	for(unsigned int i = 0; i < _subAgents.size(); i++) {
 		_subAgents[i]->setInvisible();
 	}
+	for(unsigned int i = 0; i < _subSprites.size(); i++) {
+		_subSprites[i]->setInvisible();
+	}
 }
 void Agent::setVisible() {
 	_visible = true;
 	_sprite->setVisible();
 	for(unsigned int i = 0; i < _subAgents.size(); i++) {
 		_subAgents[i]->setVisible();
+	}
+	if(_isSlowed) {
+		_slowedEffect->setVisible();
 	}
 }
 
@@ -115,6 +139,7 @@ void Agent::processTimers(float step) {
 			if(_slowTimer > SLOW_TIME) {
 				_slowTimer = 0.0f;
 				_isSlowed = false;
+				_slowedEffect->setInvisible();
 			}
 		}
 	}
@@ -155,4 +180,5 @@ void Agent::kill() {
 	for(unsigned int i = 0; i < _subAgents.size(); i++) {
 		_subAgents[i]->kill();
 	}
+	_slowedEffect->setAlpha(0);
 }
