@@ -75,6 +75,6 @@ void EnemySuper::kill() {
 		_subAgents[i]->kill();
 	}
 	if(_hasGoo) {
-		_goo = new StickieGoo(_x, _y, _width, _height, 50.0f, std::vector<float>{}, "Textures/StickieGoo.png", _SpriteManager);
+		_goo = new StickieGoo(_x - (_width / 2.0f), _y - (_height / 2.0f), _width * 2, _height * 2, 50.0f, std::vector<float>{}, "Textures/StickieGoo.png", _SpriteManager);
 	}
 }

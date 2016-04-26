@@ -8,6 +8,8 @@ public:
 	~StickieGoo();
 
 	void fade(float step);
+
+	const float PERSIST_TIME = 120.0f;
 	const float FADE_TIME = 180.0f;
 
 	bool isAlive() const { return _alive; }
