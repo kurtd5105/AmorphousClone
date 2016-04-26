@@ -11,8 +11,10 @@ public:
 	const float FADE_TIME = 180.0f;
 
 	bool isAlive() const { return _alive; }
+	float getRadius() const { return _radius; }
+	glm::vec2 getPos() const { return glm::vec2(_x, _y); }
 private:
-	float _step, _x, _y, _width, _height, _depth;
+	float _step, _x, _y, _width, _height, _radius, _depth;
 	bool _alive;
 
 	GameEngine::Sprite* _sprite;

@@ -16,7 +16,7 @@ void Player::init(float x, float y, float width, float height, float depth, glm:
 	_SpriteManager = manager;
 	//Assumes player is a circle
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
-	_slowedEffect = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, slowFx);
+	_slowedEffect = _SpriteManager->addSprite(x, y, width, height, depth - 0.1f, UVmM, slowFx);
 	_slowedEffect->setInvisible();
 	_subSprites.push_back(_slowedEffect);
 	_hitbox.init(x, y, width, height, _radius, GameEngine::CIRC);
@@ -30,9 +30,6 @@ void Player::onCollide(EnemyType type, float targetRotation) {
 		_gloopleBumps++;
 	} else if(type == STICKIE) {
 		slow();
-	} else if(type == STICKIE_GOO) {
-		slow();
-		return;
 	}
 
 	if(_gloopleBumps >= 3) {

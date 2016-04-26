@@ -6,6 +6,7 @@ _step(0.0f), _alive(true), _SpriteManager(nullptr) {
 	_y = y;
 	_width = width;
 	_height = height;
+	_radius = _width;
 	_depth = depth;
 	_SpriteManager = manager;
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);

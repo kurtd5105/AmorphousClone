@@ -116,9 +116,6 @@ void GameLogic::collisionAgents() {
 						_player->onCollide(enemy.getType(), enemy.getRotation());
 					}
 					break;
-				case STICKIE_GOO:
-					_player->slow();
-					break;
 				}
 			}
 		}
@@ -139,8 +136,6 @@ void GameLogic::collisionAgents() {
 						break;
 					case STICKIE:
 						_stickieSwing++;
-						break;
-					case STICKIE_GOO:
 						break;
 					}
 					enemy.kill();
@@ -178,6 +173,29 @@ void GameLogic::collisionAgents() {
 							tempTarget = enemy.getTarget();
 							enemy.setTarget(enemy2.getTarget());
 							enemy2.setTarget(tempTarget);
+						} else if(stickieCount == 1) {
+							if(enemy.getType() == STICKIE) {
+								enemy.kill();
+								enemy2.slow();
+								if(enemy.hasGoo()) {
+									_goos.push_back(enemy.getGoo());
+								}
+							} else {
+								enemy2.kill();
+								enemy.slow();
+								if(enemy2.hasGoo()) {
+									_goos.push_back(enemy2.getGoo());
+								}
+							}
+						} else if(stickieCount == 2) {
+							enemy.kill();
+							enemy2.kill();
+							if(enemy.hasGoo()) {
+								_goos.push_back(enemy.getGoo());
+							}
+							if(enemy2.hasGoo()) {
+								_goos.push_back(enemy2.getGoo());
+							}
 						}
 						
 					}
@@ -187,6 +205,42 @@ void GameLogic::collisionAgents() {
 	}
 	for (auto& enemy : *_enemies) {
 		enemy.setCollided(false);
+	}
+
+	//Goo collisions
+	for(auto& goo : _goos) {
+		for(auto& enemy : *_enemies) {
+			if(enemy.isEnabled() && enemy.isAlive()) {
+				auto minDist = goo->getRadius() + enemy.getRadius();
+
+				auto centerA = goo->getPos() + glm::vec2(goo->getRadius());
+				auto centerB = enemy.getPos() + glm::vec2(enemy.getRadius());
+
+				auto diff = centerA - centerB;
+
+				auto distlength = glm::length(diff);
+				auto depth = minDist - distlength;
+
+				//Replace this later with collision manager managed collisions
+				if(depth > 0) {
+					enemy.slow();
+				}
+			}
+		}
+		auto minDist = goo->getRadius() + _player->getRadius();
+
+		auto centerA = goo->getPos() + glm::vec2(goo->getRadius());
+		auto centerB = _player->getPos() + glm::vec2(_player->getRadius());
+
+		auto diff = centerA - centerB;
+
+		auto distlength = glm::length(diff);
+		auto depth = minDist - distlength;
+
+		//Replace this later with collision manager managed collisions
+		if(depth > 0) {
+			_player->slow();
+		}
 	}
 }
 

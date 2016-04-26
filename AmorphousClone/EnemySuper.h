@@ -5,7 +5,7 @@
 #include "StickieGoo.h"
 
 
-enum EnemyType { GOOPLE, STICKIE, STICKIE_GOO };
+enum EnemyType { GOOPLE, STICKIE };
 
 class EnemySuper : public Agent
 {

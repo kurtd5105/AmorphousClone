@@ -17,7 +17,7 @@ void EnemySuper::init(float x, float y, float width, float height, float depth, 
 	_SpriteManager = manager;
 	//Assumes enemy is a circle
 	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
-	_slowedEffect = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, slowFx);
+	_slowedEffect = _SpriteManager->addSprite(x, y, width, height, depth - 0.1f, UVmM, slowFx);
 	_slowedEffect->setInvisible();
 	_subSprites.push_back(_slowedEffect);
 	_hitbox.init(x, y, width, height, _radius, GameEngine::CIRC);
@@ -33,6 +33,7 @@ void EnemySuper::moveToTarget(float speed) {
 			//Get the distance to the target and point at it
 			auto distanceTo = getCentered() - _target;
 			_sprite->pointAt(_target);
+			_slowedEffect->pointAt(_target);
 			auto angle = getRotation();
 
 			float xMove, yMove;
@@ -54,9 +55,12 @@ void EnemySuper::moveToTarget(float speed) {
 			}
 			
 			_sprite->translate(xMove, yMove);
+			_slowedEffect->translate(xMove, yMove);
 			//this->translate(xMove, yMove, speed);
 		} else {
 			_SpriteManager->deleteSprite(_sprite);
+			_SpriteManager->deleteSprite(_slowedEffect);
+			_slowedEffect = nullptr;
 			_sprite = nullptr;
 			_enabled = false;
 		}
