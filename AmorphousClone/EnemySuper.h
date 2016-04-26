@@ -5,7 +5,7 @@
 #include "StickieGoo.h"
 
 
-enum EnemyType { GOOPLE, STICKIE, STICKIE_GOO };
+enum EnemyType { GOOPLE, STICKIE };
 
 class EnemySuper : public Agent
 {
@@ -16,8 +16,8 @@ public:
 	float ENEMY_SPEED = 2.0f;
 
 
-	virtual void init(float x, float y, float width, float height, float depth, int side, 
-			  std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager, GameEngine::Random* Random);
+	virtual void init(float x, float y, float width, float height, float depth, int side, std::vector<float> UVmM, std::string path,
+					  std::string slowFx, GameEngine::SpriteManager* manager, GameEngine::Random* Random);
 	void moveToTarget(float speed);
 	virtual void think() {}
 	virtual void onCollide() {}

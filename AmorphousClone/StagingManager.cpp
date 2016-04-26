@@ -142,7 +142,7 @@ void StagingManager::loadState() {
 		//Create the player
 		_player = new Player();
 		_player->init(615.0f * _scalingFactors.x, 335.0f * _scalingFactors.y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-					  1.0f, _scalingFactors, std::vector<float>{}, "Textures/player.png", _SpriteManager);
+					  1.0f, _scalingFactors, std::vector<float>{}, "Textures/player.png", "Textures/slowed.png", _SpriteManager);
 
 		//Begin spawning enemies
 		_SpawnManager = new SpawnManager();

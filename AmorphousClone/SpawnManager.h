@@ -55,6 +55,7 @@ private:
 		int _spawnrate;
 		float _size;
 		std::string _texture;
+		std::string _slowFx;
 	};
 
 	std::vector<enemyinfo> _enemyAlmanac;

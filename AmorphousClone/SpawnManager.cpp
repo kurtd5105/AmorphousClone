@@ -66,12 +66,12 @@ void SpawnManager::gradientControl() {
 	int timeElapsed = (SDL_GetTicks() - _startTime) / 1000;
 
 	//Gloople instantiation data
-	struct enemyinfo gloople = { GOOPLE, 90, 50.0f, "Textures/example_enemy.png" };
+	struct enemyinfo gloople = {GOOPLE, 90, 50.0f, "Textures/example_enemy.png", "Textures/slowed.png"};
 	_enemyAlmanac.push_back(gloople);
 
 	//Time based eneny spawns
 	if (timeElapsed >= 5) {
-		struct enemyinfo stickie = { STICKIE, 50, 50, "Textures/stickie.png" };
+		struct enemyinfo stickie = {STICKIE, 50, 50, "Textures/stickie.png", "Textures/slowed.png"};
 		_enemyAlmanac.push_back(stickie);
 	}
 
@@ -117,16 +117,16 @@ void SpawnManager::createSpawn(struct enemyinfo enemy) {
 	//Spawn on the correct side
 	if(side == 0) {
 		_enemies.back().init(x, float(_height), 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-							 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+							 2.0f, side, VEC_F_E, _texture, enemy._slowFx, _SpriteManager, &_Random);
 	} else if(side == 1) {
 		_enemies.back().init(-_size, y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-							 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+							 2.0f, side, VEC_F_E, _texture, enemy._slowFx, _SpriteManager, &_Random);
 	} else if(side == 2) {
 		_enemies.back().init(float(_width), y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-							 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+							 2.0f, side, VEC_F_E, _texture, enemy._slowFx, _SpriteManager, &_Random);
 	} else {
 		_enemies.back().init(x, -_size, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-							 2.0f, side, VEC_F_E, _texture, _SpriteManager, &_Random);
+							 2.0f, side, VEC_F_E, _texture, enemy._slowFx, _SpriteManager, &_Random);
 	}
 	_enemies.back().setInvisible();
 	_enemies.back().disable();

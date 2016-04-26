@@ -45,6 +45,8 @@ public:
 
 	void processTimers(float step);
 
+	virtual void slow() { _slowedEffect->setVisible(); _isSlowed = true; _slowTimer = 0; for(auto& a : _subAgents) { a->slow(); } }
+
 	void setAlpha(GLubyte alpha) { _sprite->setAlpha(alpha); for(auto& a : _subAgents) { a->setAlpha(alpha); } }
 	GLubyte getAlpha() const { return _sprite->getAlpha(); }
 
@@ -56,8 +58,10 @@ protected:
 	glm::vec2 centerOffset;
 
 	std::vector<Agent*> _subAgents;
+	std::vector<GameEngine::Sprite*> _subSprites;
 	GameEngine::SpriteManager* _SpriteManager;
 	GameEngine::Sprite* _sprite;
+	GameEngine::Sprite* _slowedEffect;
 	GameEngine::Random* _Random;
 	GameEngine::Hitbox _hitbox;
 };
