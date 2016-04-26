@@ -20,7 +20,7 @@ public:
 	void knockback(float step);
 
 private:
-	const float KNOCKBACK_SPEED = 2.0f;
+	const float KNOCKBACK_SPEED = 0.5f;
 	const float KNOCKBACK_TIME = 60.0f;
 	const float INVULNERABLE_TIME = 30.0f;
 	Sword _sword;

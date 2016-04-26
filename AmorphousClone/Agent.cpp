@@ -108,6 +108,18 @@ void Agent::setVisible() {
 	}
 }
 
+void Agent::processTimers(float step) {
+	if(_enabled) {
+		if(_isSlowed) {
+			_slowTimer += step;
+			if(_slowTimer > SLOW_TIME) {
+				_slowTimer = 0.0f;
+				_isSlowed = false;
+			}
+		}
+	}
+}
+
 bool Agent::collideAgents(Agent* agent) const {
 
 	//Minimum distance for a collision to occur, can be diffrent of diffrent radiuses
@@ -116,15 +128,16 @@ bool Agent::collideAgents(Agent* agent) const {
 	auto centerA = getPos() + glm::vec2(getRadius());
 	auto centerB = agent->getPos() + glm::vec2(agent->getRadius());
 
-	//auto diff = centerA - centerB;
+	auto diff = centerA - centerB;
 
-	auto distlength = glm::length(centerA - centerB);
+	auto distlength = glm::length(diff);
 	auto depth = minDist - distlength;
 
+	//Replace this later with collision manager managed collisions
 	if (depth > 0) {
-		//glm::vec2 depthVec = glm::normalize(centerA - centerB) * distlength;
+		glm::vec2 depthVec = glm::normalize(diff) * distlength;
 		//glm::vec2(_x, _y) += depthVec / 2.0f;
-		//agent->setPos(agent->getPos() - (depthVec / 2.0f));
+		agent->setPos(agent->getPos() - (depthVec / 2.0f));
 		return true;
 	}
 	return false;

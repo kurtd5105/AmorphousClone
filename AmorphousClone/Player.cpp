@@ -22,15 +22,21 @@ void Player::init(float x, float y, float width, float height, float depth, glm:
 }
 
 void Player::onCollide(EnemyType type, float targetRotation) {
-	if(type == GLOOPLE) {
+	if(type == GOOPLE) {
 		_gloopleBumps++;
-		if(_gloopleBumps >= 3) {
-			_alive = false;
-		} else if (!_invincible && !_knockback){
-			_knockback = true;
-			_invincible = true;
-			_targetRotation = targetRotation;
-		}
+	} else if(type == STICKIE) {
+		_isSlowed = true;
+	} else if(type == STICKIE_GOO) {
+		_isSlowed = true;
+		return;
+	}
+
+	if(_gloopleBumps >= 3) {
+		_alive = false;
+	} else if(!_invincible && !_knockback) {
+		_knockback = true;
+		_invincible = true;
+		_targetRotation = targetRotation;
 	}
 }
 
