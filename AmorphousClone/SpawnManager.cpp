@@ -70,7 +70,7 @@ void SpawnManager::gradientControl() {
 	_enemyAlmanac.push_back(gloople);
 
 	//Time based eneny spawns
-	if (timeElapsed >= 0) {
+	if (timeElapsed >= 5) {
 		struct enemyinfo stickie = {STICKIE, 50, 50, "Textures/stickie.png", "Textures/slowed.png"};
 		_enemyAlmanac.push_back(stickie);
 	}
