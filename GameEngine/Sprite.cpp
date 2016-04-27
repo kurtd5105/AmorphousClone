@@ -64,6 +64,8 @@ namespace GameEngine {
 	}
 
 	void Sprite::translate(float x, float y) {
+		// TODO: optimize so that if the sprite is translated while invisible, only the x and y coordinates are updated.
+		// The sprite will then perform translation and rotation on the sprite when it is set to be visible.
 		_x += x;
 		_y += y;
 		_vertices[0].setPosition(_vertices[0].position.x + x, _vertices[0].position.y + y);

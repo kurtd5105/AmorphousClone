@@ -14,7 +14,7 @@ Agent::~Agent() {
 		if(_slowedEffect != nullptr) {
 			_SpriteManager->deleteSprite(_slowedEffect);
 		}
-	} else if(_sprite != nullptr && _slowedEffect != nullptr) {
+	} else if(_sprite != nullptr || _slowedEffect != nullptr) {
 		GameEngine::fatalGenericError("Sprite deletion but no manager to delete with.");
 	} else {
 		//Optional output for debugging
