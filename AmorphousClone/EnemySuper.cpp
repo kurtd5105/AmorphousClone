@@ -1,6 +1,6 @@
 #include "EnemySuper.h"
 
-EnemySuper::EnemySuper(): _chance(0.0f), _collided(false), _hasGoo(false), _Random(nullptr), _goo(nullptr) {}
+EnemySuper::EnemySuper(): _chance(0.0f), _collided(false), _hasGoo(false), _goo(nullptr), _Random(nullptr) {}
 
 
 EnemySuper::~EnemySuper() {}
@@ -13,8 +13,9 @@ void EnemySuper::init(float x, float y, float width, float height, float depth, 
 	_height = height;
 	_depth = depth;
 
-	// Assumption of enemy being a circle
+	// Assumption of enemy being a circle.
 	_radius = width / 2;
+
 	_speed = ENEMY_SPEED;
 	_SpriteManager = manager;
 

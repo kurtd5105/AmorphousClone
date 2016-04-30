@@ -11,6 +11,7 @@ enum EnemyType { GOOPLE, STICKIE };
 class EnemySuper : public Agent
 {
 public:
+	// Initializes some values to their defaults.
 	EnemySuper();
 	virtual ~EnemySuper();
 
