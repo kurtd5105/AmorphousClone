@@ -19,7 +19,7 @@
 #include "StagingManager.h"
 #include "SpawnManager.h"
 
-
+// Contains all the game logic to be processed on each frame.
 class GameLogic {
 public:
 	GameLogic();
@@ -27,14 +27,30 @@ public:
 
 	void init(GameState* gameState, GameEngine::Camera* camera, StagingManager* manager, GameEngine::InputManager* inputManager);
 
+	// TODO: Make private.
+	// Moves the enemies towards their targets.
 	void updateEnemy(float step);
+
+	// Processes the input and moves the player.
 	void processInput(float step);
+
+	// TODO: Make private.
+	// Checks buttons for mouse events.
 	void checkButtons(glm::vec2& mouseCoords);
+
+	// TODO: Make private.
+	// Gets the stage state and the required vectors of game objects.
 	void getStage();
+
+	// TODO: Make private.
+	// TODO: Move score out of this function into a new one.
+	// Runs collisions on the agents and counts score.
 	void collisionAgents();
 
 private:
+	// Increments the correct counter based on enemy type.
 	static void countEnemy(EnemySuper* enemy, int& goopleCount, int& stickieCount);
+
 	GameEngine::InputManager* _InputManager;
 	GameEngine::Camera* _Camera;
 	StagingManager* _StagingManager;

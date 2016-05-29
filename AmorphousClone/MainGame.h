@@ -29,7 +29,7 @@ public:
 	const int WINDOW_WIDTH = 800;
 	const int WINDOW_HEIGHT = 600;
 
-	//Vectors containing all the required textures
+	// Vectors containing all the required textures and animations, for sync (main thread) and async (multithreaded) load.
 	const std::vector<std::string> TEXTURE_LIST_SYNC = std::vector<std::string>{"Textures/buttons.png", "Textures/loading.png", "Textures/checkbox.png",
 		"Textures/slider.png", "Textures/line.png", "Textures/arrows.png", "Textures/lock.png", "Textures/lockfancy.png"};
 	const std::vector<std::string> TEXTURE_LIST_ASYNC = std::vector<std::string>{"Textures/player.png", "Textures/tile1.png", "Textures/example_enemy.png",
@@ -39,13 +39,19 @@ public:
 
 	const std::vector<std::string> SHADING_ATTRIBUTES = std::vector<std::string>{"vertexPosition", "vertexColor", "vertexUV"};
 
+	// Starts the game!
 	void startGame();
+
+	// Initializes all the managers and variables used by the game.
 	void init();
 
+	// Main loop that runs the game code.
 	void gameLoop();
 
+	// Renders the sprites and text to the screen.
 	void renderGame();
 
+	// Closes the game.
 	void close();
 
 private:
@@ -71,7 +77,6 @@ private:
 	StagingManager _StagingManager;
 	GameLogic _Game;
 	GameState _gameState;
-	//SpawnManager _SpawnManager;
 
 	std::thread _IOThread;
 	ThreadState _IOThreadState;

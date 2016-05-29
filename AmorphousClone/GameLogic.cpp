@@ -95,7 +95,8 @@ void GameLogic::updateEnemy(float step) {
 void GameLogic::collisionAgents() {
 	glm::vec2 tempTarget;
 
-	//Player collision with enemies
+	// TODO: Replace this code with collision manager code.
+	// Player collision with enemies.
 	for(auto& enemy : *_enemies) {
 		if(enemy.isEnabled()) {
 			if(_player->collideAgents(&enemy)) {
@@ -121,7 +122,8 @@ void GameLogic::collisionAgents() {
 		}
 	}
 
-	//Sword collision with enemies
+	// TODO: Replace this code with collision manager code.
+	// Sword collision with enemies.
 	Sword* sword = _player->getSword();
 	if(sword->isActive()) {
 		for(auto& enemy : *_enemies) {
@@ -153,7 +155,8 @@ void GameLogic::collisionAgents() {
 		_gloopleSwing = _biterSwing = _meltieSwing = _stickieSwing = 0;
 	}
 	
-	//Enemy collisions
+	// TODO: Replace this code with collision manager code.
+	// Enemy collisions.
 	int goopleCount, stickieCount;
 	for (auto& enemy : *_enemies) {
 		if (enemy.isEnabled()) {
@@ -285,13 +288,13 @@ void GameLogic::processInput(float step) {
 
 		collisionAgents();
 
-		//If the player is dead
+		// If the player is dead the game is lost.
 		if(!_player->isAlive()) {
 			*_gameState = LOST;
 			break;
 		}
 
-		//Enough enemies killed game is over
+		// If enough enemies are killed then the game is over.
 		if (_SpawnManager->getEnemiesKilled() >= _SpawnManager->getSize()) {
 			*_gameState = WON;
 		}
@@ -299,9 +302,11 @@ void GameLogic::processInput(float step) {
 			_SpawnManager->spawn();
 		}
 
+		// Update the output text on the screen to show the enemies remaining and the score.
 		(*_textRefs)[0].changeText("Enemies Remaining: " + std::to_string(_SpawnManager->getEnemiesKilled()));
 		(*_textRefs)[1].changeText("Score: " + std::to_string(_score));
 
+		// If the player can move and attack.
 		if(_player->isEnabled() && !_player->isKnockback() && !_player->getSword()->isActive()) {
 			//Check if A or D and W or S are pressed for diagonal movement
 			if((_keys->at(D) != _keys->at(A)) && (_keys->at(W) != _keys->at(S))) {
@@ -319,13 +324,16 @@ void GameLogic::processInput(float step) {
 				}*/
 			_player->pointAt(_Camera->toWorldCoords(mouseCoords));
 
+			// If the mouse is clicked then start a player attack.
 			if(_InputManager->getMousePress()) {
 				if(!_player->getSword()->isActive()) {
 					_player->getSword()->setActive();
 				}
 			}
+		// If the player is disabled by a knockback.
 		} else if(_player->isKnockback()) {
 			_player->knockback(step);
+		// If the player can't move due to sword swing.
 		} else if(_player->getSword()->isActive()) {
 			_player->getSword()->attack(step);
 			_player->rotate(_player->getRotation());
@@ -333,6 +341,7 @@ void GameLogic::processInput(float step) {
 		_player->processTimers(step);
 		//std::cout << "Knockback: " << (_player->isKnockback() ? "yes" : "no") << "; Invincible: " << (_player->isInvincible() ? "yes." : "no.") << std::endl;
 
+		// Update the enemy positions.
 		updateEnemy(step);
 
 		break;
@@ -356,11 +365,11 @@ void GameLogic::processInput(float step) {
 
 void GameLogic::checkButtons(glm::vec2& mouseCoords) {
 	mouseCoords = _Camera->toWorldCoords(mouseCoords);
-	//Check to see if the mouse is clicked
+	// Check to see if the mouse is clicked.
 	if(_InputManager->getMousePress()) {
-		//If the mouse is clicked, check to see if it is being held or not and on what button
+		// If the mouse is clicked, check to see if it is being held or not and on what button.
 		if(!_clickHold) {
-			//If this is the first frame that a button is being clicked, set the clicked button
+			// If this is the first frame that a button is being clicked, set the clicked button.
 			for(auto& button : *_simpleButtonRefs) {
 				if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
 					_currClicked = &button;
@@ -384,17 +393,17 @@ void GameLogic::checkButtons(glm::vec2& mouseCoords) {
 				}
 			}
 		} else {
-			//If the mouse button is being held and it was clicking a button
+			// If the mouse button is being held and it was clicking a button.
 			if(_currClicked != nullptr) {
 				_currClicked->onPush();
 			}
 		}
 		_clickHold = true;
 	} else {
-		//If the mouse button isn't being pressed
+		// If the mouse button isn't being pressed.
 		_clickHold = false;
 
-		//If there was a button that was being pressed then click it if the mouse is still over it
+		// If there was a button that was being pressed then click it if the mouse is still over it.
 		if(_currClicked != nullptr) {
 			_currClicked->onIdle();
 			if(GameEngine::Collision::checkClick(*(_currClicked->getHitbox()), mouseCoords[0], mouseCoords[1])) {
@@ -403,7 +412,7 @@ void GameLogic::checkButtons(glm::vec2& mouseCoords) {
 			_currClicked = nullptr;
 		}
 
-		//Check to see if the mouse is hovering over a button or not
+		// Check to see if the mouse is hovering over a button or not.
 		for(auto& button : *_simpleButtonRefs) {
 			if(GameEngine::Collision::checkClick(*(button.getHitbox()), mouseCoords[0], mouseCoords[1])) {
 				button.onHover();
