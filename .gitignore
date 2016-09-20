@@ -7,16 +7,18 @@
 *.sap
 
 # Build results
-[Dd]ebug/*.exe
+[Dd]ebug/*
 [Dd]ebug/*.pdb
 [Dd]ebug/*.ilk
 [Dd]ebug/*.exe.*
+[Dd]ebug/*.lib
 */[Dd]ebug/
 [Dd]ebugPublic/
-[Rr]elease/*.exe
+[Rr]elease/*
 [Rr]elease/*.pdb
 [Rr]elease/*.ilk
 [Rr]elease/*.exe.*
+[Rr]elease/*.lib
 [Rr]eleases/
 */[Rr]elease/
 x64/
@@ -25,7 +27,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
-dependencies/ORIGINALS/*
+dependencies/*
 
 # User-specific files
 *.suo
