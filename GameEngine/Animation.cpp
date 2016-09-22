@@ -1,6 +1,5 @@
 #include "Animation.h"
 #include "Errors.h"
-//#include <iostream>
 
 namespace GameEngine {
 	unsigned int Animation::getUVLocation(std::string name) { 
@@ -14,9 +13,24 @@ namespace GameEngine {
 	}
 
 	void Animation::parseData() {
-		std::regex animationSet(ANIMATION_FORMAT);
+		std::regex name("[[:alnum:]]+:");
+		std::regex data("(\\{([[:digit:]](.[[:digit:]]+)?,){3}[[:digit:]](.[[:digit:]]+)?\\})+;");
 		std::string dataString(_data.begin(), _data.end());
-		if(!regex_match(dataString, animationSet)) {
+
+		std::string temp = dataString;
+		while(!temp.empty()) {
+			std::smatch s;
+			if (std::regex_search(temp, s, name)) {
+				temp.erase(s.position(0), s.length(0));
+				if (std::regex_search(temp, s, data)) {
+					temp.erase(s.position(0), s.length(0));
+				}
+			} else {
+				break;
+			}
+		}
+
+		if (!temp.empty()) {
 			fatalGenericError("Animation file cannot be parsed.");
 		}
 
