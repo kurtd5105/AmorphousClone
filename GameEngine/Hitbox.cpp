@@ -71,4 +71,9 @@ namespace GameEngine {
 			}
 		}
 	}
+
+	void Hitbox::setPos(float x, float y) {
+		_info[0] = x;
+		_info[1] = y;
+	}
 }

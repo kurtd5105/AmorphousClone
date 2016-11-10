@@ -29,7 +29,6 @@ public:
 	void setCollided(bool collided) { _collided = collided; };
 	bool getCollided() const { return _collided; };
 
-
 	void enable() override { _enabled = true; }
 	void disable() override { _enabled = false; }
 	bool isEnabled() override { return _enabled; };

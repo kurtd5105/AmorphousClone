@@ -103,6 +103,8 @@ void GameLogic::collisionAgents() {
 				case GOOPLE:
 					if(!_player->isInvincible()) {
 						_player->onCollide(enemy.getType(), enemy.getRotation());
+						std::cout << "Player is at: " << _player->getPos().x << ", " << _player->getPos().y << std::endl;
+						std::cout << "Hitbox is at: " << (_player->getHitbox()->getInfo())->at(0) << ", " << (_player->getHitbox()->getInfo())->at(1) << std::endl;
 					}
 					enemy.setTarget(glm::vec2(_player->getPos().x + 10000 * cos(enemy.getRotation() - M_PI),
 						_player->getPos().y + 10000 * sin(enemy.getRotation() - M_PI)));
@@ -309,9 +311,11 @@ void GameLogic::processInput(float step) {
 				_player->translate(_player->PLAYER_SPEED * float(_keys->at(D) - _keys->at(A)) / sqrt(2.0f),
 								   _player->PLAYER_SPEED * float(_keys->at(W) - _keys->at(S)) / sqrt(2.0f),
 								   step);
+				_player->getHitbox()->setPos(_player->getPos().x, _player->getPos().y);
 			} else {
 				//Move the player by the additions of the key presses
 				_player->translate(_player->PLAYER_SPEED * (_keys->at(D) - _keys->at(A)), _player->PLAYER_SPEED * (_keys->at(W) - _keys->at(S)), step);
+				_player->getHitbox()->setPos(_player->getPos().x, _player->getPos().y);
 			}
 			/*if(_keys->at(Q) != _keys->at(E)) {
 				_Camera->setScale(_Camera->getScale() + _Camera->SCALE_SPEED * (_keys->at(Q) - _keys->at(E)));
@@ -333,6 +337,7 @@ void GameLogic::processInput(float step) {
 		_player->processTimers(step);
 		//std::cout << "Knockback: " << (_player->isKnockback() ? "yes" : "no") << "; Invincible: " << (_player->isInvincible() ? "yes." : "no.") << std::endl;
 
+		//_player->getHitbox()->translate(_player->getPos().x, _player->getPos().y);
 		updateEnemy(step);
 
 		break;

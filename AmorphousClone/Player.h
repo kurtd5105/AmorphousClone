@@ -17,6 +17,7 @@ public:
 	bool isKnockback() const { return _knockback; }
 	bool isInvincible() const { return _invincible; }
 	Sword* getSword() { return &_sword; }
+	GameEngine::Hitbox* getHitbox() { return &_hitbox; }
 
 	void knockback(float step);
 

@@ -92,6 +92,7 @@ void Agent::moveTo(Agent* agent, float speed) {
 			_x += xMove;
 			_y += yMove;
 			_sprite->translate(xMove, yMove);
+			_hitbox.translate(xMove, yMove);
 			//this->translate(xMove, yMove, speed);
 		}
 	}

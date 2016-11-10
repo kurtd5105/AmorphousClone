@@ -17,6 +17,7 @@ namespace GameEngine {
 
 		void translate(float x, float y);
 		void lockOn(Sprite* target);
+		void setPos(float x, float y);
 
 		HitboxType getType() const { return _type; }
 		std::vector<float>* getInfo() { return &_info; }
