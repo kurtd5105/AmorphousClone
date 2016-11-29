@@ -1,3 +1,5 @@
+#include "ResourceManager.h"
+#include "Sprite.h"
 #include "SpriteSheet.h"
 
 namespace GameEngine {

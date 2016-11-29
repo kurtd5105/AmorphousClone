@@ -1,14 +1,14 @@
 #pragma once
+#include "Animation.h"
+#include "GLTexture.h"
+#include "Window.h"
+
 #include <fstream>
 #include <vector>
 
-#include "Animation.h"
-#include "GLTexture.h"
-#include "Options.h"
-#include "Window.h"
-
-
 namespace GameEngine {
+	struct Options;
+
 	class IOManager {
 	public:
 		IOManager();

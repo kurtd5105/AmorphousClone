@@ -1,4 +1,6 @@
+#include "FontBatcher.h"
 #include "SelectionBox.h"
+#include "SpriteManager.h"
 
 namespace GameEngine {
 	SelectionBox::SelectionBox(): _leftX(0), _rightX(0), _textX(0), _y(0), _buttonWidth(0), _textWidth(0), _depth(0), _count(0), _index(0),

@@ -1,11 +1,15 @@
 #pragma once
-#include "Sprite.h"
 #include <vector>
 #include <list>
+
 namespace GameEngine {
+	class ResourceManager;
+	class Sprite;
+
 	enum sortType {
 		TEXTURE, DEPTH
 	};
+
 	class SpriteManager {
 	public:
 		SpriteManager();

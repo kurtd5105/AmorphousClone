@@ -1,4 +1,7 @@
+#include "ResourceManager.h"
+#include "Sprite.h"
 #include "SpriteManager.h"
+
 #include <algorithm>
 #include <iostream>
 

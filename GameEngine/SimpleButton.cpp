@@ -1,4 +1,5 @@
 #include "SimpleButton.h"
+#include "SpriteManager.h"
 
 namespace GameEngine {
 	SimpleButton::SimpleButton() {

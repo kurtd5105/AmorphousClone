@@ -5,10 +5,11 @@
 
 #include "Font.h"
 #include "RenderBatch.h"
-#include "ResourceManager.h"
 #include "Vertex.h"
 
 namespace GameEngine {
+	class ResourceManager;
+
 	class FontBatcher {
 	public:
 		FontBatcher();

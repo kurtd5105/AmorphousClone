@@ -1,15 +1,18 @@
 #pragma once
+#include "EnemySuper.h"
+#include "Stickie.h"
+#include <GameEngine/Random.h>
 
 #include <SDL/SDL.h>
 
+#include <list>
 #include <random>
 #include <vector>
 
-#include <GameEngine/IOManager.h>
-#include <GameEngine/Random.h>
-
-#include "EnemySuper.h"
-#include "Stickie.h"
+namespace GameEngine {
+	class IOManager;
+	class SpriteManager;
+}
 
 class SpawnManager
 {

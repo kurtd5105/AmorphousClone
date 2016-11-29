@@ -4,20 +4,24 @@
 #include <deque>
 #include <glm/glm.hpp>
 
-#include <GameEngine/Button.h>
 #include <GameEngine/Checkbox.h>
 #include <GameEngine/SimpleButton.h>
 #include <GameEngine/Slider.h>
 #include <GameEngine/SelectionBox.h>
 
-#include <GameEngine/Camera.h>
-#include <GameEngine/InputManager.h>
-
 #include "GameState.h"
 #include "Player.h"
 #include "EnemySuper.h"
-#include "StagingManager.h"
-#include "SpawnManager.h"
+
+namespace GameEngine {
+	class Button;
+	class Camera;
+	class InputManager;
+	class StickieGoo;
+}
+
+class SpawnManager;
+class StagingManager;
 
 // Contains all the game logic to be processed on each frame.
 class GameLogic {

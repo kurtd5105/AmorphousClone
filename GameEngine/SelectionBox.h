@@ -1,14 +1,14 @@
 #pragma once
-
-#include <functional>
-
-#include "FontBatcher.h"
 #include "SimpleButton.h"
-#include "SpriteManager.h"
 #include "Text.h"
 #include "Vertex.h"
 
+#include <functional>
+
 namespace GameEngine {
+	class FontBatcher;
+	class SpriteManager;
+
 	class SelectionBox {
 	public:
 		SelectionBox();

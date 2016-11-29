@@ -1,5 +1,11 @@
 #include "GameLogic.h"
+#include "SpawnManager.h"
+#include "StagingManager.h"
+#include "StickieGoo.h"
+#include <GameEngine/Button.h>
+#include <GameEngine/Camera.h>
 #include <GameEngine/CollisionManager.h>
+#include <GameEngine/InputManager.h>
 #include <iostream>
 
 //#include <iostream>

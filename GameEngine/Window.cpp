@@ -2,7 +2,7 @@
 #include "Errors.h"
 #include <iostream>
 #include <GL/glew.h>
-
+#include <SDL/SDL.h>
 
 namespace GameEngine {
 	const std::vector<int> Screen::validWidths = {800, 1024, 1280, 1360, 1366, 1440, 1600, 1920};

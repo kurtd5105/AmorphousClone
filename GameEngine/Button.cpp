@@ -1,4 +1,8 @@
 #include "Button.h"
+#include "FontBatcher.h"
+#include "InputManager.h"
+#include "Sprite.h"
+#include "SpriteManager.h"
 
 namespace GameEngine {
 	Button::Button() : _SpriteManager(nullptr), _FontBatcher(nullptr), _InputManager(nullptr), _sprite(nullptr), _isPushed(false) {}

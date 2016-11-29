@@ -1,4 +1,8 @@
 #include "EnemySuper.h"
+#include "StickieGoo.h"
+#include <GameEngine/Random.h>
+#include <GameEngine/Sprite.h>
+#include <GameEngine/SpriteManager.h>
 
 EnemySuper::EnemySuper(): _chance(0.0f), _collided(false), _hasGoo(false), _goo(nullptr), _Random(nullptr) {}
 

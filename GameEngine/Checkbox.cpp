@@ -1,4 +1,6 @@
 #include "Checkbox.h"
+#include "FontBatcher.h"
+#include "SpriteManager.h"
 
 namespace GameEngine {
 	Checkbox::Checkbox() {

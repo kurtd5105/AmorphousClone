@@ -1,11 +1,12 @@
 #pragma once
+#include "Animation.h"
+
 #include <vector>
 
-#include "Animation.h"
-#include "ResourceManager.h"
-#include "Sprite.h"
-
 namespace GameEngine {
+	class ResourceManager;
+	class Sprite;
+
 	class SpriteSheet {
 	public:
 		SpriteSheet();

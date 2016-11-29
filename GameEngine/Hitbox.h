@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
-#include "GameEngine/Sprite.h"
 
 namespace GameEngine {
+	class Sprite;
 
 	enum HitboxType {
 		CIRC, RECT, RECT_POINT

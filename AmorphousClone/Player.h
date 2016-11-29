@@ -3,6 +3,8 @@
 #include "Sword.h"
 #include "EnemySuper.h"
 
+namespace GameEngine { class SpriteManager; }
+
 // The Player is the person that the player plays as. It is meant to be instantiated and used in the main game.
 class Player : public Agent {
 public:

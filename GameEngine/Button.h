@@ -1,16 +1,16 @@
 #pragma once
-#include <functional>
-
-#include "FontBatcher.h"
 #include "Hitbox.h"
-#include "InputManager.h"
-#include "Sprite.h"
-#include "SpriteManager.h"
 #include "SpriteSheet.h"
 #include "Text.h"
-#include "Vertex.h"
+
+#include <functional>
 
 namespace GameEngine {
+	class FontBatcher;
+	class InputManager;
+	class Sprite;
+	class SpriteManager;
+
 	class Button {
 	public:
 		Button();

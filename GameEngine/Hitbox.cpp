@@ -1,5 +1,6 @@
 #define _USE_MATH_DEFINES
 #include "Hitbox.h"
+#include "Sprite.h"
 
 namespace GameEngine {
 	Hitbox::Hitbox() : _type(HitboxType::RECT){}

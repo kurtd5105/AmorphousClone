@@ -1,5 +1,7 @@
-#include "Text.h"
 #include "Font.h"
+#include "FontBatcher.h"
+#include "Text.h"
+
 //#include <iostream>
 //Adapted from Benjamin Arnold's SpriteFont
 /*

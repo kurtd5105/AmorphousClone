@@ -1,5 +1,6 @@
 #include "IOManager.h"
 #include "Errors.h"
+#include "Options.h"
 #include "picoPNG.h"
 
 #include <regex>

@@ -1,5 +1,6 @@
 #include "Goople.h"
 //#include <iostream>
+#include <GameEngine/Random.h>
 #include <random>
 
 Goople::Goople(int side, GameEngine::Random* Random, float width, float height) : _hp(1){

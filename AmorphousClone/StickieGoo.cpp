@@ -1,4 +1,6 @@
 #include "StickieGoo.h"
+#include "GameEngine/Sprite.h"
+#include "GameEngine/SpriteManager.h"
 #include <GameEngine/Errors.h>
 
 StickieGoo::StickieGoo(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager) : 

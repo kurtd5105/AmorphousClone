@@ -1,11 +1,13 @@
 #pragma once
-#include <SDL/SDL.h>
 #include <string>
 #include <vector>
 
 #include "Options.h"
 #include "WindowMode.h"
 #include <glm/detail/type_vec2.hpp>
+
+struct SDL_Window;
+struct SDL_Surface;
 
 namespace GameEngine {
 	struct Screen {

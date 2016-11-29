@@ -3,6 +3,11 @@
 #include "Button.h"
 
 namespace GameEngine {
+	class FontBatcher;
+	class InputManager;
+	class Sprite;
+	class SpriteManager;
+
 	class Slider : public Button {
 	public:
 		Slider();

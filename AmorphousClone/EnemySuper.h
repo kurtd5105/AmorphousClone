@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Agent.h"
-#include <GameEngine/Random.h>
-#include "StickieGoo.h"
+
+namespace GameEngine { class Random; }
+class StickieGoo;
 
 // An enum designed to make identifying the subclass of enemy.
 enum EnemyType { GOOPLE, STICKIE };

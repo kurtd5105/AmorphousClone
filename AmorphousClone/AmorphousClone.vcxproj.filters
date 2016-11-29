@@ -15,59 +15,59 @@
     <Filter Include="Header Files\Agents\Enemies">
       <UniqueIdentifier>{32856d1b-28e6-4597-b735-4a221b09cc0b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Source Files">
+    <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Resource Files\Source Files\Agents">
+    <Filter Include="Source Files\Agents">
       <UniqueIdentifier>{930fe6e6-87f6-49e1-b193-8dc0fe102f94}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Source Files\Agents\Enemies">
+    <Filter Include="Source Files\Agents\Enemies">
       <UniqueIdentifier>{1885c4a5-09d0-4697-a1a4-f2af0419c5a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Resource Files\Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MainGame.cpp">
-      <Filter>Resource Files\Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StagingManager.cpp">
-      <Filter>Resource Files\Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameLogic.cpp">
-      <Filter>Resource Files\Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SpawnManager.cpp">
-      <Filter>Resource Files\Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sword.cpp">
-      <Filter>Resource Files\Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Agent.cpp">
-      <Filter>Resource Files\Source Files\Agents</Filter>
+      <Filter>Source Files\Agents</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Resource Files\Source Files\Agents</Filter>
+      <Filter>Source Files\Agents</Filter>
     </ClCompile>
     <ClCompile Include="EnemySuper.cpp">
-      <Filter>Resource Files\Source Files\Agents\Enemies</Filter>
+      <Filter>Source Files\Agents\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Goople.cpp">
-      <Filter>Resource Files\Source Files\Agents\Enemies</Filter>
+      <Filter>Source Files\Agents\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Sword.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Awards.cpp">
-      <Filter>Resource Files\Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Stickie.cpp">
-      <Filter>Resource Files\Source Files\Agents\Enemies</Filter>
+      <Filter>Source Files\Agents\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="StickieGoo.cpp">
-      <Filter>Resource Files\Source Files\Agents\Enemies</Filter>
+      <Filter>Source Files\Agents\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,11 @@
 #pragma once
-#include <string>
 #include <GL/glew.h>
-#include "IOManager.h"
+#include <string>
+#include <vector>
 
 namespace GameEngine {
+	class IOManager;
+
 	class ShadingProgram {
 	public:
 		ShadingProgram();

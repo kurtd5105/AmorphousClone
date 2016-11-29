@@ -1,13 +1,14 @@
 #pragma once
-#include <list>
-#include <vector>
+#include "RenderBatch.h"
+
 #include <GL/glew.h>
 
-#include "RenderBatch.h"
-#include "Sprite.h"
-
+#include <list>
+#include <vector>
 
 namespace GameEngine {
+	class Sprite;
+
 	class SpriteBatcher {
 	public:
 		SpriteBatcher();

@@ -1,4 +1,5 @@
 #include "FontBatcher.h"
+#include "ResourceManager.h"
 //#include <iostream>
 
 namespace GameEngine {

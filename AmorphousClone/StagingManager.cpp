@@ -1,4 +1,11 @@
+#include "Player.h"
+#include "SpawnManager.h"
 #include "StagingManager.h"
+#include <GameEngine/InputManager.h>
+#include <GameEngine/Options.h>
+#include <GameEngine/ResourceManager.h>
+#include <GameEngine/SpriteManager.h>
+#include <GameEngine/Window.h>
 #include <sstream>
 
 

@@ -1,8 +1,10 @@
 #pragma once
-
 #include "Button.h"
 
 namespace GameEngine {
+	class FontBatcher;
+	class SpriteManager;
+
 	class Checkbox : public Button {
 	public:
 		Checkbox();

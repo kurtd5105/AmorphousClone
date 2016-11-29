@@ -1,6 +1,11 @@
 #pragma once
-#include "GameEngine/Sprite.h"
-#include "GameEngine/SpriteManager.h"
+#include <glm\glm.hpp>
+#include <vector>
+
+namespace GameEngine {
+	class Sprite;
+	class SpriteManager;
+}
 
 // StickieGoo is the goo that is dropped by a Stickie on death. Should only be instantiated by a Stickie.
 class StickieGoo {

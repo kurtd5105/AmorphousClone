@@ -1,6 +1,9 @@
 #include "Agent.h"
 
 #include <GameEngine/Errors.h>
+#include <GameEngine/Random.h>
+#include <GameEngine/Sprite.h>
+#include <GameEngine/SpriteManager.h>
 #include <iostream>
 
 Agent::Agent() : _x(0.0f), _y(0.0f), _width(0.0f), _height(0.0f), _depth(1.0f), _rotation(0.0f), _radius(0.0f), _speed(0.0f), _rotationOffset(0.0f), _slowTimer(0.0f),
@@ -157,6 +160,11 @@ void Agent::lockOn(Agent* agent) {
 	}
 }
 
+glm::vec2 Agent::getCentered() const
+{
+	return _sprite->getCentered();
+}
+
 void Agent::setInvisible() {
 	_visible = false;
 	_sprite->setInvisible();
@@ -204,6 +212,32 @@ void Agent::processTimers(float step) {
 	}
 }
 
+void Agent::slow()
+{
+	_slowedEffect->setVisible();
+	_isSlowed = true;
+	_slowTimer = 0;
+	for (auto& a : _subAgents) {
+		a->slow();
+	}
+}
+
+void Agent::setAlpha(GLubyte alpha)
+{
+	_sprite->setAlpha(alpha);
+	for (auto& a : _subAgents) {
+		a->setAlpha(alpha); 
+	} 
+	for (auto& s : _subSprites) {
+		s->setAlpha(alpha);
+	}
+}
+
+GLubyte Agent::getAlpha() const
+{
+	return _sprite->getAlpha();
+}
+
 bool Agent::collideAgents(Agent* agent) const {
 	// TODO: Replace this function with Collision Manager.
 	//Minimum distance for a collision to occur, can be diffrent of diffrent radiuses
@@ -244,4 +278,9 @@ void Agent::kill() {
 	for(unsigned int i = 0; i < _subSprites.size(); i++) {
 		_subSprites[i]->setInvisible();
 	}
+}
+
+float Agent::getRotation() const
+{
+	return _sprite->getRotation();
 }

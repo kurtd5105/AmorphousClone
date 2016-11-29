@@ -6,15 +6,19 @@
 #include <GameEngine/SelectionBox.h>
 
 #include <GameEngine/FontBatcher.h>
-#include <GameEngine/InputManager.h>
-#include <GameEngine/Options.h>
-#include <GameEngine/ResourceManager.h>
-#include <GameEngine/SpriteManager.h>
 #include <GameEngine/Text.h>
 
 #include "GameState.h"
-#include "Player.h"
-#include "SpawnManager.h"
+
+namespace GameEngine {
+	class InputManager;
+	struct Options;
+	class ResourceManager;
+	class SpriteManager;
+}
+
+class Player;
+class SpawnManager;
 
 class StagingManager {
 public:

@@ -49,3 +49,12 @@ ipch/
 *.opensdf
 *.sdf
 *.cachefile
+/AmorphousClone.VC.VC.opendb
+/AmorphousClone.VC.db
+/AmorphousClone/Textures/hello_world.png
+/AmorphousClone/Textures/03.png
+/AmorphousClone/Textures/02.png
+/AmorphousClone/Textures/01.png
+/GameEngine/ReadMe.txt
+/Sprite sheet.txt
+/common mistake.txt

@@ -1,6 +1,8 @@
 #include "SpawnManager.h"
 #include "Goople.h"
 #include "Stickie.h"
+#include <GameEngine/IOManager.h>
+#include <GameEngine/SpriteManager.h>
 //#include <iostream>
 
 //empty float vector

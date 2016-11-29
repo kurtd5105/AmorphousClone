@@ -1,4 +1,6 @@
 #include "Player.h"
+#include <GameEngine/Sprite.h>
+#include <GameEngine/SpriteManager.h>
 
 Player::Player(): _knockback(false), _invincible(false), _step(0.0f), _prevStep(0.0f), _targetRotation(0.0f), _gloopleBumps(0) {}
 

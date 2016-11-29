@@ -1,3 +1,4 @@
+#include "Sprite.h"
 #include "SpriteBatcher.h"
 #include "Vertex.h"
 

@@ -1,4 +1,9 @@
+#include "FontBatcher.h"
+#include "InputManager.h"
 #include "Slider.h"
+#include "Sprite.h"
+#include "SpriteManager.h"
+
 #include <math.h>
 
 namespace GameEngine {

@@ -1,4 +1,5 @@
 #include "Sword.h"
+#include <GameEngine/Sprite.h>
 
 Sword::Sword(): _step(0.0f), _isActive(false) {
 }

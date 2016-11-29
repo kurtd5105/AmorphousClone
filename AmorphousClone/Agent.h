@@ -1,14 +1,18 @@
 #pragma once
-
-#include <GameEngine/SpriteManager.h>
-#include <GameEngine/Sprite.h>
 #include <GameEngine/Hitbox.h>
-#include <GameEngine/Random.h>
+#include <gl/glew.h>
+#include <glm/glm.hpp>
 
 class EnemySuper;
 class Goople;
 class Stickie;
 class Player;
+
+namespace GameEngine {
+	class Random;
+	class Sprite;
+	class SpriteManager;
+}
 
 // Defines required capabilities of all agents. It is not meant to be instantiated.
 class Agent {
@@ -44,7 +48,7 @@ public:
 	virtual void kill();
 
 	// Returns the rotation of the main sprite.
-	float getRotation() const { return _sprite->getRotation(); }
+	float getRotation() const;
 
 	// Returns the agent's rotation offset from its current angle.
 	float getRotationOffset() const { return _rotationOffset; }
@@ -59,7 +63,7 @@ public:
 	void setPos(glm::vec2 pos) { _x = pos.x; _y = pos.y; }
 
 	// Returns the agent's centered coordinates.
-	glm::vec2 getCentered() const { return _sprite->getCentered(); }
+	glm::vec2 getCentered() const;
 
 	// Returns whether or not the agent has been initialized.
 	bool isInit() const { return _isInit; }
@@ -86,12 +90,12 @@ public:
 
 	// Slows the agents and turns on the slow effect for all sub-agents. If the sub-agent doesn't need its slowed effect turned on,
 	// then this function should be overridden.
-	virtual void slow() { _slowedEffect->setVisible(); _isSlowed = true; _slowTimer = 0; for(auto& a : _subAgents) { a->slow(); } }
+	virtual void slow();
 
 	// Allows the current agent's alpha to be set from 0 to 255, 255 being opaque. Sets the alpha of all sub-agents and sub-sprites as well.
-	void setAlpha(GLubyte alpha) { _sprite->setAlpha(alpha); for(auto& a : _subAgents) { a->setAlpha(alpha); } for(auto& s : _subSprites) { s->setAlpha(alpha); } }
+	void setAlpha(GLubyte alpha);
 	// Returns the main sprite's current alpha.
-	GLubyte getAlpha() const { return _sprite->getAlpha(); }
+	GLubyte getAlpha() const;
 
 protected:
 	// Constants used for the slow timer.

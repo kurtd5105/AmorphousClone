@@ -1,6 +1,7 @@
 #pragma once
-#include <GameEngine/Random.h>
 #include "EnemySuper.h"
+
+namespace GameEngine { class Random; }
 
 // A Stickie is a type of enemy. It is meant to be instantiated and used in the main game.
 class Stickie : public EnemySuper {

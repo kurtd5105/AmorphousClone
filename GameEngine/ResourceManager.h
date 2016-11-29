@@ -1,15 +1,16 @@
 #pragma once
+#include "Animation.h"
+#include "Font.h"
+#include "GLTexture.h"
+#include "ThreadState.h"
+
 #include <map>
 #include <thread>
 #include <vector>
 
-#include "Animation.h"
-#include "Font.h"
-#include "GLTexture.h"
-#include "IOManager.h"
-#include "ThreadState.h"
-
 namespace GameEngine {
+	class IOManager;
+
 	class ResourceManager {
 	public:
 		ResourceManager(IOManager* IOManager);

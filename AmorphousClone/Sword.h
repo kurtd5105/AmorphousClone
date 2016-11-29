@@ -1,8 +1,10 @@
 #pragma once
+#include "Agent.h"
 //#include <GameEngine/Hitbox.h>
 //#include <GameEngine/Sprite.h>
 #include <GameEngine/SpriteManager.h>
-#include "Agent.h"
+
+#include <SDL/SDL_stdinc.h>
 
 class Sword : public Agent {
 public:
