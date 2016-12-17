@@ -4,6 +4,7 @@
 
 namespace GameEngine {
 	class Sprite;
+	class SpriteInfo;
 	class SpriteManager;
 }
 
@@ -11,7 +12,7 @@ namespace GameEngine {
 class StickieGoo {
 public:
 	// Constructor that creates the goo and loads the goo sprite.
-	StickieGoo(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager);
+	StickieGoo(GameEngine::SpriteInfo* info);
 	~StickieGoo();
 
 

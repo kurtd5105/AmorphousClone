@@ -1,39 +1,39 @@
 #include "Player.h"
 #include <GameEngine/Sprite.h>
+#include <GameEngine/SpriteInfo.h>
 #include <GameEngine/SpriteManager.h>
 
 Player::Player(): _knockback(false), _invincible(false), _step(0.0f), _prevStep(0.0f), _targetRotation(0.0f), _gloopleBumps(0) {}
 
 Player::~Player() {}
 
-void Player::init(float x, float y, float width, float height, float depth, glm::vec2 scalingFactors, std::vector<float> UVmM,
-				  std::string path, std::string slowFx, GameEngine::SpriteManager* manager) {
-	_x = x;
-	_y = y;
-	_width = width;
-	_height = height;
-	_depth = depth;
+void Player::init(GameEngine::SpriteInfo* info, glm::vec2 scalingFactors, std::string slowFx) {
+	_x = info->x;
+	_y = info->y;
+	_width = info->width;
+	_height = info->height;
+	_depth = info->depth;
 
 	// Assumes player is a circle.
-	_radius = width / 2;
+	_radius = _width / 2;
 	_speed = PLAYER_SPEED;
-	_SpriteManager = manager;
+	_SpriteManager = info->manager;
 	
 	// Loads the main sprite into the sprite manager.
-	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
+	_sprite = _SpriteManager->addSprite(_x, _y, _width, _height, _depth, info->UVmM, info->path);
 
 	// Loads the slowed effect sprite into the sprite manager, at a slightly lower depth so that it is seen over top of the main sprite.
-	_slowedEffect = _SpriteManager->addSprite(x, y, width, height, depth - 0.1f, UVmM, slowFx);
+	_slowedEffect = _SpriteManager->addSprite(_x, _y, _width, _height, _depth - 0.1f, info->UVmM, slowFx);
 	// Sets the slowed effect to not be seen.
 	_slowedEffect->setInvisible();
 	// Tracks the subsprite so that it can be translated with the player.
 	_subSprites.push_back(_slowedEffect);
 
 	// Initializes the enemy's hitbox, assumed to also be a circle.
-	_hitbox.init(x, y, width, height, _radius, GameEngine::CIRC);
+	_hitbox.init(_x, _y, _width, _height, _radius, GameEngine::CIRC);
 
 	// Adds the Player's sword subagent.
-	_sword.init(_x, _y, _rotation, scalingFactors, manager);
+	_sword.init(_x, _y, _rotation, scalingFactors, _SpriteManager);
 	// Tracks the subagent so that it can be translated with the player.
 	_subAgents.push_back(&_sword);
 

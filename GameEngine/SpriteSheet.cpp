@@ -10,7 +10,7 @@ namespace GameEngine {
 	SpriteSheet::~SpriteSheet() {
 	}
 
-	void SpriteSheet::init(std::string path, Sprite* sprite, ResourceManager* manager) {
+	void SpriteSheet::init(std::string& path, Sprite* sprite, ResourceManager* manager) {
 		_ResourceManager = manager;
 		_sprite = sprite;
 		_animation = _ResourceManager->getAnimation(path);
@@ -25,7 +25,7 @@ namespace GameEngine {
 		_sprite->setUVmM(*_animation.getUVSet(_set, _step));
 	}
 
-	void SpriteSheet::setAnim(std::string animName) {
+	void SpriteSheet::setAnim(std::string& animName) {
 		if(animName != _currAnim) {
 			_currAnim = animName;
 			_set = _animation.getUVLocation(animName);

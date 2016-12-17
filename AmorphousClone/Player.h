@@ -3,7 +3,10 @@
 #include "Sword.h"
 #include "EnemySuper.h"
 
-namespace GameEngine { class SpriteManager; }
+namespace GameEngine { 
+	class SpriteInfo;
+	class SpriteManager; 
+}
 
 // The Player is the person that the player plays as. It is meant to be instantiated and used in the main game.
 class Player : public Agent {
@@ -14,8 +17,7 @@ public:
 
 	// Initializes the Player. Performs all necessary setup for use including setting local variables, and loading the necessary
 	// Sprites. Assumes the player shape is a circle.
-	void init(float x, float y, float width, float height, float depth, glm::vec2 scalingFactors, std::vector<float> UVmM,
-			  std::string path, std::string slowFx, GameEngine::SpriteManager* manager);
+	void init(GameEngine::SpriteInfo* info, glm::vec2 scalingFactors, std::string slowFx);
 
 
 	// Function to be called on collision in order to deflect the player and start the knockback.

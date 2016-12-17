@@ -1,9 +1,11 @@
 #pragma once
-
 #include "Agent.h"
 
-namespace GameEngine { class Random; }
 class StickieGoo;
+namespace GameEngine { 
+	class Random; 
+	class SpriteInfo;
+}
 
 // An enum designed to make identifying the subclass of enemy.
 enum EnemyType { GOOPLE, STICKIE };
@@ -18,8 +20,7 @@ public:
 
 	// Initializes the enemy. Performs all necessary setup for use including setting local variables, and loading the necessary
 	// Sprites. Assumes the enemy shape is a circle.
-	virtual void init(float x, float y, float width, float height, float depth, int side, std::vector<float> UVmM, std::string path,
-					  std::string slowFx, GameEngine::SpriteManager* manager, GameEngine::Random* Random);
+	virtual void init(GameEngine::SpriteInfo* info, int side, std::string slowFx, GameEngine::Random* Random);
 
 
 	// Moves the enemy towards a point target in a discrete step of the locally set speed and the passed speed argument. The speed

@@ -13,9 +13,9 @@ namespace GameEngine {
 		~SpriteSheet();
 
 		//Sprite manager loads the UVmM data and stores like sprites
-		void init(std::string path, Sprite* sprite, ResourceManager* manager);
+		void init(std::string& path, Sprite* sprite, ResourceManager* manager);
 		void nextStep();
-		void setAnim(std::string animName);
+		void setAnim(std::string& animName);
 
 	private:
 		int _set, _step;

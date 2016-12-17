@@ -2,39 +2,40 @@
 #include "StickieGoo.h"
 #include <GameEngine/Random.h>
 #include <GameEngine/Sprite.h>
+#include <GameEngine/SpriteInfo.h>
 #include <GameEngine/SpriteManager.h>
+
+#include <memory>
 
 EnemySuper::EnemySuper(): _chance(0.0f), _collided(false), _hasGoo(false), _goo(nullptr), _Random(nullptr) {}
 
-
 EnemySuper::~EnemySuper() {}
 
-void EnemySuper::init(float x, float y, float width, float height, float depth, int side, 
-					  std::vector<float> UVmM, std::string path, std::string slowFx, GameEngine::SpriteManager* manager, GameEngine::Random* Random) {
-	_x = x;
-	_y = y;
-	_width = width;
-	_height = height;
-	_depth = depth;
+void EnemySuper::init(GameEngine::SpriteInfo* info, int side, std::string slowFx, GameEngine::Random* Random) {
+	_x = info->x;
+	_y = info->y;
+	_width = info->width;
+	_height = info->height;
+	_depth = info->depth;
 
 	// Assumption of enemy being a circle.
-	_radius = width / 2;
+	_radius = info->width / 2;
 
 	_speed = ENEMY_SPEED;
-	_SpriteManager = manager;
+	_SpriteManager = info->manager;
 
 	// Loads the main sprite into the sprite manager.
-	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
+	_sprite = _SpriteManager->addSprite(_x, _y, _width, _height, _depth, info->UVmM, info->path);
 
 	// Loads the slowed effect sprite into the sprite manager, at a slightly lower depth so that it is seen over top of the main sprite.
-	_slowedEffect = _SpriteManager->addSprite(x, y, width, height, depth - 0.1f, UVmM, slowFx);
+	_slowedEffect = _SpriteManager->addSprite(_x, _y, _width, _height, _depth - 0.1f, info->UVmM, slowFx);
 	// Sets the slowed effect to not be seen.
 	_slowedEffect->setInvisible();
 	// Tracks the subsprite so that it can be translated with the enemy.
 	_subSprites.push_back(_slowedEffect);
 
 	// Initializes the enemy's hitbox, assumed to also be a circle.
-	_hitbox.init(x, y, width, height, _radius, GameEngine::CIRC);
+	_hitbox.init(_x, _y, _width, _height, _radius, GameEngine::CIRC);
 
 	_chance = 0.90f;
 	_Random = Random;
@@ -105,6 +106,8 @@ void EnemySuper::kill() {
 	// Spawn goo if the enemy has goo.
 	if(_hasGoo) {
 		// Spawn the new goo as twice as big as the enemy, and center it on the enemy.
-		_goo = new StickieGoo(_x - (_width / 2.0f), _y - (_height / 2.0f), _width * 2, _height * 2, 50.0f, std::vector<float>{}, "Textures/StickieGoo.png", _SpriteManager);
+		std::unique_ptr<GameEngine::SpriteInfo> info = std::make_unique<GameEngine::SpriteInfo>(_x - (_width / 2.0f), _y - (_height / 2.0f),
+			_width * 2, _height * 2, 50.0f, std::vector<float>{}, "Textures/StickieGoo.png", _SpriteManager);
+		_goo = new StickieGoo(info.get());
 	}
 }

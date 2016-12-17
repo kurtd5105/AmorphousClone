@@ -4,6 +4,7 @@
 #include <GameEngine/InputManager.h>
 #include <GameEngine/Options.h>
 #include <GameEngine/ResourceManager.h>
+#include <GameEngine/SpriteInfo.h>
 #include <GameEngine/SpriteManager.h>
 #include <GameEngine/Window.h>
 #include <sstream>
@@ -146,10 +147,11 @@ void StagingManager::loadState() {
 		_text[0].init(test, glm::vec2(0, 0), _scalingFactors, 1.0f, color, _defaultFont);
 		_text[1].init(test, glm::vec2(1180, 0), _scalingFactors, 1.0f, color, _defaultFont);
 
+		std::unique_ptr<GameEngine::SpriteInfo> info = std::make_unique<GameEngine::SpriteInfo>(615.0f * _scalingFactors.x, 335.0f * _scalingFactors.y,
+			50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y, 1.0f, std::vector<float>{}, "Textures/player.png", _SpriteManager);
 		//Create the player
 		_player = new Player();
-		_player->init(615.0f * _scalingFactors.x, 335.0f * _scalingFactors.y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-					  1.0f, _scalingFactors, std::vector<float>{}, "Textures/player.png", "Textures/slowed.png", _SpriteManager);
+		_player->init(info.get(), _scalingFactors, "Textures/slowed.png");
 
 		//Begin spawning enemies
 		_SpawnManager = new SpawnManager();

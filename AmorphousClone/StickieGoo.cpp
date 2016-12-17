@@ -1,20 +1,20 @@
 #include "StickieGoo.h"
-#include "GameEngine/Sprite.h"
-#include "GameEngine/SpriteManager.h"
+#include <GameEngine/Sprite.h>
+#include <GameEngine/SpriteInfo.h>
+#include <GameEngine/SpriteManager.h>
 #include <GameEngine/Errors.h>
 
-StickieGoo::StickieGoo(float x, float y, float width, float height, float depth, std::vector<float> UVmM, std::string path, GameEngine::SpriteManager* manager) : 
-_step(0.0f), _alive(true), _SpriteManager(nullptr) {
-	_x = x;
-	_y = y;
-	_width = width;
-	_height = height;
+StickieGoo::StickieGoo(GameEngine::SpriteInfo* info) : _step(0.0f), _alive(true), _SpriteManager(nullptr) {
+	_x = info->x;
+	_y = info->y;
+	_width = info->width;
+	_height = info->height;
 	_radius = _width;
-	_depth = depth;
-	_SpriteManager = manager;
+	_depth = info->depth;
+	_SpriteManager = info->manager;
 
 	// Loads the main sprite into the sprite manager.
-	_sprite = _SpriteManager->addSprite(x, y, width, height, depth, UVmM, path);
+	_sprite = _SpriteManager->addSprite(_x, _y, _width, _height, _depth, info->UVmM, info->path);
 }
 
 StickieGoo::~StickieGoo() {

@@ -1,8 +1,11 @@
-#include "SpawnManager.h"
 #include "Goople.h"
+#include "SpawnManager.h"
 #include "Stickie.h"
 #include <GameEngine/IOManager.h>
+#include <GameEngine/SpriteInfo.h>
 #include <GameEngine/SpriteManager.h>
+
+#include <memory>
 //#include <iostream>
 
 //empty float vector
@@ -28,7 +31,6 @@ void SpawnManager::init(int width, int height, glm::vec2 scalingFactors, unsigne
 	_lastSpawn = _startTime;
 	_startTime = SDL_GetTicks();
 	_currentSize = 0;
-
 }
 
 void SpawnManager::groupSpawn() {
@@ -116,19 +118,20 @@ void SpawnManager::createSpawn(struct enemyinfo enemy) {
 	//Create the correct enemy type
 	_enemies.push_back(enemyFactory(enemy, side));
 	
+	std::unique_ptr<GameEngine::SpriteInfo> info;
 	//Spawn on the correct side
 	if(side == 0) {
-		_enemies.back().init(x, float(_height), 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-							 2.0f, side, VEC_F_E, _texture, enemy._slowFx, _SpriteManager, &_Random);
+		info = std::make_unique<GameEngine::SpriteInfo>(x, float(_height), 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y, 2.0f, VEC_F_E, _texture, _SpriteManager);
+		_enemies.back().init(info.get(), side, enemy._slowFx, &_Random);
 	} else if(side == 1) {
-		_enemies.back().init(-_size, y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-							 2.0f, side, VEC_F_E, _texture, enemy._slowFx, _SpriteManager, &_Random);
+		info = std::make_unique<GameEngine::SpriteInfo>(-_size, y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y, 2.0f, VEC_F_E, _texture, _SpriteManager);
+		_enemies.back().init(info.get(), side, enemy._slowFx, &_Random);
 	} else if(side == 2) {
-		_enemies.back().init(float(_width), y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-							 2.0f, side, VEC_F_E, _texture, enemy._slowFx, _SpriteManager, &_Random);
+		info = std::make_unique<GameEngine::SpriteInfo>(float(_width), y, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y, 2.0f, VEC_F_E, _texture, _SpriteManager);
+		_enemies.back().init(info.get(), side, enemy._slowFx, &_Random);
 	} else {
-		_enemies.back().init(x, -_size, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y,
-							 2.0f, side, VEC_F_E, _texture, enemy._slowFx, _SpriteManager, &_Random);
+		info = std::make_unique<GameEngine::SpriteInfo>(x, -_size, 50.0f * _scalingFactors.y, 50.0f * _scalingFactors.y, 2.0f, VEC_F_E, _texture, _SpriteManager);
+		_enemies.back().init(info.get(), side, enemy._slowFx, &_Random);
 	}
 	_enemies.back().setInvisible();
 	_enemies.back().disable();

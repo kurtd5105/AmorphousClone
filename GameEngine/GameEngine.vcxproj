@@ -113,6 +113,7 @@
     <ClInclude Include="Slider.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteBatcher.h" />
+    <ClInclude Include="SpriteInfo.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="Text.h" />
